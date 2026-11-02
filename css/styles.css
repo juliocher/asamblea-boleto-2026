@@ -3018,3 +3018,72 @@ body.ink-saver-mode .print-reverse-steps {
   color: var(--text-muted);
   line-height: 1.4;
 }
+
+
+/* ==========================================================================
+   RESOLVER DE NOMBRES DUPLICADOS
+   ========================================================================== */
+.duplicate-resolver {
+  margin-top: 18px;
+  padding: 16px;
+  background: rgba(234, 88, 12, 0.08);
+  border: 1.5px solid rgba(234, 88, 12, 0.35);
+  border-radius: var(--radius-md);
+  text-align: left;
+}
+
+.duplicate-resolver-title {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--color-acento);
+  margin-bottom: 12px;
+  line-height: 1.35;
+}
+
+.duplicate-options {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-duplicate-pick {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-sm);
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.btn-duplicate-pick:hover,
+.btn-duplicate-pick:active {
+  background: var(--color-azul-marino);
+  border-color: var(--color-azul-marino);
+  transform: translateY(-1px);
+}
+
+.btn-duplicate-pick:hover .dup-name,
+.btn-duplicate-pick:active .dup-name {
+  color: #FFFFFF;
+}
+
+.btn-duplicate-pick:hover .dup-meta,
+.btn-duplicate-pick:active .dup-meta {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.dup-name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-main);
+}
+
+.dup-meta {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+}

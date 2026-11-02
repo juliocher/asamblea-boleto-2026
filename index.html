@@ -68,6 +68,12 @@
         Ver mi tarjeta de embarque
       </button>
 
+      <!-- Selector de sugerencias si hay nombres repetidos -->
+      <div id="duplicateResolver" class="duplicate-resolver" style="display:none;">
+        <p class="duplicate-resolver-title">🔍 Encontramos más de una persona con ese nombre. ¿Quién eres?</p>
+        <div id="duplicateList" class="duplicate-options"></div>
+      </div>
+
       <!-- Error -->
       <div id="loginErrorMessage" class="error-card" style="display:none;" role="alert">
         <div class="error-card-header">

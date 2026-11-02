@@ -138,17 +138,81 @@
       return;
     }
 
-    // Buscar el pasajero por credencial exacta
-    const found = allPassengers.find(p => normCred(p.credential) === inputNorm);
+    const dupBox = document.getElementById('duplicateResolver');
+    if (dupBox) dupBox.style.display = 'none';
 
-    if (!found) {
-      showError(`No se encontró la credencial "${inputValue}". Verifica que estés escribiendo correctamente tu nombre (sin tildes está bien). Si necesitas ayuda, contacta al coordinador.`);
+    // 1. Coincidencia exacta con la credencial asignada
+    const exact = allPassengers.find(p => normCred(p.credential) === inputNorm);
+    if (exact) {
+      currentPassenger = exact;
+      loginErrorMessage.style.display = 'none';
+      renderTicketView();
       return;
     }
 
-    currentPassenger = found;
-    loginErrorMessage.style.display = 'none';
-    renderTicketView();
+    // 2. Coincidencia exacta con el nombre completo
+    const fullMatch = allPassengers.find(p => normCred(p.nombre) === inputNorm);
+    if (fullMatch) {
+      currentPassenger = fullMatch;
+      loginErrorMessage.style.display = 'none';
+      renderTicketView();
+      return;
+    }
+
+    // 3. Buscar si coincide con el primer nombre de uno o más pasajeros
+    const matches = allPassengers.filter(p => {
+      const parts = normCred(p.nombre).split(' ');
+      const pFirst = parts[0];
+      const credParts = normCred(p.credential).split(' ');
+      return pFirst === inputNorm || credParts.includes(inputNorm) || normCred(p.nombre).includes(inputNorm);
+    });
+
+    if (matches.length === 1) {
+      // Coincidencia única directa
+      currentPassenger = matches[0];
+      loginErrorMessage.style.display = 'none';
+      renderTicketView();
+      return;
+    }
+
+    if (matches.length > 1) {
+      // Múltiples personas con ese nombre: mostrar selector amigable
+      loginErrorMessage.style.display = 'none';
+      showDuplicateResolver(matches);
+      return;
+    }
+
+    showError(`No se encontró "${inputValue}". Verifica que esté bien escrito o contacta al coordinador.`);
+  }
+
+  function showDuplicateResolver(candidates) {
+    const dupBox = document.getElementById('duplicateResolver');
+    const dupList = document.getElementById('duplicateList');
+    if (!dupBox || !dupList) return;
+
+    dupList.innerHTML = '';
+    candidates.forEach(cand => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'btn-duplicate-pick';
+      
+      const busInfo = [];
+      if (cand.ida_bus) busInfo.push(`Ida: Bus ${cand.ida_bus}`);
+      if (cand.vuelta_bus) busInfo.push(`Retorno: Bus ${cand.vuelta_bus}`);
+
+      btn.innerHTML = `
+        <div class="dup-name">${esc(cand.nombre)}</div>
+        <div class="dup-meta">${busInfo.join(' • ')}</div>
+      `;
+      btn.onclick = () => {
+        currentPassenger = cand;
+        dupBox.style.display = 'none';
+        renderTicketView();
+      };
+      dupList.appendChild(btn);
+    });
+
+    dupBox.style.display = 'block';
   }
 
   function showError(msg) {
