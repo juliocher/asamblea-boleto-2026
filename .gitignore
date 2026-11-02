@@ -1,0 +1,23 @@
+# Archivos que NO se suben a GitHub
+node_modules/
+*.rar
+*.bat
+build.js
+server.js
+data.enc.json
+roster.csv
+process_images.ps1
+gen_csv.js
+google_apps_script.js
+abordaje_inicial.csv
+credenciales_whatsapp.txt
+plantilla_canva_individual.html
+plantilla_duplex_3_boletos_a4.html
+plantilla_stitch_imprimible.html
+imprimir_boletos_pdf.html
+tarjetas_asientos_fisicos.html
+croquis_bus_view.html
+*.pdf
+*.xlsx
+*.svg
+.git/

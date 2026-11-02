@@ -1,0 +1,88 @@
+{
+  "nombre_evento": "Asamblea de circuito 2026-2027",
+  "evento_nombre": "Asamblea de circuito 2026-2027",
+  "tema_anual": "Haz de Jehová tu mayor alegría",
+  "cita_tema": "Salmo 37:4",
+  "imagen_ilustracion": "",
+  "imagen_ilustracion_pantalla": "",
+  "color_principal": "#F2D58A",
+  "color_acento": "#EA580C",
+  "color_acento_verde": "#6E8B6A",
+  "color_texto": "#14213D",
+  "color_ambar": "#E3B04B",
+  "color_crema": "#FEF8EE",
+  "color_azul_marino": "#14213D",
+  "whatsapp_organizador": "+51912100299",
+  "whatsapp_coordinador2": "+51932121565",
+  "nombre_coordinador1": "Julio César Chero",
+  "nombre_coordinador2": "Lino Gutiérrez",
+  "whatsapp_mensaje_ayuda": "Hola, tengo una consulta sobre mi traslado para la Asamblea de circuito 2026-2027.",
+  "tramos": {
+    "ida": {
+      "nombre": "Tramo Ida",
+      "fecha": "Sábado 07 Nov 2026",
+      "origen_codigo": "CUZ",
+      "origen_ciudad": "Cusco",
+      "origen_lugar": "Plaza Belén",
+      "destino_codigo": "URU",
+      "destino_ciudad": "Urubamba",
+      "destino_lugar": "Estac. Local Asamblea",
+      "duracion": "1h 20m",
+      "buses": {
+        "1": {
+          "nombre": "Bus 1",
+          "capacidad": 34,
+          "hora_salida": "07:10 AM",
+          "hora_llegada": "08:30 AM",
+          "hora_abordaje": "06:50 AM",
+          "punto_salida": "Plaza Belén, Cusco",
+          "enlace_mapa": "https://maps.google.com/?q=Plaza+Belen+Cusco",
+          "nota": ""
+        },
+        "2": {
+          "nombre": "Bus 2",
+          "capacidad": 34,
+          "hora_salida": "07:10 AM",
+          "hora_llegada": "08:30 AM",
+          "hora_abordaje": "06:50 AM",
+          "punto_salida": "Plaza Belén, Cusco",
+          "enlace_mapa": "https://maps.google.com/?q=Plaza+Belen+Cusco",
+          "nota": ""
+        }
+      }
+    },
+    "vuelta": {
+      "nombre": "Tramo Retorno",
+      "fecha": "Sábado 07 Nov 2026",
+      "origen_codigo": "URU",
+      "origen_ciudad": "Urubamba",
+      "origen_lugar": "Estac. Local Asamblea",
+      "destino_codigo": "CUZ",
+      "destino_ciudad": "Cusco",
+      "destino_lugar": "Plaza Belén",
+      "duracion": "1h 20m",
+      "buses": {
+        "1": {
+          "nombre": "Bus 1",
+          "capacidad": 34,
+          "hora_salida": "06:30 PM",
+          "hora_llegada": "07:50 PM",
+          "hora_abordaje": "06:10 PM",
+          "punto_salida": "Estacionamiento del Coliseo de Urubamba",
+          "enlace_mapa": "https://maps.google.com/?q=Coliseo+Urubamba",
+          "nota": ""
+        },
+        "2": {
+          "nombre": "Bus 2",
+          "capacidad": 34,
+          "hora_salida": "06:30 PM",
+          "hora_llegada": "07:50 PM",
+          "hora_abordaje": "06:10 PM",
+          "punto_salida": "Estacionamiento del Coliseo de Urubamba",
+          "enlace_mapa": "https://maps.google.com/?q=Coliseo+Urubamba",
+          "nota": ""
+        }
+      }
+    }
+  }
+}
