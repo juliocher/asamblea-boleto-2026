@@ -8,7 +8,8 @@
     "ida_asiento": "01",
     "vuelta_bus": "1",
     "vuelta_asiento": "19",
-    "nota": "Cambio de bus en retorno: Vuelve en Bus 1 Asiento 19"
+    "nota": "Cambio de bus en retorno: Vuelve en Bus 1 Asiento 19 (Intercambio con Julián Ventura)",
+    "credential": "rosa chavez"
   },
   {
     "id": "P-02",
@@ -19,7 +20,8 @@
     "ida_asiento": "02",
     "vuelta_bus": "1",
     "vuelta_asiento": "20",
-    "nota": "Cambio de bus en retorno: Vuelve en Bus 1 Asiento 20"
+    "nota": "Cambio de bus en retorno: Vuelve en Bus 1 Asiento 20 (Intercambio con Julio Arrambide)",
+    "credential": "jose luis"
   },
   {
     "id": "P-03",
@@ -30,7 +32,8 @@
     "ida_asiento": "03",
     "vuelta_bus": "2",
     "vuelta_asiento": "03",
-    "nota": ""
+    "nota": "",
+    "credential": "sayda"
   },
   {
     "id": "P-04",
@@ -41,7 +44,8 @@
     "ida_asiento": "04",
     "vuelta_bus": "2",
     "vuelta_asiento": "04",
-    "nota": ""
+    "nota": "",
+    "credential": "cristofer"
   },
   {
     "id": "P-05",
@@ -52,7 +56,8 @@
     "ida_asiento": "05",
     "vuelta_bus": "2",
     "vuelta_asiento": "05",
-    "nota": ""
+    "nota": "",
+    "credential": "nayruth"
   },
   {
     "id": "P-06",
@@ -63,43 +68,35 @@
     "ida_asiento": "06",
     "vuelta_bus": "",
     "vuelta_asiento": "",
-    "nota": "Solo viaje de ida"
+    "nota": "Irá de Ida pero no de Vuelta (Solo viaje de ida)",
+    "credential": "jackelin"
   },
   {
     "id": "P-07",
-    "nombre": "Nievez Gutiérrez",
-    "nombre_corto": "Nievez Gutiérrez",
-    "familia": "FAM-GUTIERREZ",
-    "ida_bus": "",
-    "ida_asiento": "",
-    "vuelta_bus": "2",
-    "vuelta_asiento": "06",
-    "nota": "Solo viaje de retorno"
-  },
-  {
-    "id": "P-08",
-    "nombre": "Janna Francheska Ttito Callapiña",
-    "nombre_corto": "Janna Ttito C.",
+    "nombre": "Janna Callapiña",
+    "nombre_corto": "Janna Callapiña",
     "familia": "FAM-CALLAPIÑA",
     "ida_bus": "2",
     "ida_asiento": "07",
     "vuelta_bus": "2",
     "vuelta_asiento": "07",
-    "nota": "Viaja con Luna Galadriel Ttito"
+    "nota": "",
+    "credential": "janna"
   },
   {
-    "id": "P-09",
+    "id": "P-08",
     "nombre": "Adrián Ismael Uribe Cárdenas",
     "nombre_corto": "Adrián Uribe C.",
-    "familia": "FAM-CARDENAS",
+    "familia": "FAM-URIBE",
     "ida_bus": "2",
     "ida_asiento": "08",
     "vuelta_bus": "2",
     "vuelta_asiento": "08",
-    "nota": ""
+    "nota": "",
+    "credential": "adrian"
   },
   {
-    "id": "P-10",
+    "id": "P-09",
     "nombre": "Luz Centeno",
     "nombre_corto": "Luz Centeno",
     "familia": "FAM-CENTENO",
@@ -107,10 +104,11 @@
     "ida_asiento": "09",
     "vuelta_bus": "2",
     "vuelta_asiento": "09",
-    "nota": ""
+    "nota": "",
+    "credential": "luz"
   },
   {
-    "id": "P-11",
+    "id": "P-10",
     "nombre": "Richard Centeno",
     "nombre_corto": "Richard Centeno",
     "familia": "FAM-CENTENO",
@@ -118,10 +116,11 @@
     "ida_asiento": "10",
     "vuelta_bus": "2",
     "vuelta_asiento": "10",
-    "nota": ""
+    "nota": "",
+    "credential": "richard"
   },
   {
-    "id": "P-12",
+    "id": "P-11",
     "nombre": "Mariluz Cárdenas Quispe",
     "nombre_corto": "Mariluz Cárdenas",
     "familia": "FAM-CARDENAS",
@@ -129,10 +128,11 @@
     "ida_asiento": "11",
     "vuelta_bus": "2",
     "vuelta_asiento": "11",
-    "nota": ""
+    "nota": "",
+    "credential": "mariluz"
   },
   {
-    "id": "P-13",
+    "id": "P-12",
     "nombre": "Dominic Olórtegui Cárdenas",
     "nombre_corto": "Dominic Olórtegui",
     "familia": "FAM-CARDENAS",
@@ -140,21 +140,23 @@
     "ida_asiento": "12",
     "vuelta_bus": "2",
     "vuelta_asiento": "12",
-    "nota": ""
+    "nota": "",
+    "credential": "dominic"
   },
   {
-    "id": "P-14",
+    "id": "P-13",
     "nombre": "Jaqueline Ochoa Salas",
     "nombre_corto": "Jaqueline Ochoa",
-    "familia": "FAM-PINO",
+    "familia": "FAM-OCHOA-SALAS",
     "ida_bus": "2",
     "ida_asiento": "13",
     "vuelta_bus": "2",
     "vuelta_asiento": "13",
-    "nota": ""
+    "nota": "",
+    "credential": "jaqueline ochoa"
   },
   {
-    "id": "P-15",
+    "id": "P-14",
     "nombre": "José Efraín Pino Guevara",
     "nombre_corto": "José Pino G.",
     "familia": "FAM-PINO",
@@ -162,32 +164,35 @@
     "ida_asiento": "14",
     "vuelta_bus": "2",
     "vuelta_asiento": "14",
-    "nota": ""
+    "nota": "",
+    "credential": "jose efrain"
   },
   {
-    "id": "P-16",
-    "nombre": "Abigail Villena Delgado",
+    "id": "P-15",
+    "nombre": "Abigail Villena",
     "nombre_corto": "Abigail Villena",
     "familia": "FAM-VILLENA",
     "ida_bus": "2",
     "ida_asiento": "15",
     "vuelta_bus": "2",
     "vuelta_asiento": "15",
-    "nota": ""
+    "nota": "",
+    "credential": "abigail"
   },
   {
-    "id": "P-17",
+    "id": "P-16",
     "nombre": "Sebastiana Chávez",
     "nombre_corto": "Sebastiana Chávez",
-    "familia": "FAM-CHAVEZ",
+    "familia": "FAM-CHAVEZ-S",
     "ida_bus": "2",
     "ida_asiento": "16",
     "vuelta_bus": "2",
     "vuelta_asiento": "16",
-    "nota": ""
+    "nota": "",
+    "credential": "sebastiana"
   },
   {
-    "id": "P-18",
+    "id": "P-17",
     "nombre": "Carmen Rodríguez",
     "nombre_corto": "Carmen Rodríguez",
     "familia": "FAM-RODRIGUEZ",
@@ -195,21 +200,23 @@
     "ida_asiento": "17",
     "vuelta_bus": "2",
     "vuelta_asiento": "17",
-    "nota": ""
+    "nota": "",
+    "credential": "carmen"
   },
   {
-    "id": "P-19",
-    "nombre": "Bertha Huamán",
-    "nombre_corto": "Bertha Huamán",
-    "familia": "FAM-HUAMAN",
+    "id": "P-18",
+    "nombre": "Señora Bertha (Estudiante - Yanina Cortegana)",
+    "nombre_corto": "Sra. Bertha",
+    "familia": "FAM-CORTEGANA",
     "ida_bus": "2",
     "ida_asiento": "18",
     "vuelta_bus": "2",
     "vuelta_asiento": "18",
-    "nota": ""
+    "nota": "Estudiante de Yanina Cortegana",
+    "credential": "bertha"
   },
   {
-    "id": "P-20",
+    "id": "P-19",
     "nombre": "Eva Villena",
     "nombre_corto": "Eva Villena",
     "familia": "FAM-VILLENA",
@@ -217,10 +224,11 @@
     "ida_asiento": "19",
     "vuelta_bus": "2",
     "vuelta_asiento": "19",
-    "nota": ""
+    "nota": "",
+    "credential": "eva"
   },
   {
-    "id": "P-21",
+    "id": "P-20",
     "nombre": "Hernán Villena",
     "nombre_corto": "Hernán Villena",
     "familia": "FAM-VILLENA",
@@ -228,10 +236,11 @@
     "ida_asiento": "20",
     "vuelta_bus": "2",
     "vuelta_asiento": "20",
-    "nota": ""
+    "nota": "",
+    "credential": "hernan"
   },
   {
-    "id": "P-22",
+    "id": "P-21",
     "nombre": "Diana Genesis Sosa Vinces",
     "nombre_corto": "Diana Sosa V.",
     "familia": "FAM-SOSA",
@@ -239,10 +248,11 @@
     "ida_asiento": "21",
     "vuelta_bus": "2",
     "vuelta_asiento": "21",
-    "nota": ""
+    "nota": "",
+    "credential": "diana genesis"
   },
   {
-    "id": "P-23",
+    "id": "P-22",
     "nombre": "Luisa Papel",
     "nombre_corto": "Luisa Papel",
     "familia": "FAM-PAPEL",
@@ -250,10 +260,11 @@
     "ida_asiento": "22",
     "vuelta_bus": "2",
     "vuelta_asiento": "22",
-    "nota": ""
+    "nota": "",
+    "credential": "luisa"
   },
   {
-    "id": "P-24",
+    "id": "P-23",
     "nombre": "Julio Merardo Chero Díaz",
     "nombre_corto": "Julio M. Chero",
     "familia": "FAM-CHERO",
@@ -261,10 +272,11 @@
     "ida_asiento": "23",
     "vuelta_bus": "2",
     "vuelta_asiento": "23",
-    "nota": ""
+    "nota": "",
+    "credential": "julio merardo"
   },
   {
-    "id": "P-25",
+    "id": "P-24",
     "nombre": "Yoni Almirón de Chero",
     "nombre_corto": "Yoni Almirón C.",
     "familia": "FAM-CHERO",
@@ -272,10 +284,11 @@
     "ida_asiento": "24",
     "vuelta_bus": "2",
     "vuelta_asiento": "24",
-    "nota": ""
+    "nota": "",
+    "credential": "yoni"
   },
   {
-    "id": "P-26",
+    "id": "P-25",
     "nombre": "Juliana Lloclle",
     "nombre_corto": "Juliana Lloclle",
     "familia": "FAM-LLOCLLE",
@@ -283,10 +296,11 @@
     "ida_asiento": "25",
     "vuelta_bus": "2",
     "vuelta_asiento": "25",
-    "nota": ""
+    "nota": "",
+    "credential": "juliana"
   },
   {
-    "id": "P-27",
+    "id": "P-26",
     "nombre": "Miguel Lloclle",
     "nombre_corto": "Miguel Lloclle",
     "familia": "FAM-LLOCLLE",
@@ -294,10 +308,11 @@
     "ida_asiento": "26",
     "vuelta_bus": "2",
     "vuelta_asiento": "26",
-    "nota": ""
+    "nota": "",
+    "credential": "miguel"
   },
   {
-    "id": "P-28",
+    "id": "P-27",
     "nombre": "Etan Nahum Chero Almirón",
     "nombre_corto": "Etan Chero A.",
     "familia": "FAM-CHERO",
@@ -305,10 +320,11 @@
     "ida_asiento": "27",
     "vuelta_bus": "2",
     "vuelta_asiento": "27",
-    "nota": ""
+    "nota": "",
+    "credential": "etan"
   },
   {
-    "id": "P-29",
+    "id": "P-28",
     "nombre": "Julio César Chero Almirón",
     "nombre_corto": "Julio C. Chero",
     "familia": "FAM-CHERO",
@@ -316,10 +332,11 @@
     "ida_asiento": "28",
     "vuelta_bus": "2",
     "vuelta_asiento": "28",
-    "nota": "Coordinador de Traslado"
+    "nota": "Coordinador de Traslado",
+    "credential": "julio cesar"
   },
   {
-    "id": "P-30",
+    "id": "P-29",
     "nombre": "Yersson Villaseca Seminario",
     "nombre_corto": "Yersson Villaseca",
     "familia": "FAM-VILLASECA",
@@ -327,10 +344,11 @@
     "ida_asiento": "29",
     "vuelta_bus": "",
     "vuelta_asiento": "",
-    "nota": "Solo viaje de ida"
+    "nota": "Irá de Ida pero no de Vuelta (Solo viaje de ida)",
+    "credential": "yersson"
   },
   {
-    "id": "P-31",
+    "id": "P-30",
     "nombre": "Nelson Cortegana",
     "nombre_corto": "Nelson Cortegana",
     "familia": "FAM-CORTEGANA",
@@ -338,10 +356,11 @@
     "ida_asiento": "",
     "vuelta_bus": "2",
     "vuelta_asiento": "29",
-    "nota": "Solo viaje de retorno"
+    "nota": "Solo irá de Vuelta pero no de Ida (Solo viaje de retorno)",
+    "credential": "nelson"
   },
   {
-    "id": "P-32",
+    "id": "P-31",
     "nombre": "Rosa Gómez de Villaseca",
     "nombre_corto": "Rosa Gómez V.",
     "familia": "FAM-VILLASECA",
@@ -349,10 +368,11 @@
     "ida_asiento": "30",
     "vuelta_bus": "",
     "vuelta_asiento": "",
-    "nota": "Solo viaje de ida"
+    "nota": "Irá de Ida pero no de Vuelta (Solo viaje de ida)",
+    "credential": "rosa gomez"
   },
   {
-    "id": "P-33",
+    "id": "P-32",
     "nombre": "Yanina Cortegana",
     "nombre_corto": "Yanina Cortegana",
     "familia": "FAM-CORTEGANA",
@@ -360,10 +380,11 @@
     "ida_asiento": "",
     "vuelta_bus": "2",
     "vuelta_asiento": "30",
-    "nota": "Solo viaje de retorno"
+    "nota": "Solo irá de Vuelta pero no de Ida (Solo viaje de retorno)",
+    "credential": "yanina"
   },
   {
-    "id": "P-34",
+    "id": "P-33",
     "nombre": "Marco Gómez Rufino",
     "nombre_corto": "Marco Gómez R.",
     "familia": "FAM-VILLASECA",
@@ -371,10 +392,11 @@
     "ida_asiento": "31",
     "vuelta_bus": "",
     "vuelta_asiento": "",
-    "nota": "Solo viaje de ida"
+    "nota": "Irá de Ida pero no de Vuelta (Solo viaje de ida)",
+    "credential": "marco gomez"
   },
   {
-    "id": "P-35",
+    "id": "P-34",
     "nombre": "Abraham Almanza",
     "nombre_corto": "Abraham Almanza",
     "familia": "FAM-ALMANZA",
@@ -382,10 +404,11 @@
     "ida_asiento": "",
     "vuelta_bus": "2",
     "vuelta_asiento": "31",
-    "nota": "Solo viaje de retorno"
+    "nota": "Solo irá de Vuelta pero no de Ida (Solo viaje de retorno)",
+    "credential": "abraham"
   },
   {
-    "id": "P-36",
+    "id": "P-35",
     "nombre": "Jaqueline Mío de Gómez",
     "nombre_corto": "Jaqueline Mío",
     "familia": "FAM-VILLASECA",
@@ -393,10 +416,11 @@
     "ida_asiento": "32",
     "vuelta_bus": "",
     "vuelta_asiento": "",
-    "nota": "Solo viaje de ida"
+    "nota": "Irá de Ida pero no de Vuelta (Solo viaje de ida)",
+    "credential": "jaqueline mio"
   },
   {
-    "id": "P-37",
+    "id": "P-36",
     "nombre": "Madaí Almanza",
     "nombre_corto": "Madaí Almanza",
     "familia": "FAM-ALMANZA",
@@ -404,10 +428,11 @@
     "ida_asiento": "",
     "vuelta_bus": "2",
     "vuelta_asiento": "32",
-    "nota": "Solo viaje de retorno"
+    "nota": "Solo irá de Vuelta pero no de Ida (Solo viaje de retorno)",
+    "credential": "madai"
   },
   {
-    "id": "P-38",
+    "id": "P-37",
     "nombre": "Margarita Seminario Rufino",
     "nombre_corto": "Margarita Seminario",
     "familia": "FAM-VILLASECA",
@@ -415,10 +440,11 @@
     "ida_asiento": "33",
     "vuelta_bus": "",
     "vuelta_asiento": "",
-    "nota": "Solo viaje de ida"
+    "nota": "Irá de Ida pero no de Vuelta (Solo viaje de ida)",
+    "credential": "margarita"
   },
   {
-    "id": "P-39",
+    "id": "P-38",
     "nombre": "Leydi Villaseca Seminario",
     "nombre_corto": "Leydi Villaseca",
     "familia": "FAM-VILLASECA",
@@ -426,7 +452,20 @@
     "ida_asiento": "34",
     "vuelta_bus": "",
     "vuelta_asiento": "",
-    "nota": "Viaja con Mía Julca Villaseca (menor de edad)"
+    "nota": "Irá de Ida pero no de Vuelta (Solo viaje de ida)",
+    "credential": "leydi"
+  },
+  {
+    "id": "P-39",
+    "nombre": "Mía Julca Villaseca",
+    "nombre_corto": "Mía Julca V.",
+    "familia": "FAM-VILLASECA",
+    "ida_bus": "2",
+    "ida_asiento": "29-34",
+    "vuelta_bus": "",
+    "vuelta_asiento": "",
+    "nota": "Menor de edad (Viaja con la familia Villaseca en viaje de ida)",
+    "credential": "mia julca"
   },
   {
     "id": "P-40",
@@ -437,7 +476,8 @@
     "ida_asiento": "01",
     "vuelta_bus": "1",
     "vuelta_asiento": "01",
-    "nota": ""
+    "nota": "",
+    "credential": "dorian"
   },
   {
     "id": "P-41",
@@ -448,7 +488,8 @@
     "ida_asiento": "02",
     "vuelta_bus": "1",
     "vuelta_asiento": "02",
-    "nota": ""
+    "nota": "",
+    "credential": "marcia"
   },
   {
     "id": "P-42",
@@ -459,7 +500,8 @@
     "ida_asiento": "03",
     "vuelta_bus": "1",
     "vuelta_asiento": "03",
-    "nota": ""
+    "nota": "",
+    "credential": "josue"
   },
   {
     "id": "P-43",
@@ -470,7 +512,8 @@
     "ida_asiento": "04",
     "vuelta_bus": "1",
     "vuelta_asiento": "04",
-    "nota": ""
+    "nota": "",
+    "credential": "yuleissi"
   },
   {
     "id": "P-44",
@@ -481,7 +524,8 @@
     "ida_asiento": "05",
     "vuelta_bus": "",
     "vuelta_asiento": "",
-    "nota": "Solo viaje de ida"
+    "nota": "Solo viaje de ida",
+    "credential": "elisabeth"
   },
   {
     "id": "P-45",
@@ -492,7 +536,8 @@
     "ida_asiento": "",
     "vuelta_bus": "1",
     "vuelta_asiento": "05",
-    "nota": "Solo viaje de retorno"
+    "nota": "Solo viaje de retorno",
+    "credential": "lourdes"
   },
   {
     "id": "P-46",
@@ -503,73 +548,80 @@
     "ida_asiento": "06",
     "vuelta_bus": "1",
     "vuelta_asiento": "06",
-    "nota": ""
+    "nota": "",
+    "credential": "roxana"
   },
   {
     "id": "P-47",
     "nombre": "María Soledad Rojas",
-    "nombre_corto": "María S. Rojas",
+    "nombre_corto": "María Soledad R.",
     "familia": "FAM-ROJAS",
     "ida_bus": "1",
     "ida_asiento": "07",
     "vuelta_bus": "1",
     "vuelta_asiento": "07",
-    "nota": ""
+    "nota": "",
+    "credential": "maria soledad"
   },
   {
     "id": "P-48",
     "nombre": "Higidia Tinta Bautista",
     "nombre_corto": "Higidia Tinta",
-    "familia": "FAM-ROJAS",
+    "familia": "FAM-TINTA",
     "ida_bus": "1",
     "ida_asiento": "08",
     "vuelta_bus": "1",
     "vuelta_asiento": "08",
-    "nota": ""
+    "nota": "",
+    "credential": "higidia"
   },
   {
     "id": "P-49",
     "nombre": "Jean Fer Díaz",
     "nombre_corto": "Jean Fer Díaz",
-    "familia": "FAM-DIAZ",
+    "familia": "FAM-DIAZ-JF",
     "ida_bus": "1",
     "ida_asiento": "09",
     "vuelta_bus": "1",
     "vuelta_asiento": "09",
-    "nota": ""
+    "nota": "",
+    "credential": "jean fer"
   },
   {
     "id": "P-50",
     "nombre": "Ignacio Quispe",
     "nombre_corto": "Ignacio Quispe",
-    "familia": "FAM-QUISPE",
+    "familia": "FAM-QUISPE-IGN",
     "ida_bus": "1",
     "ida_asiento": "10",
     "vuelta_bus": "1",
     "vuelta_asiento": "10",
-    "nota": ""
+    "nota": "",
+    "credential": "ignacio"
   },
   {
     "id": "P-51",
     "nombre": "Elena Quispe",
     "nombre_corto": "Elena Quispe",
-    "familia": "FAM-QUISPE",
+    "familia": "FAM-QUISPE-IGN",
     "ida_bus": "1",
     "ida_asiento": "11",
     "vuelta_bus": "1",
     "vuelta_asiento": "11",
-    "nota": ""
+    "nota": "",
+    "credential": "elena"
   },
   {
     "id": "P-52",
     "nombre": "Gabriel Quispe",
     "nombre_corto": "Gabriel Quispe",
-    "familia": "FAM-QUISPE",
+    "familia": "FAM-QUISPE-IGN",
     "ida_bus": "1",
     "ida_asiento": "12",
     "vuelta_bus": "1",
     "vuelta_asiento": "12",
-    "nota": ""
+    "nota": "",
+    "credential": "gabriel"
   },
   {
     "id": "P-53",
@@ -580,7 +632,8 @@
     "ida_asiento": "13",
     "vuelta_bus": "1",
     "vuelta_asiento": "13",
-    "nota": ""
+    "nota": "",
+    "credential": "maribel"
   },
   {
     "id": "P-54",
@@ -591,7 +644,8 @@
     "ida_asiento": "14",
     "vuelta_bus": "1",
     "vuelta_asiento": "14",
-    "nota": ""
+    "nota": "",
+    "credential": "mariel"
   },
   {
     "id": "P-55",
@@ -602,7 +656,8 @@
     "ida_asiento": "15",
     "vuelta_bus": "1",
     "vuelta_asiento": "15",
-    "nota": ""
+    "nota": "",
+    "credential": "benito"
   },
   {
     "id": "P-56",
@@ -613,7 +668,8 @@
     "ida_asiento": "16",
     "vuelta_bus": "1",
     "vuelta_asiento": "16",
-    "nota": ""
+    "nota": "",
+    "credential": "vilma"
   },
   {
     "id": "P-57",
@@ -624,7 +680,8 @@
     "ida_asiento": "17",
     "vuelta_bus": "1",
     "vuelta_asiento": "17",
-    "nota": ""
+    "nota": "",
+    "credential": "maria murillo"
   },
   {
     "id": "P-58",
@@ -635,7 +692,8 @@
     "ida_asiento": "18",
     "vuelta_bus": "1",
     "vuelta_asiento": "18",
-    "nota": ""
+    "nota": "",
+    "credential": "guillermina"
   },
   {
     "id": "P-59",
@@ -646,7 +704,8 @@
     "ida_asiento": "19",
     "vuelta_bus": "2",
     "vuelta_asiento": "01",
-    "nota": "Cambio de bus en retorno: Vuelve en Bus 2 Asiento 01"
+    "nota": "Cambio de bus en retorno: Vuelve en Bus 2 Asiento 01 (Intercambio con Rosa Chávez)",
+    "credential": "julian"
   },
   {
     "id": "P-60",
@@ -657,7 +716,8 @@
     "ida_asiento": "20",
     "vuelta_bus": "2",
     "vuelta_asiento": "02",
-    "nota": "Cambio de bus en retorno: Vuelve en Bus 2 Asiento 02"
+    "nota": "Cambio de bus en retorno: Vuelve en Bus 2 Asiento 02 (Intercambio con José Luis Huamán)",
+    "credential": "julio arrambide"
   },
   {
     "id": "P-61",
@@ -668,7 +728,8 @@
     "ida_asiento": "21",
     "vuelta_bus": "1",
     "vuelta_asiento": "21",
-    "nota": ""
+    "nota": "",
+    "credential": "diana gamarra"
   },
   {
     "id": "P-62",
@@ -679,18 +740,20 @@
     "ida_asiento": "22",
     "vuelta_bus": "1",
     "vuelta_asiento": "22",
-    "nota": ""
+    "nota": "",
+    "credential": "justa"
   },
   {
     "id": "P-63",
-    "nombre": "Lupe Estudiante",
-    "nombre_corto": "Lupe Estudiante",
+    "nombre": "Señora Lupe (Estudiante - Celia Gutiérrez)",
+    "nombre_corto": "Sra. Lupe",
     "familia": "FAM-GUTIERREZ",
     "ida_bus": "1",
     "ida_asiento": "23",
     "vuelta_bus": "1",
     "vuelta_asiento": "23",
-    "nota": "Estudiante con Celia Gutiérrez"
+    "nota": "Estudiante de Celia Gutiérrez",
+    "credential": "lupe"
   },
   {
     "id": "P-64",
@@ -701,7 +764,8 @@
     "ida_asiento": "24",
     "vuelta_bus": "1",
     "vuelta_asiento": "24",
-    "nota": "Coordinadora"
+    "nota": "",
+    "credential": "celia"
   },
   {
     "id": "P-65",
@@ -712,7 +776,8 @@
     "ida_asiento": "25",
     "vuelta_bus": "1",
     "vuelta_asiento": "25",
-    "nota": ""
+    "nota": "",
+    "credential": "julia cuno"
   },
   {
     "id": "P-66",
@@ -723,62 +788,68 @@
     "ida_asiento": "26",
     "vuelta_bus": "1",
     "vuelta_asiento": "26",
-    "nota": ""
+    "nota": "",
+    "credential": "julia zarate"
   },
   {
     "id": "P-67",
     "nombre": "María Antonieta Ttito Quispe",
     "nombre_corto": "María A. Ttito",
-    "familia": "FAM-TTITO",
+    "familia": "FAM-TTITO-QUISPE",
     "ida_bus": "1",
     "ida_asiento": "27",
     "vuelta_bus": "1",
     "vuelta_asiento": "27",
-    "nota": ""
+    "nota": "",
+    "credential": "maria antonieta"
   },
   {
     "id": "P-68",
     "nombre": "Josshua Benjamín Choquenaira Ttito",
     "nombre_corto": "Josshua Choquenaira",
-    "familia": "FAM-TTITO",
+    "familia": "FAM-TTITO-QUISPE",
     "ida_bus": "1",
     "ida_asiento": "28",
     "vuelta_bus": "1",
     "vuelta_asiento": "28",
-    "nota": ""
+    "nota": "",
+    "credential": "josshua"
   },
   {
     "id": "P-69",
     "nombre": "Berenice Choquenaira Ttito",
     "nombre_corto": "Berenice Choquenaira",
-    "familia": "FAM-TTITO",
+    "familia": "FAM-TTITO-QUISPE",
     "ida_bus": "1",
     "ida_asiento": "29",
     "vuelta_bus": "1",
     "vuelta_asiento": "29",
-    "nota": ""
+    "nota": "",
+    "credential": "berenice"
   },
   {
     "id": "P-70",
     "nombre": "Gloria Ochoa Guillén",
     "nombre_corto": "Gloria Ochoa G.",
-    "familia": "FAM-OCHOA",
+    "familia": "FAM-OCHOA-G",
     "ida_bus": "1",
     "ida_asiento": "30",
     "vuelta_bus": "1",
     "vuelta_asiento": "30",
-    "nota": ""
+    "nota": "",
+    "credential": "gloria"
   },
   {
     "id": "P-71",
-    "nombre": "María Ccopa",
-    "nombre_corto": "María Ccopa",
-    "familia": "FAM-CCOPA",
+    "nombre": "Nieves Gutiérrez",
+    "nombre_corto": "Nieves Gutiérrez",
+    "familia": "FAM-GUTIERREZ",
     "ida_bus": "1",
     "ida_asiento": "31",
     "vuelta_bus": "1",
     "vuelta_asiento": "31",
-    "nota": ""
+    "nota": "",
+    "credential": "nieves"
   },
   {
     "id": "P-72",
@@ -789,7 +860,8 @@
     "ida_asiento": "32",
     "vuelta_bus": "1",
     "vuelta_asiento": "32",
-    "nota": ""
+    "nota": "",
+    "credential": "jhunior"
   },
   {
     "id": "P-73",
@@ -800,6 +872,19 @@
     "ida_asiento": "33",
     "vuelta_bus": "",
     "vuelta_asiento": "",
-    "nota": "Solo viaje de ida"
+    "nota": "Solo viaje de ida",
+    "credential": "ingrid"
+  },
+  {
+    "id": "P-74",
+    "nombre": "Priscila Gómez",
+    "nombre_corto": "Priscila Gómez",
+    "familia": "FAM-GOMEZ",
+    "ida_bus": "1",
+    "ida_asiento": "34",
+    "vuelta_bus": "",
+    "vuelta_asiento": "",
+    "nota": "Solo viaje de ida",
+    "credential": "priscila"
   }
 ]
