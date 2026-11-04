@@ -34,7 +34,7 @@
           "capacidad": 34,
           "hora_salida": "07:10 AM",
           "hora_llegada": "08:30 AM",
-          "hora_abordaje": "06:50 AM",
+          "hora_abordaje": "05:50 AM",
           "punto_salida": "Plaza Belén, Cusco",
           "enlace_mapa": "https://maps.google.com/?q=Plaza+Belen+Cusco",
           "nota": ""
@@ -65,9 +65,9 @@
         "1": {
           "nombre": "Bus 1",
           "capacidad": 34,
-          "hora_salida": "06:30 PM",
-          "hora_llegada": "07:50 PM",
-          "hora_abordaje": "06:10 PM",
+          "hora_salida": "05:30 PM",
+          "hora_llegada": "06:50 PM",
+          "hora_abordaje": "05:10 PM",
           "punto_salida": "Estacionamiento del Coliseo de Urubamba",
           "enlace_mapa": "https://maps.google.com/?q=Coliseo+Urubamba",
           "nota": ""

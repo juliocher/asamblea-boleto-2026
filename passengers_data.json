@@ -473,9 +473,9 @@
     "nombre_corto": "Dorian Pérez",
     "familia": "FAM-PEREZ",
     "ida_bus": "1",
-    "ida_asiento": "01",
+    "ida_asiento": "26",
     "vuelta_bus": "1",
-    "vuelta_asiento": "01",
+    "vuelta_asiento": "26",
     "nota": "",
     "credential": "dorian"
   },
@@ -785,9 +785,9 @@
     "nombre_corto": "Julia Zárate",
     "familia": "FAM-ZARATE",
     "ida_bus": "1",
-    "ida_asiento": "26",
+    "ida_asiento": "01",
     "vuelta_bus": "1",
-    "vuelta_asiento": "26",
+    "vuelta_asiento": "01",
     "nota": "",
     "credential": "julia zarate"
   },
