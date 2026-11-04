@@ -3,28 +3,39 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <meta name="description" content="Tarjeta de embarque digital para el traslado a la Asamblea de Circuito 2026-2027. Cusco → Urubamba.">
-  <title>Tarjeta de Embarque – Asamblea de Circuito 2026-2027</title>
+  <meta name="description" content="Tarjeta de embarque digital oficial para el traslado a la Asamblea de Circuito 2026-2027. Cusco ↔ Urubamba.">
+  <meta name="theme-color" content="#F9F6F0">
+  <title>Tarjeta de Embarque Digital · Asamblea de Circuito 2026-2027</title>
 
-  <!-- Tipografías -->
+  <!-- Tipografías Google Fonts Premium -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@1,500;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:ital,wght@1,500;1,600;1,700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
 
-  <!-- Estilos -->
+  <!-- Estilos Principales -->
   <link rel="stylesheet" href="css/styles.css">
 
-  <!-- QR Code lib (CDN único, sin fallback file:// que falla en GitHub Pages) -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js" defer></script>
+  <!-- Generador de QR -->
+  <script src="js/qrcode.min.js"></script>
+  <script>
+    if (typeof QRCode === 'undefined') {
+      document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"><\/script>');
+    }
+  </script>
 </head>
 <body>
+
+  <!-- Fondo ambiental cálido de lujo -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
 
   <main class="app-container">
 
     <!-- ════════ ENCABEZADO DE MARCA ════════ -->
     <header class="brand-header">
-      <div class="brand-badge">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+      <div class="brand-badge-pill">
+        <span class="badge-dot"></span>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
           <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2"/>
           <circle cx="7" cy="17" r="2"/><path d="M9 17h6"/><circle cx="17" cy="17" r="2"/>
         </svg>
@@ -32,99 +43,147 @@
       </div>
       <h1 class="brand-title" id="eventTitleDisplay">Asamblea de circuito 2026-2027</h1>
       <p class="brand-theme-annual" id="annualThemeHeader">
-        <em>"Haz de Jehová tu mayor alegría"</em>
+        <em>“Haz de Jehová tu mayor alegría”</em>
         <span class="theme-scripture">(Salmo 37:4)</span>
       </p>
     </header>
 
-    <!-- ════════ PANTALLA 1: CREDENCIAL ════════ -->
-    <section id="loginSection" class="login-card">
-      <div class="login-instructions">
-        <div class="login-icon">🎫</div>
-        <h2 id="loginHeading">Consulta tu tarjeta de embarque</h2>
-        <p>Ingresa la <strong>credencial</strong> que te enviaron por WhatsApp para ver tu tarjeta de traslado digital.</p>
+    <!-- ════════ PANTALLA 1: CONSULTA DE CREDENCIAL ════════ -->
+    <section id="loginSection" class="luxury-login-card">
+      <div class="card-shimmer"></div>
+      
+      <div class="login-header-group">
+        <div class="login-ticket-icon">
+          <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="6" width="20" height="12" rx="3"/>
+            <path d="M6 12h.01M18 12h.01"/>
+            <path d="M10 6v12" stroke-dasharray="2 2"/>
+          </svg>
+        </div>
+        <h2 id="loginHeading" class="login-title">Consulta tu tarjeta de embarque</h2>
+        <p class="login-desc">Ingresa tu <strong>nombre</strong> o la credencial enviada por WhatsApp para ver tu boleto digital oficial con asiento asignado.</p>
       </div>
 
       <div class="form-group">
-        <label for="credentialInput" class="form-label">Tu credencial</label>
-        <input
-          type="text"
-          id="credentialInput"
-          class="form-input"
-          placeholder="Ej: Higidia  ó  Julia Cuno"
-          autocomplete="off"
-          spellcheck="false"
-          inputmode="text"
-          aria-label="Ingresa tu credencial"
-        >
-        <div class="form-help-text">Puedes escribir con o sin tildes, en mayúsculas o minúsculas.</div>
+        <label for="credentialInput" class="form-label">Tu Nombre o Credencial</label>
+        <div class="input-glow-wrap">
+          <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+            <circle cx="12" cy="7" r="4"></circle>
+          </svg>
+          <input
+            type="text"
+            id="credentialInput"
+            class="form-input"
+            placeholder="Ej: Jose Efrain, Higidia, Diana..."
+            autocomplete="off"
+            spellcheck="false"
+            inputmode="text"
+            aria-label="Ingresa tu nombre o credencial"
+          >
+        </div>
+        <div class="form-help-text">
+          <span>💡</span> Puedes escribir con o sin tildes, en mayúsculas o minúsculas.
+        </div>
       </div>
 
-      <button type="button" id="btnLogin" class="btn-login">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
-          <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+      <button type="button" id="btnLogin" class="btn-primary-action">
+        <span>Ver mi tarjeta de embarque</span>
+        <svg class="btn-arrow-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <polyline points="12 5 19 12 12 19"></polyline>
         </svg>
-        Ver mi tarjeta de embarque
       </button>
 
-      <!-- Selector de sugerencias si hay nombres repetidos -->
+      <!-- Selector inteligente si el nombre está repetido (ej: Julio, Diana, Rosa...) -->
       <div id="duplicateResolver" class="duplicate-resolver" style="display:none;">
-        <p class="duplicate-resolver-title">🔍 Encontramos más de una persona con ese nombre. ¿Quién eres?</p>
+        <div class="dup-header">
+          <span class="dup-icon">🔍</span>
+          <div>
+            <h4 class="dup-title">Encontramos más de un pasajero con ese nombre</h4>
+            <p class="dup-sub">Toca tu nombre completo para ingresar de inmediato:</p>
+          </div>
+        </div>
         <div id="duplicateList" class="duplicate-options"></div>
       </div>
 
-      <!-- Error -->
-      <div id="loginErrorMessage" class="error-card" style="display:none;" role="alert">
+      <!-- Mensaje de error amigable -->
+      <div id="loginErrorMessage" class="luxury-error-card" style="display:none;" role="alert">
         <div class="error-card-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-          Credencial no encontrada
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+          <span>No encontramos ese nombre en la lista</span>
         </div>
-        <p id="loginErrorText">Verifica tu credencial e intenta de nuevo.</p>
-        <a href="https://wa.me/51912100299?text=Hola%2C%20necesito%20ayuda%20con%20mi%20traslado%20para%20la%20Asamblea." target="_blank" rel="noopener noreferrer" class="btn-whatsapp">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+        <p id="loginErrorText" class="error-card-body">Verifica que esté bien escrito o escríbenos directamente por WhatsApp para asistirte.</p>
+        <a href="https://wa.me/51912100299?text=Hola%2C%20necesito%20ayuda%20para%20consultar%20mi%20tarjeta%20de%20embarque%20para%20la%20Asamblea." target="_blank" rel="noopener noreferrer" class="btn-whatsapp-inline">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
           </svg>
-          Contactar al coordinador
+          <span>Asistencia por WhatsApp</span>
         </a>
       </div>
     </section>
 
-    <!-- ════════ PANTALLA 2: TARJETA ════════ -->
+    <!-- ════════ PANTALLA 2: TARJETA DE EMBARQUE LUXURY ════════ -->
     <section id="ticketViewSection" style="display:none;" aria-label="Tarjeta de Embarque Digital">
 
-      <!-- Tabs de tramo -->
-      <nav class="segment-tabs" aria-label="Selección de tramo">
-        <button type="button" class="tab-btn active" id="tabIdaBtn" data-segment="ida">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="5 12 19 12 14 7"/><polyline points="14 17 19 12"/>
+      <!-- Barra de Navegación de Tramos (Ida / Retorno) -->
+      <nav class="segment-tabs-bar" aria-label="Selección de tramo">
+        <div class="tabs-group">
+          <button type="button" class="tab-pill active" id="tabIdaBtn" data-segment="ida">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+            <span>TRAMO IDA</span>
+            <span class="tab-count-badge" id="badgeIdaCount">✓</span>
+          </button>
+          
+          <button type="button" class="tab-pill" id="tabVueltaBtn" data-segment="vuelta">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="19" y1="12" x2="5" y2="12"></line>
+              <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>TRAMO RETORNO</span>
+            <span class="tab-count-badge" id="badgeVueltaCount">✓</span>
+          </button>
+        </div>
+
+        <button type="button" class="btn-exit-search" id="btnBackToSearch" title="Consultar otro pasajero">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
-          IDA
-          <span class="tab-badge" id="badgeIdaCount">✓</span>
-        </button>
-        <button type="button" class="tab-btn" id="tabVueltaBtn" data-segment="vuelta">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="19 12 5 12 10 7"/><polyline points="10 17 5 12"/>
-          </svg>
-          RETORNO
-          <span class="tab-badge" id="badgeVueltaCount">✓</span>
-        </button>
-        <button type="button" class="tab-btn-back" id="btnBackToSearch">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <polyline points="15 18 9 12 15 6"/>
-          </svg>
-          Salir
+          <span>Cambiar nombre</span>
         </button>
       </nav>
 
-      <!-- Contenedor dinámico -->
-      <div id="ticketsContainer"></div>
+      <!-- Contenedor dinámico de la tarjeta idéntica a la imagen -->
+      <div id="ticketsContainer" class="ticket-render-wrapper"></div>
 
     </section>
 
   </main>
 
-  <!-- App script -->
+  <!-- Botón Flotante Premium de WhatsApp -->
+  <aside class="floating-whatsapp-container" aria-label="Contacto de soporte">
+    <a 
+      href="https://wa.me/51912100299?text=Hola%2C%20tengo%20una%20consulta%20sobre%20mi%20traslado%20para%20la%20Asamblea%20de%20circuito%202026-2027."
+      target="_blank" 
+      rel="noopener noreferrer" 
+      class="floating-whatsapp-btn"
+      title="Contactar al coordinador por WhatsApp"
+    >
+      <span class="pulse-ring"></span>
+      <span class="pulse-ring ring-delay"></span>
+      <svg class="whatsapp-icon" width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+      </svg>
+      <span class="whatsapp-label">¿Dudas? Escríbenos</span>
+    </a>
+  </aside>
+
+  <!-- App logic -->
   <script src="js/app.js"></script>
 </body>
 </html>

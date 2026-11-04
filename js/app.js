@@ -326,7 +326,7 @@
     const qrId = `qr-wp-${activeSegment}`;
 
     const card = document.createElement('article');
-    card.className = 'boarding-pass-v3';
+    card.className = 'ticket-card-outer';
     card.innerHTML = buildCardHTML({
       p, tramo, busConfig, busLabel, tramoLabel, tramoDesc,
       asientoLabel, asientoNum, asientoZona, nombreCorto,
@@ -337,139 +337,204 @@
 
     // Generar QR de WhatsApp
     generateWhatsAppQR(qrId);
+
+    // Hacer que el QR también abra el WhatsApp al hacer clic
+    const qrEl = document.getElementById(qrId);
+    if (qrEl) {
+      qrEl.style.cursor = 'pointer';
+      qrEl.onclick = () => window.open(WHATSAPP_URL, '_blank');
+    }
   }
 
-  // ─── 8. HTML de la tarjeta ─────────────────────────────────────────────────
+  // ─── 8. HTML de la tarjeta (RÉPLICA EXACTA) ────────────────────────────────
   function buildCardHTML({ p, tramo, busConfig, busLabel, tramoLabel, tramoDesc,
                            asientoLabel, asientoNum, asientoZona, nombreCorto,
                            busChangeHtml, qrId }) {
+    const salidaLabel = activeSegment === 'vuelta' ? 'SALIDA RETORNO' : 'SALIDA';
+    const badgeText = `${busLabel} - ${tramoLabel}`;
+
     return `
-      <!-- ══ CABECERA AZUL MARINO ══ -->
-      <div class="bp-header">
-        <div class="bp-header-left">
-          <div class="bp-event-badge">ASAMBLEA DE CIRCUITO</div>
-          <div class="bp-event-name">${esc(config.nombre_evento || 'Asamblea de circuito 2026-2027')}</div>
-          <div class="bp-theme-serif">"${esc(config.tema_anual || 'Haz de Jehová tu mayor alegría')}"</div>
-          <div class="bp-scripture">${esc(config.cita_tema || 'Salmo 37:4')}</div>
-        </div>
-        <div class="bp-tramo-pill ${activeSegment === 'vuelta' ? 'bp-tramo-retorno' : ''}">
-          ${esc(busLabel)} • ${esc(tramoLabel)}
-        </div>
-      </div>
+      <div class="ticket-luxury-card">
+        <!-- ══ SECCIÓN PRINCIPAL IZQUIERDA ══ -->
+        <div class="ticket-main-section">
+          
+          <!-- Barra superior beige con ilustración suave y badge -->
+          <div class="tkt-header-bar">
+            <div class="tkt-header-texts">
+              <div class="tkt-header-title">Asamblea de circuito 2026–2027</div>
+              <div class="tkt-header-theme">“${esc(config.tema_anual || 'Haz de Jehová tu mayor alegría')}” (${esc(config.cita_tema || 'Salmo 37:4')})</div>
+            </div>
 
-      <!-- ══ NOMBRE DEL PASAJERO ══ -->
-      <div class="bp-passenger-block">
-        <div class="bp-passenger-label">NOMBRE DEL PASAJERO</div>
-        <div class="bp-passenger-name">${esc(p.nombre)}</div>
-      </div>
-
-      <!-- ══ CUERPO CREMA ══ -->
-      <div class="bp-body">
-
-        <!-- Ruta -->
-        <div class="bp-route-box">
-          <div class="bp-route-origin">
-            <div class="bp-route-code">${esc(tramo.origen_codigo)}</div>
-            <div class="bp-route-city">${esc(tramo.origen_ciudad)}</div>
-            <div class="bp-route-place">${esc(tramo.origen_lugar)}</div>
+            <div class="tkt-header-illustration-wrap">
+              <img src="assets/ilustracion-screen.jpg" alt="Ilustración Asamblea" class="tkt-header-img" onerror="this.style.display='none'">
+              <div class="tkt-bus-badge">${esc(badgeText)}</div>
+            </div>
           </div>
-          <div class="bp-route-middle">
-            <div class="bp-route-arrow">
-              <div class="bp-route-line-left"></div>
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--color-acento)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/>
+
+          <!-- Nombre del Pasajero -->
+          <div class="tkt-passenger-group">
+            <div class="tkt-passenger-label">NOMBRE DEL PASAJERO</div>
+            <div class="tkt-passenger-name">${esc(p.nombre)}</div>
+          </div>
+
+          <!-- Recuadro Beige de Ruta (Cuerpo Central) -->
+          <div class="tkt-route-beige-box">
+            <div class="tkt-route-top-row">
+              <!-- Origen -->
+              <div class="tkt-origin-group">
+                <div class="tkt-city-row">
+                  <span class="tkt-code">${esc(tramo.origen_codigo)}</span>
+                  <span class="tkt-city">${esc(tramo.origen_ciudad)}</span>
+                </div>
+                <div class="tkt-place-pill">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                  <span>${esc(tramo.origen_lugar)}</span>
+                </div>
+              </div>
+
+              <!-- Centro: Directo + Flecha Animada + Duración -->
+              <div class="tkt-route-middle">
+                <span class="tkt-directo-label">Directo</span>
+                <div class="tkt-arrow-track">
+                  <span class="tkt-arrow-pulse-dot"></span>
+                  <span class="tkt-arrow-head"></span>
+                </div>
+                <span class="tkt-duration-pill">${esc(tramo.duracion || '1h 20m')}</span>
+              </div>
+
+              <!-- Destino -->
+              <div class="tkt-destination-group">
+                <div class="tkt-city-row">
+                  <span class="tkt-city">${esc(tramo.destino_ciudad)}</span>
+                  <span class="tkt-code">${esc(tramo.destino_codigo)}</span>
+                </div>
+                <div class="tkt-place-pill">
+                  <span>${esc(tramo.destino_lugar)}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Tiempos: Salida y Llegada Estimada -->
+            <div class="tkt-times-subrow">
+              <div class="tkt-time-block">
+                <div class="tkt-time-label">${esc(salidaLabel)}</div>
+                <div class="tkt-time-big orange-hero">${esc(busConfig.hora_salida)}</div>
+              </div>
+
+              <div class="tkt-time-block right-align">
+                <div class="tkt-time-label">LLEGADA ESTIMADA</div>
+                <div class="tkt-time-big navy-hero">${esc(busConfig.hora_llegada)}</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fila Inferior: Fecha, Abordaje y Pill de Asiento -->
+          <div class="tkt-bottom-row">
+            <div class="tkt-meta-item">
+              <span class="tkt-meta-label">FECHA</span>
+              <span class="tkt-meta-val">${esc(tramo.fecha)}</span>
+            </div>
+
+            <div class="tkt-meta-item">
+              <span class="tkt-meta-label">ABORDAJE</span>
+              <span class="tkt-meta-val red-hero">${esc(busConfig.hora_abordaje)}</span>
+            </div>
+
+            <div class="tkt-seat-pill-btn" title="Tu asiento asignado">
+              <span class="tkt-seat-pill-text">Tu Asiento</span>
+              <span class="tkt-seat-pill-num">${esc(asientoLabel)}</span>
+            </div>
+          </div>
+
+          <!-- Cita Anual Centrada al Fondo -->
+          <div class="tkt-annual-quote-center">
+            “${esc(config.tema_anual || 'Haz de Jehová tu mayor alegría')}” (${esc(config.cita_tema || 'Salmo 37:4')})
+          </div>
+
+        </div>
+
+        <!-- ══ LÍNEA DIVISORIA DE CORTE / PERFORACIÓN CON MUESCAS ══ -->
+        <div class="ticket-perforation-divider">
+          <div class="notch-cutout notch-top"></div>
+          <div class="notch-cutout notch-bottom"></div>
+        </div>
+
+        <!-- ══ SECCIÓN TALÓN DE ABORDAJE (DERECHA) ══ -->
+        <div class="ticket-stub-section">
+          <!-- Banner Naranja Superior -->
+          <div class="stub-header-banner">
+            <div class="stub-banner-title">Talón de Abordaje</div>
+            <div class="stub-banner-sub">${esc(tramoDesc)}</div>
+          </div>
+
+          <!-- Contenido del Talón -->
+          <div class="stub-body-content">
+            <!-- Fila Pasajero y Asiento -->
+            <div class="stub-passenger-seat-row">
+              <div class="stub-passenger-col">
+                <div class="stub-pax-lbl">PASAJERO</div>
+                <div class="stub-pax-name">${esc(nombreCorto)}</div>
+              </div>
+              <div class="stub-seat-orange-box">
+                <span class="stub-seat-box-label">Asiento</span>
+                <span class="stub-seat-box-num">${esc(asientoLabel)}</span>
+              </div>
+            </div>
+
+            <!-- Código QR -->
+            <div class="stub-qr-card" id="${qrId}" title="Toca o escanea para abrir WhatsApp"></div>
+
+            <!-- Leyenda debajo del QR -->
+            <div class="stub-consultas-caption">
+              <div class="stub-caption-title">¿TIENES ALGUNA CONSULTA?</div>
+              <div class="stub-caption-sub">Escanea el QR y contáctanos por WhatsApp.</div>
+            </div>
+
+            <!-- BOTÓN DE WHATSAPP DIRECTO IDÉNTICO -->
+            <a href="${WHATSAPP_URL}" target="_blank" rel="noopener noreferrer" class="btn-stub-whatsapp" title="Abrir chat de WhatsApp directamente">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
               </svg>
-              <div class="bp-route-line-right"></div>
+              <span>Abrir chat de WhatsApp</span>
+            </a>
+
+            <!-- Control de Abordaje -->
+            <div class="stub-control-pill-box">
+              <div class="stub-control-title">CONTROL DE ABORDAJE</div>
+              <div class="stub-control-sub">Presentar en pantalla al subir a la unidad</div>
             </div>
-            <div class="bp-route-tipo">DIRECTO</div>
-            <div class="bp-route-duracion">${esc(tramo.duracion || '1h 20m')}</div>
-          </div>
-          <div class="bp-route-destination">
-            <div class="bp-route-code">${esc(tramo.destino_codigo)}</div>
-            <div class="bp-route-city">${esc(tramo.destino_ciudad)}</div>
-            <div class="bp-route-place">${esc(tramo.destino_lugar)}</div>
           </div>
         </div>
+      </div>
 
-        <!-- Tiempos -->
-        <div class="bp-times-row">
-          <div class="bp-time-cell">
-            <div class="bp-time-label">
-              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-              SALIDA
-            </div>
-            <div class="bp-time-value">${esc(busConfig.hora_salida)}</div>
-            <div class="bp-time-sub">${esc(busConfig.punto_salida)}</div>
-          </div>
-          <div class="bp-time-cell">
-            <div class="bp-time-label">LLEGADA EST.</div>
-            <div class="bp-time-value bp-time-secondary">${esc(busConfig.hora_llegada)}</div>
-          </div>
-          <div class="bp-time-cell">
-            <div class="bp-time-label">ABORDAJE</div>
-            <div class="bp-time-value bp-time-secondary">${esc(busConfig.hora_abordaje)}</div>
-          </div>
-        </div>
+      ${busChangeHtml}
 
-        <!-- Fecha + Asiento -->
-        <div class="bp-date-seat-row">
-          <div class="bp-meta-block">
-            <div class="bp-meta-label">FECHA</div>
-            <div class="bp-meta-value">${esc(tramo.fecha)}</div>
-          </div>
-          <div class="bp-meta-block">
-            <div class="bp-meta-label">PUNTO DE PARTIDA</div>
-            <div class="bp-meta-value">${esc(busConfig.punto_salida)}</div>
-          </div>
-          <div class="bp-seat-badge-wrap">
-            <div class="bp-seat-label">TU ASIENTO</div>
-            <div class="bp-seat-badge">${esc(asientoLabel)}</div>
-            <div class="bp-seat-zona">${esc(asientoZona)}</div>
-          </div>
-        </div>
+      <!-- Acordeón Desplegable para ver la Distribución del Bus -->
+      <button type="button" class="croquis-accordion-toggle" onclick="toggleCroquisDrawer()">
+        <span>🚌 Ver croquis y ubicación de mi asiento en el bus (${asientoLabel})</span>
+        <svg id="croquisChevron" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="transition:transform 0.25s ease;">
+          <polyline points="6 9 12 15 18 9"></polyline>
+        </svg>
+      </button>
 
-        <!-- Croquis del bus -->
+      <div id="croquisDrawer" class="croquis-drawer">
         <div class="bp-seating-map">
           ${renderBusCroquis(asientoNum)}
-        </div>
-
-        ${busChangeHtml}
-
-        <!-- Nota si existe -->
-        ${p.nota ? `<div class="bp-nota">${esc(p.nota)}</div>` : ''}
-
-        <!-- Tema anual -->
-        <div class="bp-theme-quote">
-          "${esc(config.tema_anual)}" <span>(${esc(config.cita_tema)})</span>
-        </div>
-      </div>
-
-      <!-- ══ TALÓN DE ABORDAJE (NARANJA) ══ -->
-      <div class="bp-stub">
-        <div class="bp-stub-header">
-          <div class="bp-stub-title">TALÓN DE ABORDAJE</div>
-          <div class="bp-stub-route">${esc(tramoDesc)}</div>
-        </div>
-        <div class="bp-stub-body">
-          <div class="bp-stub-info">
-            <div class="bp-stub-passenger">${esc(nombreCorto)}</div>
-            <div class="bp-stub-seat-box">${esc(asientoLabel)}</div>
-          </div>
-          <div class="bp-stub-qr-wrap">
-            <div class="bp-stub-qr" id="${qrId}"></div>
-            <div class="bp-stub-qr-caption">
-              ¿TIENES ALGUNA CONSULTA?<br>
-              <span>Escanea el QR y contáctanos por WhatsApp</span>
-            </div>
-          </div>
-        </div>
-        <div class="bp-stub-footer">
-          <div class="bp-stub-control">CONTROL DE ABORDAJE</div>
-          <div class="bp-stub-instruction">Presentar en pantalla al subir a la unidad</div>
         </div>
       </div>
     `;
   }
+
+  // ─── Función para abrir/cerrar croquis ────────────────────────────────────
+  window.toggleCroquisDrawer = function() {
+    const drawer = document.getElementById('croquisDrawer');
+    const chevron = document.getElementById('croquisChevron');
+    if (!drawer) return;
+    drawer.classList.toggle('open');
+    if (chevron) {
+      chevron.style.transform = drawer.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+  };
 
   // ─── 9. Zona del asiento ───────────────────────────────────────────────────
   function getZona(n) {
