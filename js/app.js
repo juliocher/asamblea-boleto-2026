@@ -114,11 +114,15 @@
     if (playing) {
       btnAudioControl.classList.remove('paused');
       btnAudioControl.classList.add('playing');
-      if (audioControlText) audioControlText.textContent = 'Música activa';
+      if (audioControlText) {
+        audioControlText.innerHTML = '<span class="music-status-dot"></span> Sonando';
+      }
     } else {
       btnAudioControl.classList.remove('playing');
       btnAudioControl.classList.add('paused');
-      if (audioControlText) audioControlText.textContent = 'Música en pausa';
+      if (audioControlText) {
+        audioControlText.innerHTML = '<span class="music-status-dot paused"></span> En pausa';
+      }
     }
   }
 
@@ -196,6 +200,12 @@
 
     if (btnAudioControl) {
       btnAudioControl.addEventListener('click', toggleAudio);
+      btnAudioControl.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          toggleAudio();
+        }
+      });
     }
 
     if (btnBackToSearch) {
