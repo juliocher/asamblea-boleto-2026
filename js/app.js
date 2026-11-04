@@ -221,6 +221,8 @@
   }
 
   // ─── 6. Vista de tarjeta ───────────────────────────────────────────────────
+  let isSwitchingSegment = false;
+
   function renderTicketView() {
     if (!currentPassenger) return;
 
@@ -248,22 +250,37 @@
       tabVueltaBtn.classList.remove('active');
     }
 
-    renderCurrentSegment();
+    renderCurrentSegment('initial');
 
-    // Scroll al inicio de la tarjeta
+    // Scroll suave únicamente al cargar por primera vez la tarjeta
     ticketViewSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
-  function switchSegment(segment) {
+  async function switchSegment(segment) {
+    if (activeSegment === segment || isSwitchingSegment) return;
+
+    isSwitchingSegment = true;
+    const direction = segment === 'vuelta' ? 'forward' : 'backward';
     activeSegment = segment;
+
     tabIdaBtn.classList.toggle('active',    segment === 'ida');
     tabVueltaBtn.classList.toggle('active', segment === 'vuelta');
-    renderCurrentSegment();
-    ticketsContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+    const currentCard = ticketsContainer.querySelector('.ticket-card-outer');
+
+    if (currentCard) {
+      currentCard.classList.remove('slide-in-from-right', 'slide-in-from-left', 'ticket-entrance');
+      currentCard.classList.add(direction === 'forward' ? 'slide-out-to-left' : 'slide-out-to-right');
+      // Transición fluida suave sin saltos
+      await new Promise(resolve => setTimeout(resolve, 170));
+    }
+
+    renderCurrentSegment(direction);
+    isSwitchingSegment = false;
   }
 
   // ─── 7. Renderizar tarjeta del tramo activo ────────────────────────────────
-  function renderCurrentSegment() {
+  function renderCurrentSegment(slideDirection) {
     if (!currentPassenger || !config.tramos) return;
 
     ticketsContainer.innerHTML = '';
@@ -327,6 +344,15 @@
 
     const card = document.createElement('article');
     card.className = 'ticket-card-outer';
+
+    if (slideDirection === 'forward') {
+      card.classList.add('slide-in-from-right');
+    } else if (slideDirection === 'backward') {
+      card.classList.add('slide-in-from-left');
+    } else {
+      card.classList.add('ticket-entrance');
+    }
+
     card.innerHTML = buildCardHTML({
       p, tramo, busConfig, busLabel, tramoLabel, tramoDesc,
       asientoLabel, asientoNum, asientoZona, nombreCorto,

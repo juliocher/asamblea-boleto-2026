@@ -578,6 +578,87 @@ body {
 /* ══════════════════════════════════════════════════════════════
    TARJETA OFICIAL (RÉPLICA EXACTA DE LA IMAGEN)
    ══════════════════════════════════════════════════════════════ */
+.ticket-render-wrapper {
+  position: relative;
+  perspective: 1200px;
+  min-height: 440px;
+  width: 100%;
+}
+
+.ticket-card-outer {
+  width: 100%;
+  transform-origin: center center;
+  will-change: transform, opacity;
+}
+
+/* Entrada inicial al consultar pasajero */
+.ticket-card-outer.ticket-entrance .ticket-luxury-card {
+  animation: ticketPop 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* ── Transiciones ultrasuaves al alternar Tramo (Ida ⇄ Retorno) ── */
+.ticket-card-outer.slide-out-to-left {
+  animation: ticketSlideOutLeft 0.18s cubic-bezier(0.4, 0, 0.7, 1) forwards !important;
+  pointer-events: none;
+}
+
+.ticket-card-outer.slide-out-to-right {
+  animation: ticketSlideOutRight 0.18s cubic-bezier(0.4, 0, 0.7, 1) forwards !important;
+  pointer-events: none;
+}
+
+.ticket-card-outer.slide-in-from-right {
+  animation: ticketSlideInRight 0.35s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+}
+
+.ticket-card-outer.slide-in-from-left {
+  animation: ticketSlideInLeft 0.35s cubic-bezier(0.16, 1, 0.3, 1) both !important;
+}
+
+@keyframes ticketSlideOutLeft {
+  0% {
+    opacity: 1;
+    transform: perspective(1000px) translateX(0) scale(1) rotateY(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: perspective(1000px) translateX(-45px) scale(0.97) rotateY(-4deg);
+  }
+}
+
+@keyframes ticketSlideOutRight {
+  0% {
+    opacity: 1;
+    transform: perspective(1000px) translateX(0) scale(1) rotateY(0deg);
+  }
+  100% {
+    opacity: 0;
+    transform: perspective(1000px) translateX(45px) scale(0.97) rotateY(4deg);
+  }
+}
+
+@keyframes ticketSlideInRight {
+  0% {
+    opacity: 0;
+    transform: perspective(1000px) translateX(50px) scale(0.97) rotateY(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1000px) translateX(0) scale(1) rotateY(0deg);
+  }
+}
+
+@keyframes ticketSlideInLeft {
+  0% {
+    opacity: 0;
+    transform: perspective(1000px) translateX(-50px) scale(0.97) rotateY(-5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: perspective(1000px) translateX(0) scale(1) rotateY(0deg);
+  }
+}
+
 .ticket-luxury-card {
   display: flex;
   background: #FFFFFF;
@@ -586,14 +667,13 @@ body {
   box-shadow: var(--shadow-luxury);
   position: relative;
   overflow: hidden;
-  animation: ticketPop 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 @keyframes ticketPop {
   0% {
     opacity: 0;
-    transform: perspective(1000px) rotateX(8deg) translateY(30px) scale(0.96);
+    transform: perspective(1000px) rotateX(8deg) translateY(24px) scale(0.97);
   }
   100% {
     opacity: 1;
