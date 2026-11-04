@@ -1,0 +1,19 @@
+{
+  "name": "boleto-traslado",
+  "version": "1.0.0",
+  "description": "Sistema de tarjeta de embarque digital y control de traslados con estética de aerolínea y cifrado cliente",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node build.js"
+  },
+  "keywords": [
+    "boarding-pass",
+    "bus",
+    "web-crypto",
+    "aes-gcm",
+    "vanilla-js"
+  ],
+  "author": "",
+  "license": "MIT"
+}

@@ -1828,3 +1828,99 @@ body {
     font-size: 1rem;
   }
 }
+
+
+/* ==========================================================================
+   BOTÓN Y ANIMACIÓN DE MÚSICA DE BIENVENIDA
+   ========================================================================== */
+.tabs-actions-right {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.btn-audio-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-cream);
+  border-radius: 12px;
+  color: var(--color-orange);
+  font-size: 0.78rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  user-select: none;
+}
+
+.btn-audio-control:hover {
+  border-color: var(--color-orange);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(234, 88, 12, 0.15);
+}
+
+.btn-audio-control:active {
+  transform: scale(0.97);
+}
+
+.audio-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 14px;
+  width: 14px;
+}
+
+.audio-bars .bar {
+  flex: 1;
+  background: var(--color-orange);
+  border-radius: 2px;
+  height: 4px;
+  transition: height 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-audio-control.playing .bar-1 {
+  animation: equalize 1s infinite alternate ease-in-out;
+}
+.btn-audio-control.playing .bar-2 {
+  animation: equalize 0.8s 0.25s infinite alternate ease-in-out;
+}
+.btn-audio-control.playing .bar-3 {
+  animation: equalize 1.2s 0.45s infinite alternate ease-in-out;
+}
+.btn-audio-control.playing .bar-4 {
+  animation: equalize 0.9s 0.12s infinite alternate ease-in-out;
+}
+
+@keyframes equalize {
+  0%   { height: 3px; }
+  50%  { height: 14px; }
+  100% { height: 5px; }
+}
+
+.btn-audio-control.paused {
+  color: var(--color-muted);
+}
+
+.btn-audio-control.paused .bar {
+  background: var(--color-muted);
+  height: 3px !important;
+  animation: none !important;
+}
+
+@media (max-width: 640px) {
+  .tabs-actions-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+  .btn-audio-control,
+  .btn-exit-search {
+    flex: 1;
+    justify-content: center;
+  }
+}

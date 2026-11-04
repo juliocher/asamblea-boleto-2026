@@ -36,8 +36,91 @@
   const badgeIdaCount      = document.getElementById('badgeIdaCount');
   const badgeVueltaCount   = document.getElementById('badgeVueltaCount');
   const btnBackToSearch    = document.getElementById('btnBackToSearch');
+  const btnAudioControl    = document.getElementById('btnAudioControl');
+  const audioControlText   = document.getElementById('audioControlText');
   const eventTitleDisplay  = document.getElementById('eventTitleDisplay');
   const annualThemeHeader  = document.getElementById('annualThemeHeader');
+
+  // ─── Música de Bienvenida ──────────────────────────────────────────────────
+  let bgAudio = null;
+  let isAudioPlaying = false;
+  let fadeInterval = null;
+
+  function playWelcomeMusic() {
+    try {
+      if (!bgAudio) {
+        bgAudio = new Audio('las_asambleas_nos_hacen_felices.mp3');
+        bgAudio.loop = true;
+        bgAudio.volume = 0;
+      }
+      if (bgAudio.paused) {
+        bgAudio.volume = 0;
+        const playPromise = bgAudio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            isAudioPlaying = true;
+            updateAudioButtonUI(true);
+            fadeInAudio(0.35, 1200);
+          }).catch(err => {
+            console.warn('Autoplay bloqueado por el navegador hasta interacción adicional:', err);
+            isAudioPlaying = false;
+            updateAudioButtonUI(false);
+          });
+        }
+      }
+    } catch (e) {
+      console.warn('Error al iniciar audio:', e);
+    }
+  }
+
+  function fadeInAudio(targetVolume, durationMs) {
+    if (!bgAudio) return;
+    if (fadeInterval) clearInterval(fadeInterval);
+    const steps = 20;
+    const stepTime = Math.max(20, Math.floor(durationMs / steps));
+    const volStep = targetVolume / steps;
+    let currentVol = 0;
+    fadeInterval = setInterval(() => {
+      currentVol = Math.min(targetVolume, currentVol + volStep);
+      if (bgAudio) bgAudio.volume = currentVol;
+      if (currentVol >= targetVolume) {
+        clearInterval(fadeInterval);
+        fadeInterval = null;
+      }
+    }, stepTime);
+  }
+
+  function toggleAudio() {
+    if (!bgAudio) {
+      playWelcomeMusic();
+      return;
+    }
+    if (bgAudio.paused) {
+      bgAudio.play().then(() => {
+        isAudioPlaying = true;
+        updateAudioButtonUI(true);
+        fadeInAudio(0.35, 600);
+      }).catch(err => console.warn(err));
+    } else {
+      if (fadeInterval) clearInterval(fadeInterval);
+      bgAudio.pause();
+      isAudioPlaying = false;
+      updateAudioButtonUI(false);
+    }
+  }
+
+  function updateAudioButtonUI(playing) {
+    if (!btnAudioControl) return;
+    if (playing) {
+      btnAudioControl.classList.remove('paused');
+      btnAudioControl.classList.add('playing');
+      if (audioControlText) audioControlText.textContent = 'Música activa';
+    } else {
+      btnAudioControl.classList.remove('playing');
+      btnAudioControl.classList.add('paused');
+      if (audioControlText) audioControlText.textContent = 'Música en pausa';
+    }
+  }
 
   // ─── 1. Inicialización ─────────────────────────────────────────────────────
   async function init() {
@@ -111,9 +194,18 @@
     if (tabIdaBtn)    tabIdaBtn.addEventListener('click',    () => switchSegment('ida'));
     if (tabVueltaBtn) tabVueltaBtn.addEventListener('click', () => switchSegment('vuelta'));
 
+    if (btnAudioControl) {
+      btnAudioControl.addEventListener('click', toggleAudio);
+    }
+
     if (btnBackToSearch) {
       btnBackToSearch.addEventListener('click', () => {
         currentPassenger = null;
+        if (bgAudio && !bgAudio.paused) {
+          bgAudio.pause();
+          isAudioPlaying = false;
+          updateAudioButtonUI(false);
+        }
         ticketViewSection.style.display = 'none';
         loginSection.style.display = 'block';
         loginErrorMessage.style.display = 'none';
@@ -225,6 +317,9 @@
 
   function renderTicketView() {
     if (!currentPassenger) return;
+
+    // Reproducción automática de música de bienvenida
+    playWelcomeMusic();
 
     loginSection.style.display = 'none';
     ticketViewSection.style.display = 'block';
