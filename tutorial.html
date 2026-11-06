@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
   <title>Tutorial · ¿Cómo ver tu Boleto de Bus? · Asamblea 2026</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,10 +12,9 @@
   <link rel="stylesheet" href="css/styles.css">
 
   <style>
-    /* ══════ PALETA ARMONIOSA Y CÁLIDA (NO SATURADA) ══════ */
+    /* ══════ PANTALLA COMPLETA 100% SIN SCROLL ══════ */
     :root {
       --tut-bg: #FAF7F2;
-      --tut-card-bg: #FFFFFF;
       --tut-navy: #1E293B;
       --tut-slate: #475569;
       --tut-muted: #64748B;
@@ -25,263 +24,216 @@
       --tut-border-warm: #FDE8D0;
     }
 
-    body {
-      background: linear-gradient(180deg, #FFFBF5 0%, #F5EFE6 100%) !important;
-      padding: 16px 12px 48px !important;
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      height: 100%;
+      height: 100dvh;
+      overflow: hidden !important; /* CERO SCROLL EXTERNO */
+      position: fixed;
+      width: 100%;
+      background: linear-gradient(180deg, #FFFDF9 0%, #F5EFE6 100%) !important;
+      font-family: var(--font-primary, 'Plus Jakarta Sans'), sans-serif;
+      color: var(--tut-navy);
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-height: 100vh;
-      font-family: var(--font-primary, 'Plus Jakarta Sans'), sans-serif;
-      color: var(--tut-navy);
-      margin: 0;
+      justify-content: space-between;
+      padding: 6px 10px 10px !important;
     }
 
-    /* ══════ ENCABEZADO TRANQUILO Y ELEGANTE ══════ */
-    .tut-header {
-      text-align: center;
-      max-width: 480px;
-      margin-bottom: 16px;
+    /* ══════ BARRA SUPERIOR COMPACTA ══════ */
+    .top-compact-bar {
+      width: 100%;
+      max-width: 390px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 6px;
+      flex-shrink: 0;
     }
-    .tut-pill {
+    .top-badge {
       display: inline-flex;
       align-items: center;
-      gap: 6px;
+      gap: 5px;
       background: var(--tut-orange-soft);
       color: var(--tut-orange);
       font-size: 0.72rem;
       font-weight: 800;
-      padding: 5px 14px;
+      padding: 4px 12px;
       border-radius: 9999px;
-      margin-bottom: 8px;
-      letter-spacing: 0.04em;
       border: 1px solid var(--tut-border-warm);
     }
-    .tut-title {
-      font-size: 1.35rem;
-      font-weight: 800;
-      color: var(--tut-navy);
-      line-height: 1.3;
-      margin: 0;
-    }
-    .tut-subtitle {
-      font-size: 0.82rem;
-      color: var(--tut-muted);
-      margin-top: 5px;
-      line-height: 1.45;
-    }
-
-    /* ══════ CONTENEDOR PRINCIPAL ══════ */
-    .tut-main-layout {
-      width: 100%;
-      max-width: 440px;
-      display: flex;
-      flex-direction: column;
+    .top-audio-pill {
+      display: inline-flex;
       align-items: center;
-      gap: 14px;
-    }
-
-    /* ══════ TARJETA DEL GUÍA / NARRADOR (NUNCA TAPA LA PANTALLA) ══════ */
-    .guide-narrator-card {
-      width: 100%;
+      gap: 5px;
       background: #FFFFFF;
-      border-radius: 20px;
-      padding: 14px 18px;
-      border: 1.5px solid var(--tut-border-warm);
-      box-shadow: 0 4px 18px rgba(15,30,54,0.06);
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      transition: all 0.3s ease;
-      position: relative;
-      overflow: hidden;
+      color: #334155;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      border: 1px solid #CBD5E1;
+      cursor: pointer;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
     }
-    .guide-narrator-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; bottom: 0;
-      width: 5px;
-      background: linear-gradient(180deg, var(--tut-orange), #F97316);
-      border-radius: 9999px 0 0 9999px;
-    }
-    .narrator-avatar {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: var(--tut-orange-soft);
-      border: 1.5px solid var(--tut-border-warm);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      flex-shrink: 0;
-      box-shadow: 0 2px 8px rgba(234,88,12,0.15);
-    }
-    .narrator-content {
-      flex: 1;
-      min-width: 0;
-    }
-    .narrator-step-badge {
-      display: inline-block;
-      font-size: 0.65rem;
-      font-weight: 800;
-      color: var(--tut-orange);
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-      margin-bottom: 2px;
-    }
-    .narrator-text {
-      font-size: 0.85rem;
-      font-weight: 600;
-      color: var(--tut-navy);
-      line-height: 1.45;
-      margin: 0;
-      transition: opacity 0.2s ease;
+    .top-audio-pill.active {
+      background: #FEF3C7;
+      border-color: #F59E0B;
+      color: #B45309;
     }
 
-    /* ══════ MOCKUP REALISTA DE CELULAR ══════ */
+    /* ══════ CELULAR REALISTA (AJUSTE DINÁMICO A LA PANTALLA) ══════ */
     .smartphone-chassis {
       width: 100%;
-      max-width: 390px;
-      background: #181E29; /* Chasis titanio oscuro */
-      border-radius: 44px;
-      padding: 10px;
+      max-width: 380px;
+      flex: 1;
+      min-height: 0; /* Permite reducir según la altura de la pantalla */
+      background: #181E29;
+      border-radius: 36px;
+      padding: 8px;
       box-shadow: 
-        0 24px 60px rgba(15, 30, 54, 0.22),
-        0 4px 16px rgba(0, 0, 0, 0.08),
-        inset 0 0 0 2px rgba(255, 255, 255, 0.15);
+        0 18px 45px rgba(15, 30, 54, 0.22),
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        inset 0 0 0 2px rgba(255, 255, 255, 0.12);
       position: relative;
+      display: flex;
+      flex-direction: column;
     }
 
-    /* Botones laterales simulados en el chasis */
+    /* Botones laterales */
     .smartphone-chassis::before {
       content: '';
       position: absolute;
-      left: -4px;
-      top: 100px;
+      left: -3px;
+      top: 75px;
       width: 3px;
-      height: 44px;
+      height: 38px;
       background: #334155;
       border-radius: 2px 0 0 2px;
     }
     .smartphone-chassis::after {
       content: '';
       position: absolute;
-      right: -4px;
-      top: 120px;
+      right: -3px;
+      top: 90px;
       width: 3px;
-      height: 54px;
+      height: 46px;
       background: #334155;
       border-radius: 0 2px 2px 0;
     }
 
-    /* Marco de pantalla interna */
+    /* Pantalla interior */
     .smartphone-screen {
       background: #FAF6F0;
-      border-radius: 36px;
+      border-radius: 28px;
       overflow: hidden;
       display: flex;
       flex-direction: column;
       position: relative;
-      border: 1px solid rgba(0,0,0,0.1);
+      flex: 1;
+      min-height: 0;
+      border: 1px solid rgba(0,0,0,0.08);
     }
 
     /* Barra de estado con Dynamic Island */
     .mobile-top-bar {
       background: #FAF6F0;
-      padding: 8px 18px 4px;
+      padding: 6px 14px 2px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      font-size: 0.7rem;
+      font-size: 0.68rem;
       font-weight: 800;
       color: #0F1E36;
       border-bottom: 1px solid rgba(0,0,0,0.04);
+      flex-shrink: 0;
       z-index: 50;
     }
     .dynamic-island {
-      width: 86px;
-      height: 18px;
+      width: 78px;
+      height: 16px;
       background: #000000;
       border-radius: 9999px;
       margin: 0 auto;
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      padding-right: 8px;
+      padding-right: 6px;
     }
     .camera-lens {
-      width: 8px;
-      height: 8px;
+      width: 6px;
+      height: 6px;
       background: #111827;
       border: 1px solid #1F2937;
       border-radius: 50%;
     }
 
-    /* Barra del navegador simulada */
+    /* Barra URL del navegador */
     .browser-url-bar {
-      background: #F1ECE4;
-      margin: 4px 12px 6px;
-      padding: 5px 12px;
-      border-radius: 10px;
+      background: #EFE9E0;
+      margin: 3px 10px 4px;
+      padding: 4px 10px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
-      gap: 6px;
-      font-size: 0.68rem;
+      gap: 5px;
+      font-size: 0.65rem;
       color: #475569;
       font-weight: 600;
+      flex-shrink: 0;
     }
     .browser-url-bar svg {
-      color: #16A34A; /* Candado verde */
+      color: #16A34A; /* Candado seguro */
       flex-shrink: 0;
     }
 
-    /* Ventana de la app con scroll suave */
+    /* Ventana de la app con auto-scroll interno programado */
     .smartphone-viewport {
-      height: 480px;
-      overflow-y: auto;
-      overflow-x: hidden;
+      flex: 1;
+      min-height: 0;
+      overflow-y: hidden; /* El usuario NO tiene que bajar nada, el video hace scroll solo */
       position: relative;
-      scroll-behavior: smooth;
       background: #FAF6F0;
     }
 
-    /* Barra Home Indicator de celular en la parte inferior */
+    /* Barra Home Indicator de celular */
     .mobile-home-indicator {
-      width: 110px;
+      width: 90px;
       height: 4px;
-      background: rgba(0, 0, 0, 0.2);
+      background: rgba(0, 0, 0, 0.22);
       border-radius: 9999px;
-      margin: 6px auto;
+      margin: 4px auto 3px;
+      flex-shrink: 0;
     }
 
-    /* ══════ INDICADORES VISUALES SUAVES (SIN TAPAR TEXTO) ══════ */
-    /* Resaltado suave y pulsante del elemento activo */
+    /* ══════ INDICADORES VISUALES SUAVES (SIN TAPAR NADA) ══════ */
     .tut-highlight-focus {
       outline: 2.5px solid #EA580C !important;
       outline-offset: 3px !important;
-      box-shadow: 0 0 0 6px rgba(234, 88, 12, 0.2) !important;
+      box-shadow: 0 0 0 6px rgba(234, 88, 12, 0.22) !important;
       animation: softPulseGlow 2s infinite ease-in-out !important;
       border-radius: 12px !important;
       transition: all 0.3s ease;
     }
     @keyframes softPulseGlow {
       0%, 100% { box-shadow: 0 0 0 4px rgba(234, 88, 12, 0.15); }
-      50%      { box-shadow: 0 0 0 8px rgba(234, 88, 12, 0.3); }
+      50%      { box-shadow: 0 0 0 8px rgba(234, 88, 12, 0.32); }
     }
 
-    /* Puntero de dedo suave y transparente */
+    /* Dedo virtual transparente */
     .tut-touch-point {
       position: absolute;
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       background: rgba(234, 88, 12, 0.35);
       border: 2px solid #FFFFFF;
       pointer-events: none;
       z-index: 80;
       transform: translate(-50%, -50%) scale(1);
-      transition: all 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+      transition: all 0.45s cubic-bezier(0.22, 1, 0.36, 1);
       box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       display: none;
     }
@@ -290,26 +242,69 @@
       background: rgba(234, 88, 12, 0.7);
     }
 
-    /* ══════ BARRA DE CONTROLES DEL REPRODUCTOR ══════ */
-    .player-dock-bar {
+    /* ══════ TARJETA DEL GUÍA Y CONTROLES INFERIORES ══════ */
+    .bottom-guide-dock {
       width: 100%;
+      max-width: 380px;
       background: #FFFFFF;
-      border-radius: 20px;
-      padding: 12px 16px;
-      border: 1px solid var(--tut-border);
-      box-shadow: 0 4px 16px rgba(15,30,54,0.05);
+      border-radius: 18px;
+      padding: 10px 14px 10px;
+      border: 1.5px solid var(--tut-border-warm);
+      box-shadow: 0 4px 18px rgba(15,30,54,0.06);
       display: flex;
       flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    .guide-message-row {
+      display: flex;
+      align-items: center;
       gap: 10px;
     }
+    .guide-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--tut-orange-soft);
+      border: 1px solid var(--tut-border-warm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.15rem;
+      flex-shrink: 0;
+    }
+    .guide-text-wrap {
+      flex: 1;
+      min-width: 0;
+    }
+    .guide-step-tag {
+      font-size: 0.62rem;
+      font-weight: 800;
+      color: var(--tut-orange);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      display: block;
+      margin-bottom: 1px;
+    }
+    .guide-main-text {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--tut-navy);
+      line-height: 1.35;
+      margin: 0;
+    }
+
+    /* Barra de progreso sutil */
     .progress-track {
       width: 100%;
-      height: 6px;
+      height: 4px;
       background: #E2E8F0;
       border-radius: 9999px;
       cursor: pointer;
-      position: relative;
       overflow: hidden;
+      margin-top: 2px;
     }
     .progress-bar-fill {
       height: 100%;
@@ -318,389 +313,318 @@
       width: 0%;
       transition: width 0.12s linear;
     }
+
+    /* Botones de acción inferiores */
     .dock-actions-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 8px;
+      gap: 6px;
+      margin-top: 2px;
     }
-    .btn-play-action {
-      background: #EA580C;
-      color: #FFFFFF;
-      border: none;
-      width: 42px;
-      height: 42px;
+    .btn-dock-play {
+      background: var(--tut-orange-soft);
+      color: var(--tut-orange);
+      border: 1px solid var(--tut-border-warm);
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 1.1rem;
+      font-size: 0.85rem;
       cursor: pointer;
-      box-shadow: 0 3px 10px rgba(234,88,12,0.3);
-      transition: transform 0.15s;
-    }
-    .btn-play-action:active { transform: scale(0.94); }
-    
-    .step-nav-group {
-      display: flex;
-      gap: 6px;
-    }
-    .btn-step-item {
-      background: #F8FAFC;
-      border: 1px solid #CBD5E1;
-      color: #334155;
-      padding: 7px 12px;
-      border-radius: 10px;
-      font-size: 0.76rem;
-      font-weight: 700;
-      cursor: pointer;
-      font-family: inherit;
-      transition: all 0.15s;
-    }
-    .btn-step-item:hover { background: #EDF2F7; }
-
-    .voice-toggle-btn {
-      background: #F1F5F9;
-      border: 1px solid #CBD5E1;
-      color: #475569;
-      padding: 6px 10px;
-      border-radius: 8px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-    }
-    .voice-toggle-btn.active {
-      background: #FEF3C7;
-      border-color: #F59E0B;
-      color: #B45309;
-    }
-
-    /* ══════ BANNER FINAL PARA ENTRAR A LA APP ══════ */
-    .cta-banner-card {
-      width: 100%;
-      background: #FFFFFF;
-      border-radius: 20px;
-      padding: 16px;
-      border: 1.5px solid var(--tut-border-warm);
-      text-align: center;
-      box-shadow: 0 4px 16px rgba(15,30,54,0.04);
+      flex-shrink: 0;
     }
     .btn-open-real-app {
+      flex: 1;
+      height: 34px;
+      background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
+      color: #FFFFFF;
+      font-size: 0.78rem;
+      font-weight: 800;
+      border-radius: 10px;
+      text-decoration: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      width: 100%;
-      height: 48px;
-      background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
-      color: #FFFFFF;
-      font-size: 0.92rem;
-      font-weight: 800;
-      border-radius: 12px;
-      text-decoration: none;
-      margin-top: 10px;
-      box-shadow: 0 4px 14px rgba(234,88,12,0.25);
-      transition: transform 0.15s;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(234,88,12,0.22);
     }
-    .btn-open-real-app:active { transform: scale(0.98); }
   </style>
 </head>
 <body>
 
-  <!-- ENCABEZADO TRANQUILO -->
-  <header class="tut-header">
-    <div class="tut-pill">🎬 TUTORIAL EN VIDEO</div>
-    <h1 class="tut-title">¿Cómo ver tu Boleto de Bus?</h1>
-    <p class="tut-subtitle">Sigue estos sencillos pasos. Verás la pantalla exacta tal como aparece en tu teléfono.</p>
-  </header>
+  <!-- BARRA SUPERIOR COMPACTA -->
+  <div class="top-compact-bar">
+    <div class="top-badge">🎬 TUTORIAL EN VIVO</div>
+    <div class="top-audio-pill active" id="btnAudioToggle" title="Toca para silenciar o activar audio">
+      <span>🔊</span> <span id="audioPillText">Audio activado</span>
+    </div>
+  </div>
 
-  <main class="tut-main-layout">
+  <!-- CELULAR REALISTA (TODO CABE EN LA PANTALLA) -->
+  <div class="smartphone-chassis">
+    <div class="smartphone-screen">
+      
+      <!-- Barra superior con Dynamic Island -->
+      <div class="mobile-top-bar">
+        <span>09:41 AM</span>
+        <div class="dynamic-island">
+          <div class="camera-lens"></div>
+        </div>
+        <span>📶 🔋 100%</span>
+      </div>
 
-    <!-- ══════ TARJETA DEL GUÍA (ARRIBA, NUNCA TAPA LA PANTALLA) ══════ -->
-    <div class="guide-narrator-card" id="narratorCard">
-      <div class="narrator-avatar" id="narratorIcon">👋</div>
-      <div class="narrator-content">
-        <span class="narrator-step-badge" id="stepBadge">Paso 1 de 5</span>
-        <p class="narrator-text" id="stepMessage">
-          ¡Hola! Ver tu boleto es muy fácil. Toca el botón <strong>Play ▶</strong> para ver la demostración paso a paso.
+      <!-- Barra URL del navegador -->
+      <div class="browser-url-bar">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+        <span>juliocher.github.io/asamblea-boleto-2026/</span>
+      </div>
+
+      <!-- VENTANA CON LA INTERFAZ EXACTA DE LA APP (AUTO-SCROLL PROGRAMADO) -->
+      <div class="smartphone-viewport" id="viewportScroll">
+        
+        <!-- Dedo táctil virtual -->
+        <div class="tut-touch-point" id="touchPoint"></div>
+
+        <!-- ════ VISTA 1: INGRESO DE NOMBRE ════ -->
+        <div id="screenLogin" style="padding: 12px 10px 24px;">
+          
+          <header class="login-header-group" style="margin-bottom: 12px;">
+            <h1 class="event-title-main" style="font-size: 0.9rem;">ASAMBLEA DE CIRCUITO 2026–2027</h1>
+            <p class="event-theme-quote" style="font-size: 0.7rem;">“Haz de Jehová tu mayor alegría” (Salmo 37:4)</p>
+            <div class="header-divider-accent"></div>
+            <p class="service-subtitle" style="font-size: 0.72rem;">Traslado Privado Cusco ↔ Urubamba</p>
+          </header>
+
+          <div class="login-card-luxury" style="padding: 16px 14px;">
+            <div class="login-instruction-group">
+              <h2 class="login-heading" style="font-size: 1.05rem;">Escribe tu nombre</h2>
+              <p class="login-description" style="font-size: 0.75rem;">
+                Escribe tu nombre para ver de inmediato tu asiento asignado, bus y horarios.
+              </p>
+            </div>
+
+            <div class="form-field-wrapper" style="margin-top: 12px;" id="inputFieldContainer">
+              <div class="form-input-wrapper" id="simInputWrap" style="height: 44px;">
+                <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <input
+                  type="text"
+                  id="simInput"
+                  class="form-input"
+                  placeholder="Escribe tu nombre aquí..."
+                  readonly
+                  style="font-size: 0.85rem;"
+                >
+              </div>
+
+              <!-- Sugerencia que aparece en tiempo real -->
+              <div id="simSuggestions" class="live-suggestions-box" style="display:none; margin-top: 6px;">
+                <div class="suggestion-item" id="simSuggItem" style="background:#FFFDF7; border: 1.5px solid #FCD34D; padding: 8px 10px;">
+                  <div class="suggestion-name" style="font-size: 0.84rem; font-weight: 800; color: #0F1E36;">Julia Zárate</div>
+                  <span class="suggestion-bus-tag" style="background: #FEF3C7; color: #B45309; font-weight: 800; font-size: 0.65rem;">BUS 1 · Asiento 01</span>
+                </div>
+              </div>
+
+              <div class="form-help-text" style="font-size: 0.68rem; margin-top: 6px;">
+                <span>💡</span> No te preocupes por tildes o mayúsculas, te reconocerá igual.
+              </div>
+            </div>
+
+            <button type="button" class="btn-primary-action" style="margin-top: 12px; pointer-events: none; opacity: 0.95; height: 44px;">
+              <span style="font-size: 0.82rem;">Ver mi tarjeta de embarque</span>
+              <svg class="btn-arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+            </button>
+
+            <!-- Opción alternativa: Directorio de pasajeros -->
+            <div class="directory-toggle-wrap" style="margin-top: 12px;" id="simDirWrap">
+              <button type="button" class="btn-toggle-directory" id="simBtnDir" style="font-size: 0.72rem; pointer-events: none; padding: 8px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path></svg>
+                <span>¿Prefieres buscar tu nombre en la lista? Toca aquí ▾</span>
+              </button>
+
+              <div id="simDirDropdown" class="directory-dropdown" style="display:none; margin-top: 6px;">
+                <div class="directory-search-bar" style="padding: 6px 10px;">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                  <input type="text" placeholder="Filtrar por nombre..." readonly style="font-size: 0.72rem;">
+                </div>
+                <div class="directory-list-scroll" style="max-height: 100px;">
+                  <div class="directory-item-btn"><span class="dir-p-name">Abigail Villena</span><span class="dir-p-bus">Bus 2</span></div>
+                  <div class="directory-item-btn" style="background:#FFFBEB; border: 1.5px solid #F59E0B;"><span class="dir-p-name" style="font-weight:800; color:#EA580C;">👉 Julia Zárate</span><span class="dir-p-bus" style="background:#EA580C; color:#fff;">Bus 1</span></div>
+                  <div class="directory-item-btn"><span class="dir-p-name">Julio César Chero</span><span class="dir-p-bus">Bus 2</span></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- ════ VISTA 2: BOLETO DIGITAL REAL ════ -->
+        <div id="screenTicket" style="display:none; padding: 10px 8px 24px;">
+          
+          <!-- Pestañas de tramo y widget de música -->
+          <nav class="segment-tabs-bar" style="margin-bottom: 8px;">
+            <div class="tabs-group">
+              <button type="button" class="tab-pill active" id="pillIda" style="font-size: 0.68rem; padding: 5px 8px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                <span>IDA</span>
+                <span class="tab-count-badge">✓</span>
+              </button>
+              <button type="button" class="tab-pill" id="pillVuelta" style="font-size: 0.68rem; padding: 5px 8px;">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <span>RETORNO</span>
+                <span class="tab-count-badge">✓</span>
+              </button>
+            </div>
+
+            <div class="tabs-actions-right">
+              <div class="music-avatar-badge playing" style="padding: 3px 6px;">
+                <div class="music-ripple-ring"></div>
+                <div class="music-disc-wrap" style="width: 24px; height: 24px;">
+                  <img src="welcome_music.jpg" alt="Música" class="music-disc-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23ea580c\'><circle cx=\'12\' cy=\'12\' r=\'10\'/></svg>'">
+                  <div class="music-disc-center"></div>
+                </div>
+                <div class="music-note-float music-note-1">♪</div>
+                <div class="music-note-float music-note-2">♫</div>
+                <div class="music-avatar-info">
+                  <span class="music-label-title" style="font-size:0.58rem;">Música de asamblea</span>
+                  <span class="music-label-status" style="font-size:0.52rem; color:#16A34A;">
+                    <span class="music-status-dot"></span> Sonando
+                  </span>
+                </div>
+              </div>
+            </div>
+          </nav>
+
+          <!-- Tarjeta Luxury de Julia Zárate -->
+          <div class="ticket-luxury-card" id="tktCardReal">
+            <div class="ticket-main-section" style="padding: 14px 12px;">
+              
+              <div class="tkt-header-bar" style="margin-bottom: 8px;">
+                <div class="tkt-header-texts">
+                  <div class="tkt-header-title" style="font-size: 0.68rem;">Asamblea de circuito 2026–2027</div>
+                  <div class="tkt-header-theme" style="font-size: 0.58rem;">“Haz de Jehová tu mayor alegría” (Salmo 37:4)</div>
+                </div>
+                <div class="tkt-bus-badge" id="tktBusBadge" style="font-size: 0.62rem; padding: 2px 7px;">BUS 1 - IDA</div>
+              </div>
+
+              <div class="tkt-passenger-group" style="margin-bottom: 8px;">
+                <div class="tkt-passenger-label" style="font-size: 0.55rem;">NOMBRE DEL PASAJERO</div>
+                <div class="tkt-passenger-name" style="font-size: 1.1rem;">Julia Zárate</div>
+              </div>
+
+              <!-- Caja de ruta -->
+              <div class="tkt-route-beige-box" style="padding: 10px 8px;">
+                <div class="tkt-route-top-row">
+                  <div class="tkt-origin-group">
+                    <div class="tkt-city-row">
+                      <span class="tkt-code" id="tktOrigCode" style="font-size: 1.05rem;">CUZ</span>
+                      <span class="tkt-city" id="tktOrigCity" style="font-size: 0.8rem;">Cusco</span>
+                    </div>
+                    <div class="tkt-place-pill" style="font-size: 0.6rem; padding: 2px 6px;">
+                      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                      <span id="tktOrigPlace">Plaza Belén</span>
+                    </div>
+                  </div>
+
+                  <div class="tkt-route-middle">
+                    <span class="tkt-directo-label" style="font-size: 0.58rem;">Directo</span>
+                    <div class="tkt-arrow-track" style="width: 42px;">
+                      <span class="tkt-arrow-pulse-dot"></span>
+                      <span class="tkt-arrow-head"></span>
+                    </div>
+                    <span class="tkt-duration-pill" style="font-size: 0.58rem;">1h 20m</span>
+                  </div>
+
+                  <div class="tkt-destination-group">
+                    <div class="tkt-city-row">
+                      <span class="tkt-city" id="tktDestCity" style="font-size: 0.8rem;">Urubamba</span>
+                      <span class="tkt-code" id="tktDestCode" style="font-size: 1.05rem;">URU</span>
+                    </div>
+                    <div class="tkt-place-pill" style="font-size: 0.6rem; padding: 2px 6px;">
+                      <span id="tktDestPlace">Estac. Local</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Tiempos -->
+                <div class="tkt-times-subrow" style="margin-top: 10px;">
+                  <div class="tkt-time-block">
+                    <div class="tkt-time-label" id="lblSalida" style="font-size: 0.58rem;">SALIDA</div>
+                    <div class="tkt-time-big orange-hero" id="valSalida" style="font-size: 1.15rem;">06:15 AM</div>
+                  </div>
+                  <div class="tkt-time-block right-align">
+                    <div class="tkt-time-label" style="font-size: 0.58rem;">LLEGADA ESTIMADA</div>
+                    <div class="tkt-time-big navy-hero" id="valLlegada" style="font-size: 1.15rem;">07:35 AM</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Fila de Asiento y Abordaje -->
+              <div class="tkt-bottom-row" style="margin-top: 10px;" id="seatRowBox">
+                <div class="tkt-meta-item">
+                  <span class="tkt-meta-label" style="font-size: 0.55rem;">FECHA</span>
+                  <span class="tkt-meta-val" style="font-size: 0.72rem;">07 Nov</span>
+                </div>
+                <div class="tkt-meta-item">
+                  <span class="tkt-meta-label" style="font-size: 0.55rem;">ABORDAJE</span>
+                  <span class="tkt-meta-val red-hero" id="valAbordaje" style="font-size: 0.8rem;">05:50 AM</span>
+                </div>
+                <div class="tkt-seat-pill-btn" id="seatPillHero" style="padding: 5px 12px;">
+                  <span class="tkt-seat-pill-text" style="font-size: 0.58rem;">Tu Asiento</span>
+                  <span class="tkt-seat-pill-num" style="font-size: 1.25rem;">01</span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Indicador Home bar del celular -->
+      <div class="mobile-home-indicator"></div>
+
+    </div>
+  </div>
+
+  <!-- TARJETA DEL GUÍA Y CONTROLES (ABAJO) -->
+  <div class="bottom-guide-dock">
+    <div class="guide-message-row">
+      <div class="guide-avatar" id="narratorIcon">👋</div>
+      <div class="guide-text-wrap">
+        <span class="guide-step-tag" id="stepBadge">Paso 1 de 5</span>
+        <p class="guide-main-text" id="stepMessage">
+          ¡Hola! Ver tu boleto es muy fácil. Te mostramos cómo hacerlo paso a paso...
         </p>
       </div>
     </div>
 
-    <!-- ══════ CELULAR REALISTA CON LA APP EXACTA ══════ -->
-    <div class="smartphone-chassis">
-      <div class="smartphone-screen">
-        
-        <!-- Barra superior del teléfono -->
-        <div class="mobile-top-bar">
-          <span>09:41 AM</span>
-          <div class="dynamic-island">
-            <div class="camera-lens"></div>
-          </div>
-          <span>📶 🔋 100%</span>
-        </div>
-
-        <!-- Barra URL de navegación -->
-        <div class="browser-url-bar">
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-          <span>juliocher.github.io/asamblea-boleto-2026/</span>
-        </div>
-
-        <!-- VENTANA CON LA INTERFAZ EXACTA DE LA APP -->
-        <div class="smartphone-viewport" id="viewportScroll">
-          
-          <!-- Dedo táctil virtual -->
-          <div class="tut-touch-point" id="touchPoint"></div>
-
-          <!-- ════ VISTA 1: INGRESO DE NOMBRE ════ -->
-          <div id="screenLogin" style="padding: 14px 12px 30px;">
-            
-            <header class="login-header-group" style="margin-bottom: 16px;">
-              <h1 class="event-title-main" style="font-size: 0.95rem;">ASAMBLEA DE CIRCUITO 2026–2027</h1>
-              <p class="event-theme-quote" style="font-size: 0.72rem;">“Haz de Jehová tu mayor alegría” (Salmo 37:4)</p>
-              <div class="header-divider-accent"></div>
-              <p class="service-subtitle" style="font-size: 0.75rem;">Traslado Privado Cusco ↔ Urubamba</p>
-            </header>
-
-            <div class="login-card-luxury" style="padding: 20px 16px;">
-              <div class="login-instruction-group">
-                <h2 class="login-heading" style="font-size: 1.1rem;">Escribe tu nombre</h2>
-                <p class="login-description" style="font-size: 0.78rem;">
-                  Escribe tu nombre para ver de inmediato tu asiento asignado, bus y horarios.
-                </p>
-              </div>
-
-              <div class="form-field-wrapper" style="margin-top: 14px;" id="inputFieldContainer">
-                <div class="form-input-wrapper" id="simInputWrap">
-                  <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                  </svg>
-                  <input
-                    type="text"
-                    id="simInput"
-                    class="form-input"
-                    placeholder="Escribe tu nombre aquí..."
-                    readonly
-                    style="font-size: 0.88rem;"
-                  >
-                </div>
-
-                <!-- Sugerencia que aparece en tiempo real -->
-                <div id="simSuggestions" class="live-suggestions-box" style="display:none; margin-top: 8px;">
-                  <div class="suggestion-item" id="simSuggItem" style="background:#FFFDF7; border: 1.5px solid #FCD34D;">
-                    <div class="suggestion-name" style="font-size: 0.86rem; font-weight: 800; color: #0F1E36;">Julia Zárate</div>
-                    <span class="suggestion-bus-tag" style="background: #FEF3C7; color: #B45309; font-weight: 800;">BUS 1 · Asiento 01</span>
-                  </div>
-                </div>
-
-                <div class="form-help-text" style="font-size: 0.7rem; margin-top: 8px;">
-                  <span>💡</span> No te preocupes por tildes o mayúsculas, te reconocerá igual.
-                </div>
-              </div>
-
-              <button type="button" class="btn-primary-action" style="margin-top: 14px; pointer-events: none; opacity: 0.95;">
-                <span style="font-size: 0.85rem;">Ver mi tarjeta de embarque</span>
-                <svg class="btn-arrow-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-              </button>
-
-              <!-- Opción alternativa: Directorio de pasajeros -->
-              <div class="directory-toggle-wrap" style="margin-top: 14px;" id="simDirWrap">
-                <button type="button" class="btn-toggle-directory" id="simBtnDir" style="font-size: 0.76rem; pointer-events: none;">
-                  <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path></svg>
-                  <span>¿Prefieres buscar tu nombre en la lista? Toca aquí ▾</span>
-                </button>
-
-                <!-- Menú desplegable del directorio -->
-                <div id="simDirDropdown" class="directory-dropdown" style="display:none; margin-top: 8px;">
-                  <div class="directory-search-bar">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-                    <input type="text" placeholder="Filtrar por nombre..." readonly style="font-size: 0.75rem;">
-                  </div>
-                  <div class="directory-list-scroll" style="max-height: 120px;">
-                    <div class="directory-item-btn"><span class="dir-p-name">Abigail Villena</span><span class="dir-p-bus">Bus 2</span></div>
-                    <div class="directory-item-btn" style="background:#FFFBEB; border: 1.5px solid #F59E0B;"><span class="dir-p-name" style="font-weight:800; color:#EA580C;">👉 Julia Zárate</span><span class="dir-p-bus" style="background:#EA580C; color:#fff;">Bus 1</span></div>
-                    <div class="directory-item-btn"><span class="dir-p-name">Julio César Chero</span><span class="dir-p-bus">Bus 2</span></div>
-                  </div>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <!-- ════ VISTA 2: BOLETO DIGITAL REAL ════ -->
-          <div id="screenTicket" style="display:none; padding: 10px 8px 30px;">
-            
-            <!-- Barra de navegación con pestañas de tramo y widget de música -->
-            <nav class="segment-tabs-bar" style="margin-bottom: 10px;">
-              <div class="tabs-group">
-                <button type="button" class="tab-pill active" id="pillIda" style="font-size: 0.72rem; padding: 6px 10px;">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-                  <span>IDA</span>
-                  <span class="tab-count-badge">✓</span>
-                </button>
-                <button type="button" class="tab-pill" id="pillVuelta" style="font-size: 0.72rem; padding: 6px 10px;">
-                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-                  <span>RETORNO</span>
-                  <span class="tab-count-badge">✓</span>
-                </button>
-              </div>
-
-              <div class="tabs-actions-right">
-                <div class="music-avatar-badge playing" style="padding: 4px 8px;">
-                  <div class="music-ripple-ring"></div>
-                  <div class="music-disc-wrap" style="width: 28px; height: 28px;">
-                    <img src="welcome_music.jpg" alt="Música" class="music-disc-img" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23ea580c\'><circle cx=\'12\' cy=\'12\' r=\'10\'/></svg>'">
-                    <div class="music-disc-center"></div>
-                  </div>
-                  <div class="music-note-float music-note-1">♪</div>
-                  <div class="music-note-float music-note-2">♫</div>
-                  <div class="music-avatar-info">
-                    <span class="music-label-title" style="font-size:0.6rem;">Música bienvenida</span>
-                    <span class="music-label-status" style="font-size:0.55rem; color:#16A34A;">
-                      <span class="music-status-dot"></span> Sonando
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </nav>
-
-            <!-- Tarjeta Luxury de Julia Zárate -->
-            <div class="ticket-luxury-card" id="tktCardReal">
-              <div class="ticket-main-section" style="padding: 16px 14px;">
-                
-                <div class="tkt-header-bar" style="margin-bottom: 10px;">
-                  <div class="tkt-header-texts">
-                    <div class="tkt-header-title" style="font-size: 0.72rem;">Asamblea de circuito 2026–2027</div>
-                    <div class="tkt-header-theme" style="font-size: 0.62rem;">“Haz de Jehová tu mayor alegría” (Salmo 37:4)</div>
-                  </div>
-                  <div class="tkt-bus-badge" id="tktBusBadge" style="font-size: 0.65rem; padding: 3px 8px;">BUS 1 - IDA</div>
-                </div>
-
-                <!-- Nombre -->
-                <div class="tkt-passenger-group" style="margin-bottom: 10px;">
-                  <div class="tkt-passenger-label" style="font-size: 0.58rem;">NOMBRE DEL PASAJERO</div>
-                  <div class="tkt-passenger-name" style="font-size: 1.15rem;">Julia Zárate</div>
-                </div>
-
-                <!-- Caja de ruta -->
-                <div class="tkt-route-beige-box" style="padding: 12px 10px;">
-                  <div class="tkt-route-top-row">
-                    <div class="tkt-origin-group">
-                      <div class="tkt-city-row">
-                        <span class="tkt-code" id="tktOrigCode" style="font-size: 1.1rem;">CUZ</span>
-                        <span class="tkt-city" id="tktOrigCity" style="font-size: 0.85rem;">Cusco</span>
-                      </div>
-                      <div class="tkt-place-pill" style="font-size: 0.65rem; padding: 2px 7px;">
-                        <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                        <span id="tktOrigPlace">Plaza Belén</span>
-                      </div>
-                    </div>
-
-                    <div class="tkt-route-middle">
-                      <span class="tkt-directo-label" style="font-size: 0.62rem;">Directo</span>
-                      <div class="tkt-arrow-track" style="width: 48px;">
-                        <span class="tkt-arrow-pulse-dot"></span>
-                        <span class="tkt-arrow-head"></span>
-                      </div>
-                      <span class="tkt-duration-pill" style="font-size: 0.6rem;">1h 20m</span>
-                    </div>
-
-                    <div class="tkt-destination-group">
-                      <div class="tkt-city-row">
-                        <span class="tkt-city" id="tktDestCity" style="font-size: 0.85rem;">Urubamba</span>
-                        <span class="tkt-code" id="tktDestCode" style="font-size: 1.1rem;">URU</span>
-                      </div>
-                      <div class="tkt-place-pill" style="font-size: 0.65rem; padding: 2px 7px;">
-                        <span id="tktDestPlace">Estac. Local</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- Tiempos -->
-                  <div class="tkt-times-subrow" style="margin-top: 12px;" id="timesBox">
-                    <div class="tkt-time-block">
-                      <div class="tkt-time-label" id="lblSalida" style="font-size: 0.62rem;">SALIDA</div>
-                      <div class="tkt-time-big orange-hero" id="valSalida" style="font-size: 1.25rem;">06:15 AM</div>
-                    </div>
-                    <div class="tkt-time-block right-align">
-                      <div class="tkt-time-label" style="font-size: 0.62rem;">LLEGADA ESTIMADA</div>
-                      <div class="tkt-time-big navy-hero" id="valLlegada" style="font-size: 1.25rem;">07:35 AM</div>
-                    </div>
-                  </div>
-                </div>
-
-                <!-- Fila de Asiento y Abordaje -->
-                <div class="tkt-bottom-row" style="margin-top: 12px;" id="seatRowBox">
-                  <div class="tkt-meta-item">
-                    <span class="tkt-meta-label" style="font-size: 0.58rem;">FECHA</span>
-                    <span class="tkt-meta-val" style="font-size: 0.75rem;">07 Nov</span>
-                  </div>
-                  <div class="tkt-meta-item">
-                    <span class="tkt-meta-label" style="font-size: 0.58rem;">ABORDAJE</span>
-                    <span class="tkt-meta-val red-hero" id="valAbordaje" style="font-size: 0.85rem;">05:50 AM</span>
-                  </div>
-                  <div class="tkt-seat-pill-btn" id="seatPillHero" style="padding: 6px 14px;">
-                    <span class="tkt-seat-pill-text" style="font-size: 0.62rem;">Tu Asiento</span>
-                    <span class="tkt-seat-pill-num" style="font-size: 1.35rem;">01</span>
-                  </div>
-                </div>
-
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- Indicador Home bar del celular -->
-        <div class="mobile-home-indicator"></div>
-
-      </div>
+    <!-- Barra de progreso continua -->
+    <div class="progress-track" id="progTrack" title="Progreso del video">
+      <div class="progress-bar-fill" id="progFill"></div>
     </div>
 
-    <!-- ══════ CONTROLES DE REPRODUCCIÓN (ABAJO) ══════ -->
-    <div class="player-dock-bar">
-      <div class="progress-track" id="progTrack" title="Toca para adelantar o retroceder">
-        <div class="progress-bar-fill" id="progFill"></div>
-      </div>
-
-      <div class="dock-actions-row">
-        <button class="btn-play-action" id="btnPlay" title="Iniciar o pausar">▶</button>
-        
-        <div class="step-nav-group">
-          <button class="btn-step-item" id="btnPrev">« Anterior</button>
-          <button class="btn-step-item" id="btnNext">Siguiente »</button>
-        </div>
-
-        <button class="voice-toggle-btn active" id="btnVoiceToggle" title="Activar o desactivar voz explicativa">
-          <span>🎙️</span> <span id="voiceStatusText">Voz activada</span>
-        </button>
-      </div>
-    </div>
-
-    <!-- BANNER FINAL DE ACCESO DIRECTO -->
-    <div class="cta-banner-card">
-      <div style="font-weight: 800; font-size: 0.95rem; color: #1E293B;">¿Quieres ver tu boleto real ahora?</div>
-      <p style="font-size: 0.78rem; color: #64748B; margin: 3px 0 10px;">Ingresa a la página oficial y escribe tu nombre.</p>
+    <div class="dock-actions-row">
+      <button class="btn-dock-play" id="btnPlay" title="Pausar / Reanudar">⏸</button>
       <a href="index.html" class="btn-open-real-app">
-        <span>Ir a consultar mi Boleto</span>
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        <span>Ir a ver mi Boleto Real ➔</span>
       </a>
     </div>
-
-  </main>
+  </div>
 
   <audio id="bgAudio" preload="none" src="las_asambleas_nos_hacen_felices.mp3"></audio>
 
   <script>
     // ══════════════════════════════════════════════════════════════
-    //  GUION EMPÁTICO Y ARMONIOSO (Sincronizado paso a paso)
+    //  REPRODUCCIÓN AUTOMÁTICA AL ENTRAR (SIN CLIC PREVIO)
     // ══════════════════════════════════════════════════════════════
-    const TOTAL_SECONDS = 32;
+    const TOTAL_SECONDS = 30;
     let currentTime = 0;
     let isPlaying = false;
     let animInterval = null;
@@ -735,58 +659,55 @@
     const valAbordaje    = document.getElementById('valAbordaje');
     const lblSalida      = document.getElementById('lblSalida');
     const seatRowBox     = document.getElementById('seatRowBox');
-    const timesBox       = document.getElementById('timesBox');
 
     const btnPlay        = document.getElementById('btnPlay');
-    const btnPrev        = document.getElementById('btnPrev');
-    const btnNext        = document.getElementById('btnNext');
     const progFill       = document.getElementById('progFill');
-    const btnVoiceToggle = document.getElementById('btnVoiceToggle');
-    const voiceStatusText= document.getElementById('voiceStatusText');
+    const btnAudioToggle = document.getElementById('btnAudioToggle');
+    const audioPillText  = document.getElementById('audioPillText');
     const bgAudio        = document.getElementById('bgAudio');
 
-    // Pasos cronológicos
+    // Capítulos del video
     const CHAPTERS = [
       {
         t: 0,
-        badge: "Bienvenida",
+        badge: "Paso 1 de 5 · Inicio",
         icon: "👋",
-        msg: "¡Hola! Bienvenidos. Consultar tu boleto de bus para la asamblea es muy fácil. Te mostramos cómo hacerlo en unos segundos.",
+        msg: "¡Hola! Bienvenidos. Consultar tu boleto de bus es muy fácil. Te mostramos cómo hacerlo en solo unos segundos.",
         voice: "Hola, bienvenidos. Consultar tu boleto para la asamblea es muy fácil. Te mostramos cómo hacerlo en solo unos segundos."
       },
       {
-        t: 6,
-        badge: "Paso 1 · Escribe tu nombre",
+        t: 5.5,
+        badge: "Paso 2 de 5 · Escribe tu nombre",
         icon: "✍️",
-        msg: "Escribe tu nombre en el recuadro. No te preocupes por tildes o mayúsculas, el sistema te reconocerá igual.",
+        msg: "Escribe tu nombre en el recuadro. No te preocupes por tildes o mayúsculas, el sistema te reconocerá con tranquilidad.",
         voice: "Primero, escribe tu nombre en el recuadro. No te preocupes por mayúsculas o tildes, el sistema te reconocerá con tranquilidad."
       },
       {
-        t: 12,
-        badge: "Paso 2 · Toca tu nombre",
+        t: 11.5,
+        badge: "Paso 3 de 5 · Toca tu nombre",
         icon: "👆",
-        msg: "Verás que tu nombre aparece abajo en una tarjeta dorada con tu bus y asiento. Solo dale un toque para ingresar.",
+        msg: "Tu nombre aparecerá abajo en una tarjeta dorada con tu bus y asiento. Solo dale un toque suave con el dedo.",
         voice: "Verás que tu nombre aparece de inmediato abajo. Solo dale un toque con tu dedo para ingresar a tu boleto."
       },
       {
-        t: 17,
+        t: 16.5,
         badge: "Opción alternativa · Lista completa",
         icon: "📖",
-        msg: "¿Prefieres no escribir? Toca 'Buscar tu nombre en la lista' y elígete directamente de la lista completa de pasajeros.",
+        msg: "¿Prefieres no escribir? Toca 'Buscar tu nombre en la lista' y elígete directamente de la lista de pasajeros.",
         voice: "Y si prefieres no escribir en el teclado, puedes tocar la lista completa para elegir tu nombre directamente."
       },
       {
-        t: 22,
-        badge: "Paso 3 · ¡Tu Asiento y Horarios!",
+        t: 21.5,
+        badge: "Paso 4 de 5 · ¡Tu Boleto y Asiento!",
         icon: "🎫",
-        msg: "¡Listo! Suena la música de asamblea y ves tu Asiento 01, tu bus y la hora de abordaje (05:50 AM) y salida (06:15 AM) en Plaza Belén.",
+        msg: "¡Listo! Suena la música de asamblea y ves tu Asiento 01, tu bus y la hora de abordaje (05:50 AM) y salida (06:15 AM).",
         voice: "Listo. Se abrirá tu boleto con nuestra música de asamblea. Aquí puedes ver tu asiento cero uno en color naranja y los horarios de salida."
       },
       {
-        t: 27,
-        badge: "Paso 4 · Viaje de Retorno",
+        t: 26.5,
+        badge: "Paso 5 de 5 · Viaje de Retorno",
         icon: "🔄",
-        msg: "Para ver el regreso a Cusco, solo toca arriba en 'RETORNO'. Verás la salida a las 05:30 PM desde el local de asamblea.",
+        msg: "Para ver el regreso a Cusco, solo toca arriba en 'RETORNO'. Verás la salida a las 05:30 PM. ¡Que disfrutes la asamblea!",
         voice: "Y para ver el viaje de regreso a Cusco, solo toca arriba en Tramo Retorno. Esperamos que disfrutes mucho la asamblea."
       }
     ];
@@ -794,8 +715,8 @@
     let currentChapterIndex = -1;
 
     function renderTimeline(sec) {
-      // 0 a 5.9s: Estado Inicial
-      if (sec < 6) {
+      // 0 a 5.4s: Estado Inicial
+      if (sec < 5.5) {
         setChapter(0);
         screenLogin.style.display = 'block';
         screenTicket.style.display = 'none';
@@ -806,22 +727,21 @@
         simDirWrap.classList.remove('tut-highlight-focus');
         simInput.value = '';
         touchPoint.style.display = 'none';
-        viewport.scrollTop = 0;
+        viewport.scrollTo({ top: 0, behavior: 'smooth' });
         stopMusic();
       }
-      // 6 a 11.9s: Escribir nombre
-      else if (sec >= 6 && sec < 12) {
+      // 5.5 a 11.4s: Escribir nombre
+      else if (sec >= 5.5 && sec < 11.5) {
         setChapter(1);
         screenLogin.style.display = 'block';
         screenTicket.style.display = 'none';
         simDirDropdown.style.display = 'none';
         simDirWrap.classList.remove('tut-highlight-focus');
 
-        // Resaltar suavemente el input
         simInputWrap.classList.add('tut-highlight-focus');
 
         const name = "Julia Zárate";
-        const charCount = Math.min(name.length, Math.floor((sec - 6) * 2.5));
+        const charCount = Math.min(name.length, Math.floor((sec - 5.5) * 2.5));
         simInput.value = name.slice(0, charCount);
 
         if (charCount >= 3) {
@@ -831,10 +751,10 @@
         }
 
         touchPoint.style.display = 'none';
-        viewport.scrollTop = 40;
+        viewport.scrollTo({ top: 20, behavior: 'smooth' });
       }
-      // 12 a 16.9s: Tocar sugerencia
-      else if (sec >= 12 && sec < 17) {
+      // 11.5 a 16.4s: Tocar sugerencia
+      else if (sec >= 11.5 && sec < 16.5) {
         setChapter(2);
         screenLogin.style.display = 'block';
         screenTicket.style.display = 'none';
@@ -848,13 +768,13 @@
 
         touchPoint.style.display = 'block';
         touchPoint.style.left = '50%';
-        touchPoint.style.top = '275px';
-        if (sec >= 13.5) touchPoint.classList.add('tap'); else touchPoint.classList.remove('tap');
+        touchPoint.style.top = '255px';
+        if (sec >= 13) touchPoint.classList.add('tap'); else touchPoint.classList.remove('tap');
 
-        viewport.scrollTop = 60;
+        viewport.scrollTo({ top: 40, behavior: 'smooth' });
       }
-      // 17 a 21.9s: Opción alternativa - Directorio
-      else if (sec >= 17 && sec < 22) {
+      // 16.5 a 21.4s: Opción alternativa - Directorio
+      else if (sec >= 16.5 && sec < 21.5) {
         setChapter(3);
         screenLogin.style.display = 'block';
         screenTicket.style.display = 'none';
@@ -866,13 +786,13 @@
 
         touchPoint.style.display = 'block';
         touchPoint.style.left = '50%';
-        touchPoint.style.top = '340px';
+        touchPoint.style.top = '315px';
         touchPoint.classList.remove('tap');
 
-        viewport.scrollTop = 160;
+        viewport.scrollTo({ top: 120, behavior: 'smooth' });
       }
-      // 22 a 26.9s: Boleto Digital - TRAMO IDA
-      else if (sec >= 22 && sec < 27) {
+      // 21.5 a 26.4s: Boleto Digital - TRAMO IDA
+      else if (sec >= 21.5 && sec < 26.5) {
         setChapter(4);
         screenLogin.style.display = 'none';
         screenTicket.style.display = 'block';
@@ -893,16 +813,15 @@
         valLlegada.textContent = '07:35 AM';
         lblSalida.textContent = 'SALIDA';
 
-        // Resaltar suavemente el asiento
         seatRowBox.classList.add('tut-highlight-focus');
         pillVuelta.classList.remove('tut-highlight-focus');
 
         touchPoint.style.display = 'none';
-        viewport.scrollTop = 80;
+        viewport.scrollTo({ top: 45, behavior: 'smooth' });
         startMusic();
       }
-      // 27 a 32s: Boleto Digital - TRAMO RETORNO
-      else if (sec >= 27) {
+      // 26.5 a 30s: Boleto Digital - TRAMO RETORNO
+      else if (sec >= 26.5) {
         setChapter(5);
         screenLogin.style.display = 'none';
         screenTicket.style.display = 'block';
@@ -923,18 +842,17 @@
         valLlegada.textContent = '06:50 PM';
         lblSalida.textContent = 'SALIDA RETORNO';
 
-        // Resaltar la pestaña de retorno
         pillVuelta.classList.add('tut-highlight-focus');
 
         touchPoint.style.display = 'block';
-        touchPoint.style.left = '78%';
-        touchPoint.style.top = '24px';
+        touchPoint.style.left = '76%';
+        touchPoint.style.top = '22px';
         touchPoint.classList.add('tap');
 
-        viewport.scrollTop = 40;
+        viewport.scrollTo({ top: 0, behavior: 'smooth' });
       }
 
-      // Barra de progreso y tiempo
+      // Progreso
       const pct = (sec / TOTAL_SECONDS) * 100;
       progFill.style.width = pct + '%';
     }
@@ -952,7 +870,7 @@
       }
     }
 
-    // ══════ VOZ EMPÁTICA Y NATURAL (Español) ══════
+    // ══════ VOZ ESPAÑOLA TRANQUILA ══════
     let availableVoices = [];
     function loadVoices() {
       if (!('speechSynthesis' in window)) return;
@@ -968,10 +886,9 @@
       window.speechSynthesis.cancel();
 
       const u = new SpeechSynthesisUtterance(text);
-      u.rate = 0.88;  // Ritmo tranquilo y pausado, ideal para personas 40-50+
-      u.pitch = 1.02; // Tono cálido y natural
+      u.rate = 0.88;
+      u.pitch = 1.02;
 
-      // Elegir la voz española más empática y natural disponible
       const voice = availableVoices.find(v => 
         (v.lang.startsWith('es') || v.lang.startsWith('es-')) && 
         (v.name.includes('Sabina') || v.name.includes('Helena') || v.name.includes('Monica') || v.name.includes('Paulina') || v.name.includes('Google') || v.name.includes('Natural'))
@@ -981,10 +898,9 @@
       window.speechSynthesis.speak(u);
     }
 
-    // ══════ MÚSICA SUAVE DE FONDO ══════
     function startMusic() {
       if (bgAudio && bgAudio.paused) {
-        bgAudio.volume = 0.18; // Volumen suave que no compite con la voz
+        bgAudio.volume = 0.16;
         bgAudio.play().catch(()=>{});
       }
     }
@@ -995,7 +911,7 @@
       }
     }
 
-    // ══════ REPRODUCCIÓN / PAUSA ══════
+    // ══════ INICIAR REPRODUCCIÓN ══════
     function play() {
       if (currentTime >= TOTAL_SECONDS) {
         currentTime = 0;
@@ -1004,7 +920,6 @@
       isPlaying = true;
       btnPlay.textContent = '⏸';
 
-      // Disparar voz inicial
       if (currentChapterIndex < 0) {
         setChapter(0);
       }
@@ -1014,6 +929,7 @@
         if (currentTime >= TOTAL_SECONDS) {
           pause();
           currentTime = TOTAL_SECONDS;
+          btnPlay.textContent = '🔄';
         }
         renderTimeline(currentTime);
       }, 500);
@@ -1031,29 +947,19 @@
       if (isPlaying) pause(); else play();
     });
 
-    // Navegación por pasos
-    btnNext.addEventListener('click', () => {
-      const next = CHAPTERS.find(c => c.t > currentTime + 0.8);
-      currentTime = next ? next.t : TOTAL_SECONDS;
-      renderTimeline(currentTime);
-    });
-
-    btnPrev.addEventListener('click', () => {
-      const prev = [...CHAPTERS].reverse().find(c => c.t < currentTime - 1.2);
-      currentTime = prev ? prev.t : 0;
-      renderTimeline(currentTime);
-    });
-
-    // Control de voz on/off
-    btnVoiceToggle.addEventListener('click', () => {
+    // Control de audio On/Off
+    btnAudioToggle.addEventListener('click', () => {
       voiceEnabled = !voiceEnabled;
-      btnVoiceToggle.classList.toggle('active', voiceEnabled);
-      voiceStatusText.textContent = voiceEnabled ? 'Voz activada' : 'Voz silenciada';
-      if (!voiceEnabled && 'speechSynthesis' in window) {
-        window.speechSynthesis.cancel();
-      } else if (voiceEnabled && isPlaying) {
-        const ch = CHAPTERS[Math.max(0, currentChapterIndex)];
-        if (ch) speak(ch.voice);
+      btnAudioToggle.classList.toggle('active', voiceEnabled);
+      audioPillText.textContent = voiceEnabled ? 'Audio activado' : 'Silenciado';
+      if (!voiceEnabled) {
+        stopMusic();
+        if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      } else {
+        if (isPlaying && currentChapterIndex >= 0) {
+          speak(CHAPTERS[currentChapterIndex].voice);
+          if (currentTime >= 21.5) startMusic();
+        }
       }
     });
 
@@ -1066,8 +972,24 @@
       renderTimeline(currentTime);
     });
 
-    // Iniciar estado
-    renderTimeline(0);
+    // Activar audio con cualquier toque si el navegador lo bloqueó inicialmente
+    document.body.addEventListener('click', () => {
+      if (voiceEnabled && !speechSynthesis.speaking && isPlaying) {
+        if (currentChapterIndex >= 0) speak(CHAPTERS[currentChapterIndex].voice);
+        if (currentTime >= 21.5) startMusic();
+      }
+    }, { once: true });
+
+    // ══════════════════════════════════════════════════════════════
+    //  INICIO AUTOMÁTICO INMEDIATO AL CARGAR LA PÁGINA
+    // ══════════════════════════════════════════════════════════════
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTimeline(0);
+      // Inicia automáticamente a los 300ms sin tocar nada
+      setTimeout(() => {
+        play();
+      }, 300);
+    });
   </script>
 </body>
 </html>
