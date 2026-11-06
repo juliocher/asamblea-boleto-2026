@@ -222,6 +222,112 @@
       50%      { box-shadow: 0 0 0 8px rgba(234, 88, 12, 0.32); }
     }
 
+    /* ══════ AJUSTE EXACTO DE MÁRGENES DE RUTA (SIN LETRAS CORTADAS) ══════ */
+    .smartphone-viewport .ticket-luxury-card {
+      box-sizing: border-box !important;
+      width: 100% !important;
+      max-width: 100% !important;
+      margin: 0 !important;
+      border-radius: 18px !important;
+    }
+    .smartphone-viewport .ticket-main-section {
+      box-sizing: border-box !important;
+      padding: 10px 8px !important;
+    }
+    .smartphone-viewport .tkt-route-beige-box {
+      box-sizing: border-box !important;
+      padding: 8px 8px !important;
+      overflow: visible !important;
+    }
+    .smartphone-viewport .tkt-route-top-row {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: space-between !important;
+      gap: 2px !important;
+      margin-bottom: 6px !important;
+    }
+    .smartphone-viewport .tkt-origin-group,
+    .smartphone-viewport .tkt-destination-group {
+      flex: 1 1 0 !important;
+      min-width: 0 !important;
+      overflow: visible !important;
+    }
+    .smartphone-viewport .tkt-destination-group {
+      text-align: right !important;
+    }
+    .smartphone-viewport .tkt-city-row {
+      display: flex !important;
+      align-items: baseline !important;
+      gap: 3px !important;
+      white-space: nowrap !important;
+      overflow: visible !important;
+    }
+    .smartphone-viewport .tkt-destination-group .tkt-city-row {
+      justify-content: flex-end !important;
+    }
+    .smartphone-viewport .tkt-code {
+      font-size: 1.05rem !important;
+      font-weight: 900 !important;
+      line-height: 1 !important;
+      letter-spacing: -0.02em !important;
+    }
+    .smartphone-viewport .tkt-city {
+      font-size: 0.76rem !important;
+      font-weight: 800 !important;
+    }
+    .smartphone-viewport .tkt-place-pill {
+      display: inline-flex !important;
+      align-items: center !important;
+      gap: 2px !important;
+      padding: 2px 5px !important;
+      background: #FFFFFF !important;
+      border: 1px solid #FDE8C8 !important;
+      border-radius: 9999px !important;
+      font-size: 0.56rem !important;
+      font-weight: 600 !important;
+      color: #475569 !important;
+      margin-top: 3px !important;
+      max-width: 100% !important;
+      white-space: nowrap !important;
+    }
+    .smartphone-viewport .tkt-route-middle {
+      flex: 0 0 auto !important;
+      min-width: 44px !important;
+      max-width: 50px !important;
+      text-align: center !important;
+      display: flex !important;
+      flex-direction: column !important;
+      align-items: center !important;
+      padding: 0 1px !important;
+    }
+    .smartphone-viewport .tkt-arrow-track {
+      width: 24px !important;
+      height: 2px !important;
+    }
+    .smartphone-viewport .tkt-directo-label {
+      font-size: 0.54rem !important;
+    }
+    .smartphone-viewport .tkt-duration-pill {
+      font-size: 0.50rem !important;
+      padding: 1px 4px !important;
+    }
+    /* Pestañas limpias y sin widget de música que empuje el boleto */
+    .smartphone-viewport .tabs-actions-right {
+      display: none !important;
+    }
+    .smartphone-viewport .segment-tabs-bar {
+      margin-bottom: 8px !important;
+    }
+    .smartphone-viewport .tabs-group {
+      width: 100% !important;
+      display: flex !important;
+      gap: 4px !important;
+    }
+    .smartphone-viewport .tab-pill {
+      flex: 1 1 50% !important;
+      justify-content: center !important;
+    }
+
     /* Dedo virtual transparente */
     .tut-touch-point {
       position: absolute;
@@ -454,7 +560,7 @@
                 </div>
                 <div class="directory-list-scroll" style="max-height: 100px;">
                   <div class="directory-item-btn"><span class="dir-p-name">Abigail Villena</span><span class="dir-p-bus">Bus 2</span></div>
-                  <div class="directory-item-btn" style="background:#FFFBEB; border: 1.5px solid #F59E0B;"><span class="dir-p-name" style="font-weight:800; color:#EA580C;">👉 Julia Zárate</span><span class="dir-p-bus" style="background:#EA580C; color:#fff;">Bus 1</span></div>
+                  <div class="directory-item-btn" id="simTargetPassenger" style="background:#FFFBEB; border: 1.5px solid #F59E0B;"><span class="dir-p-name" style="font-weight:800; color:#EA580C;">👉 Julia Zárate</span><span class="dir-p-bus" style="background:#EA580C; color:#fff;">Bus 1</span></div>
                   <div class="directory-item-btn"><span class="dir-p-name">Julio César Chero</span><span class="dir-p-bus">Bus 2</span></div>
                 </div>
               </div>
@@ -618,13 +724,12 @@
     </div>
   </div>
 
-  <audio id="bgAudio" preload="none" src="las_asambleas_nos_hacen_felices.mp3"></audio>
 
   <script>
     // ══════════════════════════════════════════════════════════════
     //  REPRODUCCIÓN AUTOMÁTICA AL ENTRAR (SIN CLIC PREVIO)
     // ══════════════════════════════════════════════════════════════
-    const TOTAL_SECONDS = 39;
+    const TOTAL_SECONDS = 44;
     let currentTime = 0;
     let isPlaying = false;
     let animInterval = null;
@@ -642,6 +747,7 @@
     const simInputWrap   = document.getElementById('simInputWrap');
     const simInput       = document.getElementById('simInput');
     const simSuggestions = document.getElementById('simSuggestions');
+    const simSuggItem    = document.getElementById('simSuggItem');
     const simDirWrap     = document.getElementById('simDirWrap');
     const simDirDropdown = document.getElementById('simDirDropdown');
 
@@ -664,9 +770,8 @@
     const progFill       = document.getElementById('progFill');
     const btnAudioToggle = document.getElementById('btnAudioToggle');
     const audioPillText  = document.getElementById('audioPillText');
-    const bgAudio        = document.getElementById('bgAudio');
 
-    // Capítulos del video (Frases concisas y completas con tiempo suficiente)
+    // Capítulos del video con oraciones completas y tiempo holgado para hablar
     const CHAPTERS = [
       {
         t: 0,
@@ -701,18 +806,31 @@
         badge: "Paso 4 de 5 · ¡Tu Boleto y Asiento!",
         icon: "🎫",
         msg: "¡Listo! Aquí verás tu número de asiento en grande, tu bus y tus horarios de abordaje y salida.",
-        voice: "¡Listo! Aquí verás tu número de asiento en grande, tu bus y tus horarios de salida."
+        voice: "¡Listo! Aquí verás tu número de asiento en grande, tu bus y tus horarios de abordaje y salida."
       },
       {
         t: 33.5,
         badge: "Paso 5 de 5 · Viaje de Retorno",
         icon: "🔄",
         msg: "Para ver tu viaje de regreso a Cusco, solo toca arriba en 'RETORNO'. ¡Buen viaje!",
-        voice: "Para ver tu viaje de regreso a Cusco, solo toca arriba en Tramo Retorno. ¡Buen viaje!"
+        voice: "Para ver tu viaje de regreso a Cusco, solo toca arriba en la opción Retorno. ¡Que tengas una excelente asamblea!"
       }
     ];
 
     let currentChapterIndex = -1;
+
+    // Posicionamiento dinámico milimétrico del dedo táctil sobre cualquier elemento
+    function placeTouchOn(elem, isTap = false) {
+      if (!elem || !touchPoint || !viewport) return;
+      const vpRect = viewport.getBoundingClientRect();
+      const elRect = elem.getBoundingClientRect();
+      const x = (elRect.left + elRect.width / 2) - vpRect.left;
+      const y = (elRect.top + elRect.height / 2) - vpRect.top;
+      touchPoint.style.display = 'block';
+      touchPoint.style.left = Math.round(x) + 'px';
+      touchPoint.style.top = Math.round(y) + 'px';
+      if (isTap) touchPoint.classList.add('tap'); else touchPoint.classList.remove('tap');
+    }
 
     function renderTimeline(sec) {
       // 0 a 6.4s: Estado Inicial
@@ -728,7 +846,6 @@
         simInput.value = '';
         touchPoint.style.display = 'none';
         viewport.scrollTo({ top: 0, behavior: 'smooth' });
-        stopMusic();
       }
       // 6.5 a 13.4s: Escribir nombre
       else if (sec >= 6.5 && sec < 13.5) {
@@ -764,14 +881,12 @@
         simDirWrap.classList.remove('tut-highlight-focus');
 
         simInputWrap.classList.remove('tut-highlight-focus');
-        document.getElementById('simSuggItem').classList.add('tut-highlight-focus');
+        simSuggItem.classList.add('tut-highlight-focus');
 
-        touchPoint.style.display = 'block';
-        touchPoint.style.left = '50%';
-        touchPoint.style.top = '255px';
-        if (sec >= 15.5) touchPoint.classList.add('tap'); else touchPoint.classList.remove('tap');
-
-        viewport.scrollTo({ top: 40, behavior: 'smooth' });
+        viewport.scrollTo({ top: 35, behavior: 'smooth' });
+        requestAnimationFrame(() => {
+          placeTouchOn(simSuggItem, sec >= 15.5);
+        });
       }
       // 20 a 26.4s: Opción alternativa - Directorio
       else if (sec >= 20 && sec < 26.5) {
@@ -779,17 +894,16 @@
         screenLogin.style.display = 'block';
         screenTicket.style.display = 'none';
         simSuggestions.style.display = 'none';
-        document.getElementById('simSuggItem').classList.remove('tut-highlight-focus');
+        simSuggItem.classList.remove('tut-highlight-focus');
 
         simDirDropdown.style.display = 'block';
         simDirWrap.classList.add('tut-highlight-focus');
 
-        touchPoint.style.display = 'block';
-        touchPoint.style.left = '50%';
-        touchPoint.style.top = '315px';
-        touchPoint.classList.remove('tap');
-
-        viewport.scrollTo({ top: 120, behavior: 'smooth' });
+        viewport.scrollTo({ top: 110, behavior: 'smooth' });
+        const targetPassenger = document.getElementById('simTargetPassenger') || simDirWrap;
+        requestAnimationFrame(() => {
+          placeTouchOn(targetPassenger, false);
+        });
       }
       // 26.5 a 33.4s: Boleto Digital - TRAMO IDA
       else if (sec >= 26.5 && sec < 33.5) {
@@ -817,10 +931,9 @@
         pillVuelta.classList.remove('tut-highlight-focus');
 
         touchPoint.style.display = 'none';
-        viewport.scrollTo({ top: 45, behavior: 'smooth' });
-        startMusic();
+        viewport.scrollTo({ top: 30, behavior: 'smooth' });
       }
-      // 33.5 a 39s: Boleto Digital - TRAMO RETORNO
+      // 33.5 a 44s: Boleto Digital - TRAMO RETORNO
       else if (sec >= 33.5) {
         setChapter(5);
         screenLogin.style.display = 'none';
@@ -844,12 +957,10 @@
 
         pillVuelta.classList.add('tut-highlight-focus');
 
-        touchPoint.style.display = 'block';
-        touchPoint.style.left = '76%';
-        touchPoint.style.top = '22px';
-        touchPoint.classList.add('tap');
-
         viewport.scrollTo({ top: 0, behavior: 'smooth' });
+        requestAnimationFrame(() => {
+          placeTouchOn(pillVuelta, true);
+        });
       }
 
       // Progreso
@@ -897,7 +1008,7 @@
       }
 
       const u = new SpeechSynthesisUtterance(text);
-      u.rate = 0.92;
+      u.rate = 0.90;
       u.pitch = 1.0;
       u.lang = 'es-PE';
 
@@ -914,19 +1025,6 @@
       window.speechSynthesis.speak(u);
     }
 
-    function startMusic() {
-      if (bgAudio && bgAudio.paused) {
-        bgAudio.volume = 0.16;
-        bgAudio.play().catch(()=>{});
-      }
-    }
-    function stopMusic() {
-      if (bgAudio && !bgAudio.paused) {
-        bgAudio.pause();
-        bgAudio.currentTime = 0;
-      }
-    }
-
     // ══════ INICIAR REPRODUCCIÓN (INMEDIATO) ══════
     function play() {
       if (currentTime >= TOTAL_SECONDS) {
@@ -936,7 +1034,7 @@
       isPlaying = true;
       btnPlay.textContent = '⏸';
 
-      // Disparar voz y mensaje del capítulo activo DE INMEDIATO (sin esperar)
+      // Disparar voz y mensaje del capítulo activo DE INMEDIATO
       const chIdx = currentChapterIndex >= 0 ? currentChapterIndex : 0;
       currentChapterIndex = chIdx;
       const ch = CHAPTERS[chIdx];
@@ -948,27 +1046,42 @@
         speak(ch.voice);
       }
 
+      if (animInterval) clearInterval(animInterval);
       animInterval = setInterval(() => {
         currentTime += 0.5;
         if (currentTime >= TOTAL_SECONDS) {
-          pause();
+          // TERMINÓ EL VIDEO: NO cancelar la voz, dejar que termine su última oración completa con calma
+          clearInterval(animInterval);
+          isPlaying = false;
           currentTime = TOTAL_SECONDS;
+          progFill.style.width = '100%';
           btnPlay.textContent = '🔄';
+          return;
         }
         renderTimeline(currentTime);
       }, 500);
     }
 
-    function pause() {
+    function pause(userManual = false) {
       isPlaying = false;
       btnPlay.textContent = '▶';
-      clearInterval(animInterval);
-      stopMusic();
-      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      if (animInterval) clearInterval(animInterval);
+      // Solo cancelar voz si el usuario presionó pausa manualmente
+      if (userManual && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
     }
 
     btnPlay.addEventListener('click', () => {
-      if (isPlaying) pause(); else play();
+      if (btnPlay.textContent === '🔄' || currentTime >= TOTAL_SECONDS) {
+        currentTime = 0;
+        currentChapterIndex = -1;
+        play();
+      } else if (isPlaying) {
+        pause(true);
+      } else {
+        play();
+      }
     });
 
     // Control de audio On/Off
@@ -978,12 +1091,10 @@
       btnAudioToggle.classList.toggle('active', voiceEnabled);
       audioPillText.textContent = voiceEnabled ? 'Audio activado' : 'Silenciado';
       if (!voiceEnabled) {
-        stopMusic();
         if ('speechSynthesis' in window) window.speechSynthesis.cancel();
       } else {
         if (isPlaying && currentChapterIndex >= 0) {
           speak(CHAPTERS[currentChapterIndex].voice);
-          if (currentTime >= 26.5) startMusic();
         }
       }
     });
@@ -1002,17 +1113,21 @@
       if (voiceEnabled && !speechSynthesis.speaking && isPlaying) {
         const ch = CHAPTERS[Math.max(0, currentChapterIndex)];
         if (ch) speak(ch.voice);
-        if (currentTime >= 26.5) startMusic();
       }
     }, { once: true });
 
     // ══════════════════════════════════════════════════════════════
     //  INICIO AUTOMÁTICO AL INSTANTE (0 RETARDO)
     // ══════════════════════════════════════════════════════════════
-    document.addEventListener('DOMContentLoaded', () => {
+    function startImmediately() {
       renderTimeline(0);
-      play(); // Inicia inmediatamente sin esperar 3 segundos
-    });
+      play();
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', startImmediately);
+    } else {
+      startImmediately();
+    }
   </script>
 </body>
 </html>
