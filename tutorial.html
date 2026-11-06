@@ -870,11 +870,17 @@
       }
     }
 
-    // ══════ VOZ ESPAÑOLA TRANQUILA ══════
+    // ══════ VOZ ESPAÑOLA TRANQUILA (INICIO INSTANTÁNEO) ══════
     let availableVoices = [];
+    let hasSpokenFirst = false;
+
     function loadVoices() {
       if (!('speechSynthesis' in window)) return;
       availableVoices = window.speechSynthesis.getVoices();
+      if (!hasSpokenFirst && isPlaying && voiceEnabled && currentChapterIndex === 0) {
+        hasSpokenFirst = true;
+        speak(CHAPTERS[0].voice);
+      }
     }
     if ('speechSynthesis' in window) {
       speechSynthesis.onvoiceschanged = loadVoices;
@@ -883,18 +889,28 @@
 
     function speak(text) {
       if (!('speechSynthesis' in window) || !voiceEnabled) return;
+      hasSpokenFirst = true;
       window.speechSynthesis.cancel();
 
+      if (availableVoices.length === 0) {
+        availableVoices = window.speechSynthesis.getVoices();
+      }
+
       const u = new SpeechSynthesisUtterance(text);
-      u.rate = 0.88;
-      u.pitch = 1.02;
+      u.rate = 0.92;
+      u.pitch = 1.0;
+      u.lang = 'es-PE';
 
       const voice = availableVoices.find(v => 
         (v.lang.startsWith('es') || v.lang.startsWith('es-')) && 
         (v.name.includes('Sabina') || v.name.includes('Helena') || v.name.includes('Monica') || v.name.includes('Paulina') || v.name.includes('Google') || v.name.includes('Natural'))
       ) || availableVoices.find(v => v.lang.startsWith('es'));
 
-      if (voice) u.voice = voice;
+      if (voice) {
+        u.voice = voice;
+        u.lang = voice.lang;
+      }
+
       window.speechSynthesis.speak(u);
     }
 
@@ -911,7 +927,7 @@
       }
     }
 
-    // ══════ INICIAR REPRODUCCIÓN ══════
+    // ══════ INICIAR REPRODUCCIÓN (INMEDIATO) ══════
     function play() {
       if (currentTime >= TOTAL_SECONDS) {
         currentTime = 0;
@@ -920,8 +936,16 @@
       isPlaying = true;
       btnPlay.textContent = '⏸';
 
-      if (currentChapterIndex < 0) {
-        setChapter(0);
+      // Disparar voz y mensaje del capítulo activo DE INMEDIATO (sin esperar)
+      const chIdx = currentChapterIndex >= 0 ? currentChapterIndex : 0;
+      currentChapterIndex = chIdx;
+      const ch = CHAPTERS[chIdx];
+      stepBadge.textContent = ch.badge;
+      stepMessage.innerHTML = ch.msg;
+      narratorIcon.textContent = ch.icon;
+
+      if (voiceEnabled) {
+        speak(ch.voice);
       }
 
       animInterval = setInterval(() => {
@@ -948,7 +972,8 @@
     });
 
     // Control de audio On/Off
-    btnAudioToggle.addEventListener('click', () => {
+    btnAudioToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
       voiceEnabled = !voiceEnabled;
       btnAudioToggle.classList.toggle('active', voiceEnabled);
       audioPillText.textContent = voiceEnabled ? 'Audio activado' : 'Silenciado';
@@ -958,7 +983,7 @@
       } else {
         if (isPlaying && currentChapterIndex >= 0) {
           speak(CHAPTERS[currentChapterIndex].voice);
-          if (currentTime >= 21.5) startMusic();
+          if (currentTime >= 26.5) startMusic();
         }
       }
     });
@@ -972,23 +997,21 @@
       renderTimeline(currentTime);
     });
 
-    // Activar audio con cualquier toque si el navegador lo bloqueó inicialmente
-    document.body.addEventListener('click', () => {
+    // Activar audio con cualquier toque si la política del navegador lo bloqueó inicialmente
+    document.addEventListener('pointerdown', () => {
       if (voiceEnabled && !speechSynthesis.speaking && isPlaying) {
-        if (currentChapterIndex >= 0) speak(CHAPTERS[currentChapterIndex].voice);
-        if (currentTime >= 21.5) startMusic();
+        const ch = CHAPTERS[Math.max(0, currentChapterIndex)];
+        if (ch) speak(ch.voice);
+        if (currentTime >= 26.5) startMusic();
       }
     }, { once: true });
 
     // ══════════════════════════════════════════════════════════════
-    //  INICIO AUTOMÁTICO INMEDIATO AL CARGAR LA PÁGINA
+    //  INICIO AUTOMÁTICO AL INSTANTE (0 RETARDO)
     // ══════════════════════════════════════════════════════════════
     document.addEventListener('DOMContentLoaded', () => {
       renderTimeline(0);
-      // Inicia automáticamente a los 300ms sin tocar nada
-      setTimeout(() => {
-        play();
-      }, 300);
+      play(); // Inicia inmediatamente sin esperar 3 segundos
     });
   </script>
 </body>
