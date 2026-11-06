@@ -84,6 +84,33 @@
       color: #B45309;
     }
 
+    /* Banner flotante sutil para activar voz en celulares */
+    .mobile-audio-banner {
+      position: absolute;
+      top: 54px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #EA580C 0%, #C2410C 100%);
+      color: #FFFFFF;
+      padding: 6px 16px;
+      border-radius: 9999px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 4px 16px rgba(234, 88, 12, 0.45);
+      z-index: 100;
+      cursor: pointer;
+      animation: pulseAudioBanner 1.8s infinite ease-in-out;
+      border: 1.5px solid rgba(255, 255, 255, 0.6);
+      white-space: nowrap;
+    }
+    @keyframes pulseAudioBanner {
+      0%, 100% { transform: translateX(-50%) scale(1); box-shadow: 0 4px 16px rgba(234, 88, 12, 0.35); }
+      50%      { transform: translateX(-50%) scale(1.05); box-shadow: 0 6px 22px rgba(234, 88, 12, 0.65); }
+    }
+
     /* ══════ CELULAR REALISTA (AJUSTE DINÁMICO A LA PANTALLA) ══════ */
     .smartphone-chassis {
       width: 100%;
@@ -486,6 +513,11 @@
       <div class="browser-url-bar">
         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
         <span>juliocher.github.io/asamblea-boleto-2026/</span>
+      </div>
+
+      <!-- Banner flotante sutil para celulares (se quita al tocar o en cuanto empieza a hablar) -->
+      <div id="mobileAudioPrompt" class="mobile-audio-banner" onclick="userUnlockAudio(event)">
+        <span>🔊</span> <span>Toca para escuchar la voz</span>
       </div>
 
       <!-- VENTANA CON LA INTERFAZ EXACTA DE LA APP (AUTO-SCROLL PROGRAMADO) -->
@@ -981,49 +1013,109 @@
       }
     }
 
-    // ══════ VOZ ESPAÑOLA TRANQUILA (INICIO INSTANTÁNEO) ══════
+    // ══════ VOZ ESPAÑOLA TRANQUILA (INICIO INSTANTÁNEO Y COMPATIBLE MÓVIL) ══════
     let availableVoices = [];
-    let hasSpokenFirst = false;
+    let hasUserUnlockedAudio = false;
 
-    function loadVoices() {
-      if (!('speechSynthesis' in window)) return;
-      availableVoices = window.speechSynthesis.getVoices();
-      if (!hasSpokenFirst && isPlaying && voiceEnabled && currentChapterIndex === 0) {
-        hasSpokenFirst = true;
-        speak(CHAPTERS[0].voice);
+    function getBestVoice() {
+      if (!('speechSynthesis' in window)) return null;
+      if (!availableVoices.length) {
+        availableVoices = window.speechSynthesis.getVoices() || [];
       }
+      if (!availableVoices.length) return null;
+
+      // 1. Voz natural o de Google en español
+      const natural = availableVoices.find(v => 
+        v.lang && (v.lang.startsWith('es') || v.lang.startsWith('es-') || v.lang.startsWith('es_')) && 
+        (v.name.includes('Natural') || v.name.includes('Google') || v.name.includes('Sabina') || v.name.includes('Helena') || v.name.includes('Paulina'))
+      );
+      if (natural) return natural;
+
+      // 2. Cualquier voz en español
+      return availableVoices.find(v => v.lang && (v.lang.startsWith('es') || v.lang.startsWith('es-') || v.lang.startsWith('es_')));
+    }
+
+    function initVoices() {
+      if (!('speechSynthesis' in window)) return;
+      availableVoices = window.speechSynthesis.getVoices() || [];
     }
     if ('speechSynthesis' in window) {
-      speechSynthesis.onvoiceschanged = loadVoices;
-      loadVoices();
+      speechSynthesis.onvoiceschanged = initVoices;
+      initVoices();
     }
 
     function speak(text) {
       if (!('speechSynthesis' in window) || !voiceEnabled) return;
-      hasSpokenFirst = true;
-      window.speechSynthesis.cancel();
 
-      if (availableVoices.length === 0) {
-        availableVoices = window.speechSynthesis.getVoices();
+      // Evitar colisión de cancel/speak que traba Chrome por 3 segundos
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
       }
+      try {
+        window.speechSynthesis.resume();
+      } catch(e) {}
 
       const u = new SpeechSynthesisUtterance(text);
       u.rate = 0.90;
       u.pitch = 1.0;
-      u.lang = 'es-PE';
 
-      const voice = availableVoices.find(v => 
-        (v.lang.startsWith('es') || v.lang.startsWith('es-')) && 
-        (v.name.includes('Sabina') || v.name.includes('Helena') || v.name.includes('Monica') || v.name.includes('Paulina') || v.name.includes('Google') || v.name.includes('Natural'))
-      ) || availableVoices.find(v => v.lang.startsWith('es'));
-
+      const voice = getBestVoice();
       if (voice) {
         u.voice = voice;
         u.lang = voice.lang;
+      } else {
+        // Lenguaje estándar preinstalado universal (evita búsqueda offline que congela Android)
+        u.lang = 'es-ES';
       }
 
-      window.speechSynthesis.speak(u);
+      u.onstart = () => {
+        // En cuanto el navegador empieza a hablar, ocultar el aviso flotante del móvil
+        const prompt = document.getElementById('mobileAudioPrompt');
+        if (prompt) prompt.style.display = 'none';
+      };
+
+      try {
+        window.speechSynthesis.speak(u);
+        window.speechSynthesis.resume();
+      } catch(e) {}
     }
+
+    // ══════ DESBLOQUEO INMEDIATO EN CELULARES (IOS SAFARI Y ANDROID) ══════
+    function userUnlockAudio(e) {
+      if (e) e.stopPropagation();
+      if (hasUserUnlockedAudio) return;
+      hasUserUnlockedAudio = true;
+
+      const prompt = document.getElementById('mobileAudioPrompt');
+      if (prompt) prompt.style.display = 'none';
+
+      if ('speechSynthesis' in window) {
+        try {
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.resume();
+          // Despierta el motor de audio en iOS y Android con micro-sonido silencioso
+          const wake = new SpeechSynthesisUtterance(' ');
+          wake.volume = 0.01;
+          wake.rate = 10;
+          window.speechSynthesis.speak(wake);
+        } catch(e) {}
+      }
+
+      // Habla de inmediato el capítulo actual con 0 retardo
+      if (voiceEnabled && currentChapterIndex >= 0) {
+        const ch = CHAPTERS[currentChapterIndex];
+        if (ch) speak(ch.voice);
+      }
+    }
+
+    // Escuchar cualquier toque en el celular para activar la voz de inmediato
+    ['touchstart', 'touchend', 'pointerdown', 'click'].forEach(evtName => {
+      document.addEventListener(evtName, () => {
+        if (!hasUserUnlockedAudio) {
+          userUnlockAudio();
+        }
+      }, { passive: true });
+    });
 
     // ══════ INICIAR REPRODUCCIÓN (INMEDIATO) ══════
     function play() {
@@ -1072,7 +1164,9 @@
       }
     }
 
-    btnPlay.addEventListener('click', () => {
+    btnPlay.addEventListener('click', (e) => {
+      e.stopPropagation();
+      userUnlockAudio();
       if (btnPlay.textContent === '🔄' || currentTime >= TOTAL_SECONDS) {
         currentTime = 0;
         currentChapterIndex = -1;
@@ -1087,6 +1181,7 @@
     // Control de audio On/Off
     btnAudioToggle.addEventListener('click', (e) => {
       e.stopPropagation();
+      userUnlockAudio();
       voiceEnabled = !voiceEnabled;
       btnAudioToggle.classList.toggle('active', voiceEnabled);
       audioPillText.textContent = voiceEnabled ? 'Audio activado' : 'Silenciado';
@@ -1107,14 +1202,6 @@
       currentTime = ratio * TOTAL_SECONDS;
       renderTimeline(currentTime);
     });
-
-    // Activar audio con cualquier toque si la política del navegador lo bloqueó inicialmente
-    document.addEventListener('pointerdown', () => {
-      if (voiceEnabled && !speechSynthesis.speaking && isPlaying) {
-        const ch = CHAPTERS[Math.max(0, currentChapterIndex)];
-        if (ch) speak(ch.voice);
-      }
-    }, { once: true });
 
     // ══════════════════════════════════════════════════════════════
     //  INICIO AUTOMÁTICO AL INSTANTE (0 RETARDO)
