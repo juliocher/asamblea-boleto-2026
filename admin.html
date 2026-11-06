@@ -173,6 +173,151 @@
     }
     .search-in:focus { border-color: var(--orange); background: var(--white); box-shadow: 0 0 0 3px var(--orange-glow); }
 
+    /* ══════════ TARJETAS DE HORARIOS DE AMBOS BUSES ══════════ */
+    .buses-schedule-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+    @media (max-width: 600px) {
+      .buses-schedule-container {
+        grid-template-columns: 1fr;
+      }
+    }
+    .sched-card {
+      background: var(--white);
+      border-radius: 16px;
+      border: 2px solid var(--border-light);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+      cursor: pointer;
+      transition: all 0.25s ease;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .sched-card:hover {
+      border-color: var(--orange-light);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(234,88,12,0.12);
+    }
+    .sched-card.active-bus-card {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px var(--orange-glow), 0 4px 16px rgba(234,88,12,0.15);
+      background: #FFFAF5;
+    }
+    .sched-card-top {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+      color: #fff;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sched-badge-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .sched-bus-badge {
+      background: var(--orange);
+      color: #fff;
+      padding: 4px 10px;
+      border-radius: 7px;
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+    }
+    .sched-bus-badge.bus2 {
+      background: #2563EB;
+    }
+    .sched-active-indicator {
+      font-size: 0.65rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.18);
+      color: #fff;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .sched-active-indicator::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #22C55E;
+      display: inline-block;
+      animation: pulse-dot 1.5s infinite;
+    }
+    .sched-route-sub {
+      font-size: 0.7rem;
+      color: rgba(255,255,255,0.65);
+      font-weight: 600;
+    }
+    .sched-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      padding: 12px 8px;
+      background: var(--white);
+      border-bottom: 1px solid var(--border-light);
+    }
+    .sched-card.active-bus-card .sched-grid {
+      background: #FFFDF9;
+    }
+    .sched-col {
+      text-align: center;
+      padding: 4px 6px;
+      border-right: 1px solid var(--border-light);
+    }
+    .sched-col:last-child {
+      border-right: none;
+    }
+    .sched-col-lbl {
+      display: block;
+      font-size: 0.58rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .sched-col-time {
+      display: block;
+      font-size: 1.05rem;
+      font-weight: 900;
+      font-family: var(--mono);
+      line-height: 1.1;
+    }
+    .sched-col-time.green  { color: var(--green); }
+    .sched-col-time.orange { color: var(--orange); }
+    .sched-col-time.navy   { color: var(--navy); }
+    .sched-col-sub {
+      display: block;
+      font-size: 0.58rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .sched-footer-info {
+      padding: 9px 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--slate);
+      background: var(--bg-cream);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      line-height: 1.3;
+    }
+    .sched-tap-hint {
+      margin-left: auto;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--orange);
+    }
+
     /* ══════════ LISTA DE PASAJEROS ══════════ */
     .p-list { display: flex; flex-direction: column; gap: 6px; }
 
@@ -412,6 +557,75 @@
       </div>
     </div>
 
+    <!-- Tarjetas de Horarios de Ambos Buses -->
+    <div class="buses-schedule-container" id="busesSchedule">
+      <!-- BUS 1 -->
+      <div class="sched-card active-bus-card" id="schedCard1" onclick="setBus('1')" title="Toca para ver lista de Bus 1">
+        <div class="sched-card-top">
+          <div class="sched-badge-wrap">
+            <span class="sched-bus-badge">BUS 1</span>
+            <span class="sched-active-indicator" id="indBus1">Viendo lista</span>
+          </div>
+          <div class="sched-route-sub" id="schedRoute1">Cusco → Urubamba</div>
+        </div>
+        <div class="sched-grid">
+          <div class="sched-col">
+            <span class="sched-col-lbl">Llegada Bus</span>
+            <span class="sched-col-time green" id="b1_abordaje">05:50 AM</span>
+            <span class="sched-col-sub">Abordaje</span>
+          </div>
+          <div class="sched-col">
+            <span class="sched-col-lbl">Salida</span>
+            <span class="sched-col-time orange" id="b1_salida">06:15 AM</span>
+            <span class="sched-col-sub">Partida</span>
+          </div>
+          <div class="sched-col">
+            <span class="sched-col-lbl">Llegada</span>
+            <span class="sched-col-time navy" id="b1_llegada">07:35 AM</span>
+            <span class="sched-col-sub">Destino</span>
+          </div>
+        </div>
+        <div class="sched-footer-info">
+          <span>📍</span>
+          <span id="b1_lugar">Plaza Belén, Cusco</span>
+          <span class="sched-tap-hint" id="hintBus1">● Viendo lista</span>
+        </div>
+      </div>
+
+      <!-- BUS 2 -->
+      <div class="sched-card" id="schedCard2" onclick="setBus('2')" title="Toca para ver lista de Bus 2">
+        <div class="sched-card-top">
+          <div class="sched-badge-wrap">
+            <span class="sched-bus-badge bus2">BUS 2</span>
+            <span class="sched-active-indicator" id="indBus2" style="display:none;">Viendo lista</span>
+          </div>
+          <div class="sched-route-sub" id="schedRoute2">Cusco → Urubamba</div>
+        </div>
+        <div class="sched-grid">
+          <div class="sched-col">
+            <span class="sched-col-lbl">Llegada Bus</span>
+            <span class="sched-col-time green" id="b2_abordaje">06:50 AM</span>
+            <span class="sched-col-sub">Abordaje</span>
+          </div>
+          <div class="sched-col">
+            <span class="sched-col-lbl">Salida</span>
+            <span class="sched-col-time orange" id="b2_salida">07:10 AM</span>
+            <span class="sched-col-sub">Partida</span>
+          </div>
+          <div class="sched-col">
+            <span class="sched-col-lbl">Llegada</span>
+            <span class="sched-col-time navy" id="b2_llegada">08:30 AM</span>
+            <span class="sched-col-sub">Destino</span>
+          </div>
+        </div>
+        <div class="sched-footer-info">
+          <span>📍</span>
+          <span id="b2_lugar">Plaza Belén, Cusco</span>
+          <span class="sched-tap-hint" id="hintBus2">Toca para cambiar</span>
+        </div>
+      </div>
+    </div>
+
     <!-- Lista de pasajeros -->
     <div class="p-list" id="pList"></div>
 
@@ -444,6 +658,7 @@ let boarding     = {};
 let activeUser   = null;
 let activeSeg    = 'ida';
 let activeBus    = '1';
+let config       = {};  // config.json con horarios
 
 const LS_BOARD = 'asamblea_boarding_2026';
 const LS_USER  = 'asamblea_admin_user';
@@ -460,6 +675,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     passengers = await r.json();
   } catch(e) {
     passengers = [];
+  }
+
+  // Cargar config con horarios de buses
+  try {
+    const rc = await fetch('config.json');
+    config = await rc.json();
+  } catch(e) {
+    config = {};
   }
 
   loadBoarding();
@@ -505,6 +728,7 @@ function showApp() {
   document.getElementById('appScreen').style.display   = 'block';
   document.getElementById('userPill').textContent       = activeUser.toUpperCase();
   updateStats();
+  updateSchedules();
   render();
 }
 
@@ -529,6 +753,7 @@ function setSeg(seg) {
   document.getElementById('tabIda').classList.toggle('active',    seg==='ida');
   document.getElementById('tabVuelta').classList.toggle('active', seg==='vuelta');
   updateStats();
+  updateSchedules();
   render();
 }
 
@@ -537,7 +762,70 @@ function setBus(bus) {
   document.getElementById('tBus1').classList.toggle('active', bus==='1');
   document.getElementById('tBus2').classList.toggle('active', bus==='2');
   updateStats();
+  updateSchedules();
   render();
+}
+
+// ══════════════════════════════════════
+//  HORARIOS DE AMBOS BUSES
+// ══════════════════════════════════════
+function updateSchedules() {
+  if (!config || !config.tramos) return;
+  const tramo = config.tramos[activeSeg];
+  if (!tramo) return;
+
+  const b1 = (tramo.buses && tramo.buses['1']) || {};
+  const b2 = (tramo.buses && tramo.buses['2']) || {};
+
+  const routeText = `${tramo.origen_ciudad} → ${tramo.destino_ciudad}`;
+
+  // Bus 1
+  const elRoute1 = document.getElementById('schedRoute1');
+  const elB1Ab   = document.getElementById('b1_abordaje');
+  const elB1Sal  = document.getElementById('b1_salida');
+  const elB1Ll   = document.getElementById('b1_llegada');
+  const elB1Lug  = document.getElementById('b1_lugar');
+  if (elRoute1) elRoute1.textContent = routeText;
+  if (elB1Ab)   elB1Ab.textContent   = b1.hora_abordaje || '—';
+  if (elB1Sal)  elB1Sal.textContent  = b1.hora_salida   || '—';
+  if (elB1Ll)   elB1Ll.textContent   = b1.hora_llegada  || '—';
+  if (elB1Lug)  elB1Lug.textContent  = b1.punto_salida  || tramo.origen_lugar || '—';
+
+  // Bus 2
+  const elRoute2 = document.getElementById('schedRoute2');
+  const elB2Ab   = document.getElementById('b2_abordaje');
+  const elB2Sal  = document.getElementById('b2_salida');
+  const elB2Ll   = document.getElementById('b2_llegada');
+  const elB2Lug  = document.getElementById('b2_lugar');
+  if (elRoute2) elRoute2.textContent = routeText;
+  if (elB2Ab)   elB2Ab.textContent   = b2.hora_abordaje || '—';
+  if (elB2Sal)  elB2Sal.textContent  = b2.hora_salida   || '—';
+  if (elB2Ll)   elB2Ll.textContent   = b2.hora_llegada  || '—';
+  if (elB2Lug)  elB2Lug.textContent  = b2.punto_salida  || tramo.origen_lugar || '—';
+
+  // Resaltado de tarjeta de bus activo
+  const card1 = document.getElementById('schedCard1');
+  const card2 = document.getElementById('schedCard2');
+  const ind1  = document.getElementById('indBus1');
+  const ind2  = document.getElementById('indBus2');
+  const hint1 = document.getElementById('hintBus1');
+  const hint2 = document.getElementById('hintBus2');
+
+  if (activeBus === '1') {
+    if (card1) card1.classList.add('active-bus-card');
+    if (card2) card2.classList.remove('active-bus-card');
+    if (ind1)  ind1.style.display = 'inline-flex';
+    if (ind2)  ind2.style.display = 'none';
+    if (hint1) { hint1.textContent = '● Viendo lista'; hint1.style.color = 'var(--orange)'; }
+    if (hint2) { hint2.textContent = 'Toca para cambiar'; hint2.style.color = 'var(--slate)'; }
+  } else {
+    if (card2) card2.classList.add('active-bus-card');
+    if (card1) card1.classList.remove('active-bus-card');
+    if (ind2)  ind2.style.display = 'inline-flex';
+    if (ind1)  ind1.style.display = 'none';
+    if (hint2) { hint2.textContent = '● Viendo lista'; hint2.style.color = 'var(--orange)'; }
+    if (hint1) { hint1.textContent = 'Toca para cambiar'; hint1.style.color = 'var(--slate)'; }
+  }
 }
 
 function norm(s) {
