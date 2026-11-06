@@ -61,13 +61,13 @@
           </svg>
         </div>
         <h2 id="loginHeading" class="login-title">Consulta tu tarjeta de embarque</h2>
-        <p class="login-desc">Ingresa tu <strong>nombre</strong> o la credencial enviada por WhatsApp para ver tu boleto digital oficial con asiento asignado.</p>
+        <p class="login-desc">Escribe tu nombre para ver de inmediato tu asiento asignado, bus y horarios.</p>
       </div>
 
       <div class="form-group">
-        <label for="credentialInput" class="form-label">Tu Nombre o Credencial</label>
+        <label for="credentialInput" class="form-label">Escribe tu nombre</label>
         <div class="input-glow-wrap">
-          <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
             <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
             <circle cx="12" cy="7" r="4"></circle>
           </svg>
@@ -75,15 +75,19 @@
             type="text"
             id="credentialInput"
             class="form-input"
-            placeholder="Ej: Jose Efrain, Higidia, Diana..."
+            placeholder="Escribe tu nombre aquí..."
             autocomplete="off"
             spellcheck="false"
             inputmode="text"
-            aria-label="Ingresa tu nombre o credencial"
+            aria-label="Escribe tu nombre"
           >
         </div>
+
+        <!-- Sugerencias en tiempo real al escribir -->
+        <div id="liveSuggestionsBox" class="live-suggestions-box" style="display:none;" aria-label="Sugerencias de pasajeros"></div>
+
         <div class="form-help-text">
-          <span>💡</span> Puedes escribir con o sin tildes, en mayúsculas o minúsculas.
+          <span>💡</span> No te preocupes por tildes o mayúsculas, te reconocerá igual.
         </div>
       </div>
 
@@ -94,6 +98,28 @@
           <polyline points="12 5 19 12 12 19"></polyline>
         </svg>
       </button>
+
+      <!-- Opción alternativa fácil para personas mayores: Buscar su nombre en la lista completa -->
+      <div class="directory-toggle-wrap">
+        <button type="button" id="btnToggleDirectory" class="btn-toggle-directory">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+            <circle cx="9" cy="7" r="4"></circle>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+          </svg>
+          <span>¿Prefieres buscar tu nombre en la lista? Toca aquí ▾</span>
+        </button>
+        <div id="directoryContainer" class="directory-dropdown" style="display:none;">
+          <div class="directory-search-bar">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+            </svg>
+            <input type="text" id="directoryFilterInput" placeholder="Escribe para filtrar la lista..." autocomplete="off">
+          </div>
+          <div id="directoryList" class="directory-list-scroll"></div>
+        </div>
+      </div>
 
       <!-- Selector inteligente si el nombre está repetido (ej: Julio, Diana, Rosa...) -->
       <div id="duplicateResolver" class="duplicate-resolver" style="display:none;">

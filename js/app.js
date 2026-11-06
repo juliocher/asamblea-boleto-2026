@@ -24,22 +24,27 @@
   const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUM}?text=${WHATSAPP_MSG}`;
 
   // ─── Referencias DOM ───────────────────────────────────────────────────────
-  const loginSection       = document.getElementById('loginSection');
-  const ticketViewSection  = document.getElementById('ticketViewSection');
-  const credentialInput    = document.getElementById('credentialInput');
-  const btnLogin           = document.getElementById('btnLogin');
-  const loginErrorMessage  = document.getElementById('loginErrorMessage');
-  const loginErrorText     = document.getElementById('loginErrorText');
-  const ticketsContainer   = document.getElementById('ticketsContainer');
-  const tabIdaBtn          = document.getElementById('tabIdaBtn');
-  const tabVueltaBtn       = document.getElementById('tabVueltaBtn');
-  const badgeIdaCount      = document.getElementById('badgeIdaCount');
-  const badgeVueltaCount   = document.getElementById('badgeVueltaCount');
-  const btnBackToSearch    = document.getElementById('btnBackToSearch');
-  const btnAudioControl    = document.getElementById('btnAudioControl');
-  const audioControlText   = document.getElementById('audioControlText');
-  const eventTitleDisplay  = document.getElementById('eventTitleDisplay');
-  const annualThemeHeader  = document.getElementById('annualThemeHeader');
+  const loginSection          = document.getElementById('loginSection');
+  const ticketViewSection     = document.getElementById('ticketViewSection');
+  const credentialInput       = document.getElementById('credentialInput');
+  const btnLogin              = document.getElementById('btnLogin');
+  const loginErrorMessage     = document.getElementById('loginErrorMessage');
+  const loginErrorText        = document.getElementById('loginErrorText');
+  const liveSuggestionsBox    = document.getElementById('liveSuggestionsBox');
+  const btnToggleDirectory    = document.getElementById('btnToggleDirectory');
+  const directoryContainer    = document.getElementById('directoryContainer');
+  const directoryFilterInput  = document.getElementById('directoryFilterInput');
+  const directoryList         = document.getElementById('directoryList');
+  const ticketsContainer      = document.getElementById('ticketsContainer');
+  const tabIdaBtn             = document.getElementById('tabIdaBtn');
+  const tabVueltaBtn          = document.getElementById('tabVueltaBtn');
+  const badgeIdaCount         = document.getElementById('badgeIdaCount');
+  const badgeVueltaCount      = document.getElementById('badgeVueltaCount');
+  const btnBackToSearch       = document.getElementById('btnBackToSearch');
+  const btnAudioControl       = document.getElementById('btnAudioControl');
+  const audioControlText      = document.getElementById('audioControlText');
+  const eventTitleDisplay     = document.getElementById('eventTitleDisplay');
+  const annualThemeHeader     = document.getElementById('annualThemeHeader');
 
   // ─── Música de Bienvenida ──────────────────────────────────────────────────
   let bgAudio = null;
@@ -141,6 +146,8 @@
       config        = await cfgRes.json();
 
       applyBranding();
+      initDirectory();
+      checkUrlAutoLogin();
     } catch (err) {
       console.error('Error al inicializar:', err);
       showError('No se pudieron cargar los datos. Intenta recargando la página.');
@@ -187,13 +194,60 @@
 
     if (credentialInput) {
       credentialInput.addEventListener('keydown', e => {
-        if (e.key === 'Enter') handleLogin();
+        if (e.key === 'Enter') {
+          if (liveSuggestionsBox) liveSuggestionsBox.style.display = 'none';
+          handleLogin();
+        }
       });
-      // Limpiar error al escribir
+
+      // Sugerencias en tiempo real al escribir
       credentialInput.addEventListener('input', () => {
-        loginErrorMessage.style.display = 'none';
+        const val = credentialInput.value;
+        const norm = normCred(val);
+        if (loginErrorMessage) loginErrorMessage.style.display = 'none';
+
+        if (!norm || norm.length < 1) {
+          if (liveSuggestionsBox) liveSuggestionsBox.style.display = 'none';
+          return;
+        }
+
+        const matches = allPassengers.filter(p => {
+          const pNameNorm = normCred(p.nombre);
+          const pCredNorm = normCred(p.credential);
+          return pNameNorm.includes(norm) || pCredNorm.includes(norm);
+        });
+
+        if (matches.length > 0) {
+          renderLiveSuggestions(matches.slice(0, 6));
+        } else {
+          if (liveSuggestionsBox) liveSuggestionsBox.style.display = 'none';
+        }
       });
     }
+
+    // Botón desplegable para ver la lista completa de pasajeros (muy fácil para mayores)
+    if (btnToggleDirectory && directoryContainer) {
+      btnToggleDirectory.addEventListener('click', () => {
+        const isHidden = directoryContainer.style.display === 'none';
+        directoryContainer.style.display = isHidden ? 'block' : 'none';
+        if (isHidden && directoryFilterInput) {
+          directoryFilterInput.focus();
+        }
+      });
+    }
+
+    if (directoryFilterInput) {
+      directoryFilterInput.addEventListener('input', e => {
+        filterDirectory(e.target.value);
+      });
+    }
+
+    // Ocultar sugerencias si se hace clic fuera del input
+    document.addEventListener('click', e => {
+      if (liveSuggestionsBox && !liveSuggestionsBox.contains(e.target) && e.target !== credentialInput) {
+        liveSuggestionsBox.style.display = 'none';
+      }
+    });
 
     if (tabIdaBtn)    tabIdaBtn.addEventListener('click',    () => switchSegment('ida'));
     if (tabVueltaBtn) tabVueltaBtn.addEventListener('click', () => switchSegment('vuelta'));
@@ -219,19 +273,103 @@
         ticketViewSection.style.display = 'none';
         loginSection.style.display = 'block';
         loginErrorMessage.style.display = 'none';
+        if (liveSuggestionsBox) liveSuggestionsBox.style.display = 'none';
+        if (directoryContainer) directoryContainer.style.display = 'none';
         credentialInput.value = '';
         credentialInput.focus();
       });
     }
   }
 
-  // ─── 5. Login / Validación de credencial ───────────────────────────────────
+  // ─── 5. Login y Selección Amigable de Pasajero ──────────────────────────────
+  function selectPassenger(p) {
+    if (!p) return;
+    currentPassenger = p;
+    if (credentialInput) credentialInput.value = p.nombre;
+    if (loginErrorMessage) loginErrorMessage.style.display = 'none';
+    if (liveSuggestionsBox) liveSuggestionsBox.style.display = 'none';
+    if (directoryContainer) directoryContainer.style.display = 'none';
+    const dupBox = document.getElementById('duplicateResolver');
+    if (dupBox) dupBox.style.display = 'none';
+    renderTicketView();
+  }
+
+  function renderLiveSuggestions(candidates) {
+    if (!liveSuggestionsBox) return;
+    liveSuggestionsBox.innerHTML = '';
+
+    candidates.forEach(cand => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'suggestion-item';
+      const busText = cand.ida_bus ? `Bus ${cand.ida_bus}` : (cand.vuelta_bus ? `Bus ${cand.vuelta_bus}` : '');
+      btn.innerHTML = `
+        <div class="suggestion-name-col">
+          <span class="suggestion-name">${esc(cand.nombre)}</span>
+          <span class="suggestion-sub">Toca para ver tu boleto</span>
+        </div>
+        ${busText ? `<span class="suggestion-bus-tag">🚌 ${esc(busText)}</span>` : ''}
+      `;
+      btn.onclick = () => selectPassenger(cand);
+      liveSuggestionsBox.appendChild(btn);
+    });
+
+    liveSuggestionsBox.style.display = 'block';
+  }
+
+  function initDirectory() {
+    if (!directoryList || allPassengers.length === 0) return;
+    directoryList.innerHTML = '';
+
+    // Ordenar alfabéticamente para facilitar la búsqueda
+    const sorted = [...allPassengers].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+    sorted.forEach(p => {
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'directory-item-btn';
+      const busText = p.ida_bus ? `Bus ${p.ida_bus}` : (p.vuelta_bus ? `Bus ${p.vuelta_bus}` : '');
+      btn.innerHTML = `
+        <span class="directory-item-name">${esc(p.nombre)}</span>
+        ${busText ? `<span class="suggestion-bus-tag">🚌 ${esc(busText)}</span>` : ''}
+      `;
+      btn.onclick = () => selectPassenger(p);
+      directoryList.appendChild(btn);
+    });
+  }
+
+  function filterDirectory(query) {
+    if (!directoryList) return;
+    const norm = normCred(query);
+    const items = directoryList.querySelectorAll('.directory-item-btn');
+    items.forEach(item => {
+      const name = normCred(item.textContent);
+      item.style.display = (!norm || name.includes(norm)) ? 'flex' : 'none';
+    });
+  }
+
+  function checkUrlAutoLogin() {
+    if (allPassengers.length === 0) return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('p') || urlParams.get('c') || urlParams.get('nombre') || urlParams.get('id');
+    if (!query) return;
+
+    const norm = normCred(query);
+    let match = allPassengers.find(p => normCred(p.id) === norm);
+    if (!match) match = allPassengers.find(p => normCred(p.credential) === norm);
+    if (!match) match = allPassengers.find(p => normCred(p.nombre) === norm);
+    if (!match) match = allPassengers.find(p => normCred(p.nombre).includes(norm));
+
+    if (match) {
+      selectPassenger(match);
+    }
+  }
+
   function handleLogin() {
     const inputValue = credentialInput ? credentialInput.value : '';
     const inputNorm  = normCred(inputValue);
 
     if (!inputNorm) {
-      showError('Por favor ingresa tu credencial (tu nombre).');
+      showError('Por favor escribe tu nombre para consultar tu tarjeta.');
       return;
     }
 
@@ -246,22 +384,18 @@
     // 1. Coincidencia exacta con la credencial asignada
     const exact = allPassengers.find(p => normCred(p.credential) === inputNorm);
     if (exact) {
-      currentPassenger = exact;
-      loginErrorMessage.style.display = 'none';
-      renderTicketView();
+      selectPassenger(exact);
       return;
     }
 
     // 2. Coincidencia exacta con el nombre completo
     const fullMatch = allPassengers.find(p => normCred(p.nombre) === inputNorm);
     if (fullMatch) {
-      currentPassenger = fullMatch;
-      loginErrorMessage.style.display = 'none';
-      renderTicketView();
+      selectPassenger(fullMatch);
       return;
     }
 
-    // 3. Buscar si coincide con el primer nombre de uno o más pasajeros
+    // 3. Buscar si coincide con el primer nombre o partes del nombre
     const matches = allPassengers.filter(p => {
       const parts = normCred(p.nombre).split(' ');
       const pFirst = parts[0];
@@ -270,21 +404,17 @@
     });
 
     if (matches.length === 1) {
-      // Coincidencia única directa
-      currentPassenger = matches[0];
-      loginErrorMessage.style.display = 'none';
-      renderTicketView();
+      selectPassenger(matches[0]);
       return;
     }
 
     if (matches.length > 1) {
-      // Múltiples personas con ese nombre: mostrar selector amigable
       loginErrorMessage.style.display = 'none';
       showDuplicateResolver(matches);
       return;
     }
 
-    showError(`No se encontró "${inputValue}". Verifica que esté bien escrito o contacta al coordinador.`);
+    showError(`No encontramos "${inputValue}". Verifica que esté bien escrito o toca abajo para buscarte en la lista completa.`);
   }
 
   function showDuplicateResolver(candidates) {
@@ -306,11 +436,7 @@
         <div class="dup-name">${esc(cand.nombre)}</div>
         <div class="dup-meta">${busInfo.join(' • ')}</div>
       `;
-      btn.onclick = () => {
-        currentPassenger = cand;
-        dupBox.style.display = 'none';
-        renderTicketView();
-      };
+      btn.onclick = () => selectPassenger(cand);
       dupList.appendChild(btn);
     });
 
