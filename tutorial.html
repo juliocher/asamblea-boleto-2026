@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Video Tutorial · ¿Cómo ver tu Boleto Digital? · Asamblea 2026</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #F4EFE6;
+      --navy: #0F1E36;
+      --navy-soft: #1B2B4E;
+      --orange: #EA580C;
+      --orange-light: #F97316;
+      --cream: #FFFDF9;
+      --cream-box: #FFF5E8;
+      --border: #E8D8C3;
+      --text: #1E293B;
+      --muted: #64748B;
+      --green: #16A34A;
+      --font: 'Plus Jakarta Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font);
+      background: radial-gradient(circle at 50% 10%, #FFF8EE 0%, var(--bg) 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px 12px 40px;
+    }
+
+    .top-header {
+      text-align: center;
+      max-width: 500px;
+      margin-bottom: 14px;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #FFE8D6;
+      color: var(--orange);
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 5px 14px;
+      border-radius: 9999px;
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+    .title {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--navy);
+      line-height: 1.25;
+    }
+    .subtitle {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+
+    /* ══════ VIDEO PLAYER CONTAINER ══════ */
+    .player-wrap {
+      width: 100%;
+      max-width: 420px;
+      background: var(--navy);
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(15,30,54,0.22), 0 4px 12px rgba(0,0,0,0.08);
+      border: 4px solid #FFFFFF;
+      position: relative;
+    }
+
+    /* Barra de estado simulada */
+    .phone-bar {
+      background: var(--navy);
+      color: #FFFFFF;
+      padding: 10px 18px 4px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .phone-notch {
+      width: 90px;
+      height: 16px;
+      background: #000;
+      border-radius: 0 0 12px 12px;
+      margin: 0 auto;
+    }
+
+    /* Pantalla interactiva simulada */
+    .screen-stage {
+      width: 100%;
+      height: 480px;
+      background: #FAF6F0;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── ESCENA 1: LOGIN ── */
+    .scene {
+      position: absolute;
+      inset: 0;
+      padding: 18px 16px;
+      display: flex;
+      flex-direction: column;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.4s ease;
+    }
+    .scene.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Elementos dentro de Escena 1 */
+    .sim-card {
+      background: #FFFFFF;
+      border-radius: 18px;
+      padding: 22px 18px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      border: 1px solid var(--border);
+      text-align: center;
+      margin-top: 15px;
+    }
+    .sim-logo {
+      width: 52px;
+      height: 52px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--orange), var(--orange-light));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.6rem;
+      color: #fff;
+      margin: 0 auto 10px;
+      box-shadow: 0 6px 16px rgba(234,88,12,0.3);
+    }
+    .sim-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--navy);
+    }
+    .sim-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 3px;
+    }
+    .sim-input-box {
+      margin-top: 18px;
+      text-align: left;
+    }
+    .sim-label {
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .sim-input {
+      width: 100%;
+      height: 44px;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      background: #FFFDF9;
+      padding: 0 12px;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--navy);
+      display: flex;
+      align-items: center;
+      margin-top: 6px;
+      position: relative;
+    }
+    .sim-input.focus {
+      border-color: var(--orange);
+      box-shadow: 0 0 0 3px rgba(234,88,12,0.15);
+    }
+    .sim-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 18px;
+      background: var(--orange);
+      margin-left: 2px;
+      animation: blink 0.8s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+    /* Autocomplete simulado */
+    .sim-sugg-box {
+      margin-top: 6px;
+      background: #FFF;
+      border: 1.5px solid #FCD34D;
+      border-radius: 10px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: none;
+    }
+    .sim-sugg-item {
+      padding: 9px 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #FEF3C7;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: var(--navy);
+    }
+    .sim-sugg-item.highlight {
+      background: #FFFBEB;
+      color: var(--orange);
+    }
+    .sim-bus-tag {
+      background: #FEF3C7;
+      color: #B45309;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 2px 7px;
+      border-radius: 6px;
+    }
+
+    .sim-btn-dir {
+      margin-top: 12px;
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1.5px dashed var(--border);
+      background: #FFF9F0;
+      color: var(--navy);
+      font-size: 0.75rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    /* ── ESCENA 2: BOLETO DIGITAL ── */
+    .sim-tkt {
+      background: #FFFFFF;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .sim-tkt-top {
+      background: linear-gradient(135deg, var(--navy), var(--navy-soft));
+      color: #fff;
+      padding: 12px 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .sim-tkt-badge {
+      background: var(--orange);
+      color: #fff;
+      font-size: 0.68rem;
+      font-weight: 800;
+      padding: 3px 9px;
+      border-radius: 6px;
+    }
+    .sim-tkt-body {
+      padding: 14px;
+    }
+    .sim-p-name {
+      font-size: 1.15rem;
+      font-weight: 900;
+      color: var(--navy);
+    }
+    .sim-route-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 12px 0 10px;
+      padding: 10px 12px;
+      background: var(--cream-box);
+      border-radius: 12px;
+    }
+    .sim-city-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--navy);
+    }
+    .sim-city-sub {
+      font-size: 0.65rem;
+      color: var(--muted);
+    }
+    .sim-seat-hero {
+      background: linear-gradient(135deg, var(--orange), var(--orange-dark));
+      color: #fff;
+      border-radius: 12px;
+      padding: 10px;
+      text-align: center;
+      margin-top: 8px;
+      box-shadow: 0 4px 14px rgba(234,88,12,0.3);
+    }
+    .sim-seat-lbl {
+      font-size: 0.68rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      opacity: 0.9;
+    }
+    .sim-seat-num {
+      font-size: 1.8rem;
+      font-weight: 900;
+      font-family: 'Space Grotesk', monospace;
+      line-height: 1;
+    }
+
+    /* Animación del disco de música en esquina */
+    .sim-music-float {
+      position: absolute;
+      top: 14px;
+      right: 14px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #000;
+      border: 2px solid var(--orange);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: spin 3s linear infinite;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+    .sim-music-float img {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+    }
+    @keyframes spin { 100%{ transform: rotate(360deg); } }
+
+    /* Dedo / Puntero táctil animado */
+    .virtual-finger {
+      position: absolute;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: rgba(234,88,12,0.5);
+      border: 3px solid #FFFFFF;
+      pointer-events: none;
+      z-index: 99;
+      transform: translate(-50%, -50%) scale(1);
+      transition: all 0.5s cubic-bezier(0.22,1,0.36,1);
+      box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+      display: none;
+    }
+    .virtual-finger.tap {
+      transform: translate(-50%, -50%) scale(0.8);
+      background: rgba(234,88,12,0.85);
+    }
+
+    /* Subtítulo / Narrador dentro del reproductor */
+    .voice-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(to top, rgba(15,30,54,0.95) 0%, rgba(15,30,54,0.7) 80%, transparent 100%);
+      color: #FFFFFF;
+      padding: 16px 14px 10px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      text-align: center;
+      line-height: 1.35;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    }
+    .step-pill-top {
+      position: absolute;
+      top: 14px;
+      left: 14px;
+      background: var(--navy);
+      color: #fff;
+      font-size: 0.65rem;
+      font-weight: 800;
+      padding: 4px 10px;
+      border-radius: 9999px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    /* ══════ CONTROLES DEL REPRODUCTOR ══════ */
+    .player-controls {
+      background: var(--navy);
+      padding: 10px 16px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .progress-bar-wrap {
+      width: 100%;
+      height: 5px;
+      background: rgba(255,255,255,0.18);
+      border-radius: 9999px;
+      cursor: pointer;
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--orange);
+      border-radius: 9999px;
+      width: 0%;
+      transition: width 0.1s linear;
+    }
+    .ctrl-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+    }
+    .btn-play {
+      background: var(--orange);
+      color: #fff;
+      border: none;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(234,88,12,0.4);
+      transition: all 0.2s;
+    }
+    .btn-play:hover {
+      transform: scale(1.06);
+    }
+    .ctrl-time {
+      font-size: 0.75rem;
+      font-family: 'Space Grotesk', monospace;
+      font-weight: 700;
+      color: rgba(255,255,255,0.7);
+    }
+    .btn-text {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      padding: 6px 12px;
+      border-radius: 8px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-text:hover {
+      background: rgba(255,255,255,0.2);
+    }
+
+    /* ══════ PASOS ESCRITOS PARA COPIAR A WHATSAPP ══════ */
+    .whatsapp-card {
+      width: 100%;
+      max-width: 420px;
+      background: #FFFFFF;
+      border-radius: 20px;
+      padding: 18px 16px;
+      margin-top: 18px;
+      border: 1px solid var(--border);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+    .wa-title {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .wa-step {
+      font-size: 0.8rem;
+      line-height: 1.45;
+      color: var(--slate);
+      margin-bottom: 8px;
+      padding-left: 20px;
+      position: relative;
+    }
+    .wa-step::before {
+      content: '👉';
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+    .btn-copy {
+      width: 100%;
+      padding: 10px;
+      background: #16A34A;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 0.82rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-header">
+    <div class="badge-pill">🎬 GUÍA INTERACTIVA EN VIDEO</div>
+    <h1 class="title">¿Cómo ver tu Boleto de Bus?</h1>
+    <p class="subtitle">Video explicativo animado para pasajeros y familias</p>
+  </div>
+
+  <!-- REPRODUCTOR DE VIDEO SIMULADO -->
+  <div class="player-wrap">
+    
+    <!-- Barra superior de teléfono -->
+    <div class="phone-bar">
+      <span>07:00</span>
+      <div class="phone-notch"></div>
+      <span>📶 🔋 100%</span>
+    </div>
+
+    <!-- Pantalla interactiva -->
+    <div class="screen-stage" id="screenStage">
+      
+      <div class="step-pill-top" id="stepPill">PASO 1 / 3</div>
+      <div class="virtual-finger" id="finger"></div>
+
+      <!-- ESCENA 1: LOGIN -->
+      <div class="scene active" id="sceneLogin">
+        <div class="sim-card">
+          <div class="sim-logo">🚌</div>
+          <div class="sim-title">Asamblea de Circuito</div>
+          <div class="sim-sub">Traslado Privado Cusco ↔ Urubamba</div>
+
+          <div class="sim-input-box">
+            <span class="sim-label">Escribe tu nombre</span>
+            <div class="sim-input" id="simInput">
+              <span id="simInputText"></span><span class="sim-cursor"></span>
+            </div>
+            
+            <div class="sim-sugg-box" id="simSuggBox">
+              <div class="sim-sugg-item highlight" id="simSugg1">
+                <span>👤 Julia Zárate</span>
+                <span class="sim-bus-tag">BUS 1 · ASIENTO 01</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="sim-btn-dir" id="simBtnDir">
+            <span>📖</span> ¿Prefieres buscar tu nombre en la lista?
+          </div>
+        </div>
+      </div>
+
+      <!-- ESCENA 2: BOLETO -->
+      <div class="scene" id="sceneTicket">
+        <div class="sim-music-float" title="Música sonando">
+          <img src="https://antigravity-artifacts.pages.dev/vinyl-center.jpg" alt="Música" onerror="this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 24 24\' fill=\'%23ea580c\'><circle cx=\'12\' cy=\'12\' r=\'10\'/></svg>'">
+        </div>
+
+        <div class="sim-tkt">
+          <div class="sim-tkt-top">
+            <span class="sim-tkt-badge">BUS 1 — IDA</span>
+            <span style="font-size:0.68rem; opacity:0.8;">Sábado 07 Nov</span>
+          </div>
+          <div class="sim-tkt-body">
+            <div style="font-size:0.62rem; color:var(--muted); font-weight:800; text-transform:uppercase;">Pasajero</div>
+            <div class="sim-p-name">Julia Zárate</div>
+
+            <div class="sim-route-row">
+              <div>
+                <div class="sim-city-title">Cusco</div>
+                <div class="sim-city-sub">Plaza Belén</div>
+              </div>
+              <div style="font-size:1.1rem; color:var(--orange);">➔</div>
+              <div style="text-align:right;">
+                <div class="sim-city-title">Urubamba</div>
+                <div class="sim-city-sub">Local Asamblea</div>
+              </div>
+            </div>
+
+            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+              <div>
+                <div style="font-size:0.58rem; color:var(--muted); font-weight:700;">SALIDA</div>
+                <div style="font-size:1rem; font-weight:900; color:var(--orange); font-family:'Space Grotesk';">06:15 AM</div>
+              </div>
+              <div style="text-align:center;">
+                <div style="font-size:0.58rem; color:var(--muted); font-weight:700;">ABORDAJE</div>
+                <div style="font-size:1rem; font-weight:900; color:var(--green); font-family:'Space Grotesk';">05:50 AM</div>
+              </div>
+              <div style="text-align:right;">
+                <div style="font-size:0.58rem; color:var(--muted); font-weight:700;">LLEGADA</div>
+                <div style="font-size:1rem; font-weight:900; color:var(--navy); font-family:'Space Grotesk';">07:35 AM</div>
+              </div>
+            </div>
+
+            <div class="sim-seat-hero">
+              <div class="sim-seat-lbl">Tu Asiento Asignado</div>
+              <div class="sim-seat-num">01</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subtítulo Narrador -->
+      <div class="voice-caption" id="voiceCaption">
+        Presiona "Reproducir Video" para iniciar el tutorial.
+      </div>
+
+    </div>
+
+    <!-- Controles inferiores -->
+    <div class="player-controls">
+      <div class="progress-bar-wrap" id="progressWrap">
+        <div class="progress-fill" id="progressFill"></div>
+      </div>
+      <div class="ctrl-row">
+        <button class="btn-play" id="btnPlay" title="Reproducir / Pausar">▶</button>
+        <span class="ctrl-time" id="ctrlTime">00:00 / 00:24</span>
+        <button class="btn-text" id="btnRestart">🔄 Reiniciar</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INSTRUCCIONES PARA COPIAR A WHATSAPP -->
+  <div class="whatsapp-card">
+    <div class="wa-title">📲 Mensaje listo para enviar a WhatsApp</div>
+    <div class="wa-step"><strong>1. Abre el enlace:</strong> https://juliocher.github.io/asamblea-boleto-2026/</div>
+    <div class="wa-step"><strong>2. Escribe tu nombre</strong> o presiona <em>"¿Prefieres buscar tu nombre en la lista?"</em> para seleccionarlo directamente.</div>
+    <div class="wa-step"><strong>3. ¡Listo!</strong> Verás tu bus, número de asiento, horarios y lugar de salida con música especial.</div>
+    <button class="btn-copy" onclick="copyInstructions()">📋 Copiar mensaje para WhatsApp</button>
+  </div>
+
+  <script>
+    const DURATION = 24; // segundos totales del video simulado
+    let currentTime = 0;
+    let isPlaying = false;
+    let timer = null;
+
+    const btnPlay      = document.getElementById('btnPlay');
+    const btnRestart   = document.getElementById('btnRestart');
+    const progressFill = document.getElementById('progressFill');
+    const ctrlTime     = document.getElementById('ctrlTime');
+    const caption      = document.getElementById('voiceCaption');
+    const stepPill     = document.getElementById('stepPill');
+    const finger       = document.getElementById('finger');
+
+    const sceneLogin   = document.getElementById('sceneLogin');
+    const sceneTicket  = document.getElementById('sceneTicket');
+    const simInput     = document.getElementById('simInput');
+    const simInputText = document.getElementById('simInputText');
+    const simSuggBox   = document.getElementById('simSuggBox');
+
+    // Guión del video por segundo
+    function updateTimeline(sec) {
+      // 0 a 4s: Paso 1 - Abrir la página
+      if (sec < 5) {
+        stepPill.textContent = 'PASO 1 · ABRIR ENLACE';
+        sceneLogin.classList.add('active');
+        sceneTicket.classList.remove('active');
+        simInput.classList.remove('focus');
+        simInputText.textContent = '';
+        simSuggBox.style.display = 'none';
+        finger.style.display = 'none';
+        caption.textContent = '1. Abre el enlace que recibiste por WhatsApp en tu celular.';
+      }
+      // 5 a 8s: Paso 2 - Escribir el nombre
+      else if (sec >= 5 && sec < 9) {
+        stepPill.textContent = 'PASO 2 · ESCRIBIR TU NOMBRE';
+        sceneLogin.classList.add('active');
+        sceneTicket.classList.remove('active');
+        simInput.classList.add('focus');
+
+        // Simular escritura de "Julia"
+        const text = "Julia Zárate";
+        const progressInName = Math.min(text.length, Math.floor((sec - 5) * 3));
+        simInputText.textContent = text.slice(0, progressInName);
+        simSuggBox.style.display = (progressInName > 2) ? 'block' : 'none';
+
+        finger.style.display = 'block';
+        finger.style.left = '50%';
+        finger.style.top = '52%';
+        finger.classList.remove('tap');
+        caption.textContent = '2. Escribe tu nombre o apellido. Aparecerá de inmediato tu sugerencia.';
+      }
+      // 9 a 12s: Toque en sugerencia
+      else if (sec >= 9 && sec < 12) {
+        stepPill.textContent = 'PASO 2 · TOCAR TU NOMBRE';
+        sceneLogin.classList.add('active');
+        sceneTicket.classList.remove('active');
+        simInputText.textContent = "Julia Zárate";
+        simSuggBox.style.display = 'block';
+
+        finger.style.display = 'block';
+        finger.style.left = '50%';
+        finger.style.top = '62%';
+        if (sec >= 10) finger.classList.add('tap');
+
+        caption.textContent = 'Toca tu nombre en la lista para ingresar a tu boleto digital.';
+      }
+      // 12 a 24s: Paso 3 - Boleto desplegado con música
+      else if (sec >= 12) {
+        stepPill.textContent = 'PASO 3 · ¡TU BOLETO LISTO!';
+        sceneLogin.classList.remove('active');
+        sceneTicket.classList.add('active');
+        finger.style.display = 'none';
+
+        if (sec < 18) {
+          caption.textContent = '¡Listo! Suena la música de asamblea y ves tu número de asiento: 01.';
+        } else {
+          caption.textContent = 'Revisa tus horarios: Abordaje 05:50 AM y Salida 06:15 AM en Plaza Belén.';
+        }
+      }
+
+      // Actualizar barra de progreso y reloj
+      const pct = (sec / DURATION) * 100;
+      progressFill.style.width = pct + '%';
+      const m = String(Math.floor(sec / 60)).padStart(2, '0');
+      const s = String(Math.floor(sec % 60)).padStart(2, '0');
+      ctrlTime.textContent = `${m}:${s} / 00:24`;
+    }
+
+    function play() {
+      if (currentTime >= DURATION) currentTime = 0;
+      isPlaying = true;
+      btnPlay.textContent = '⏸';
+      speakCaption();
+      timer = setInterval(() => {
+        currentTime += 0.5;
+        if (currentTime >= DURATION) {
+          pause();
+          currentTime = DURATION;
+        }
+        updateTimeline(currentTime);
+      }, 500);
+    }
+
+    function pause() {
+      isPlaying = false;
+      btnPlay.textContent = '▶';
+      clearInterval(timer);
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    }
+
+    btnPlay.addEventListener('click', () => {
+      if (isPlaying) pause(); else play();
+    });
+
+    btnRestart.addEventListener('click', () => {
+      pause();
+      currentTime = 0;
+      updateTimeline(0);
+      play();
+    });
+
+    // Opcional: Voz hablada automática
+    function speakCaption() {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance("Abre el enlace, escribe tu nombre o búscalo en la lista, y de inmediato verás tu asiento y horarios.");
+      u.lang = 'es-PE';
+      u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    }
+
+    function copyInstructions() {
+      const msg = `🚌 *BOLETOS DE TRASLADO - ASAMBLEA 2026-2027*\n\n` +
+        `Queridos hermanos y amigos, aquí pueden ver su asiento asignado y horarios del bus:\n\n` +
+        `👉 *Enlace:* https://juliocher.github.io/asamblea-boleto-2026/\n\n` +
+        `1️⃣ Abre el enlace en tu celular.\n` +
+        `2️⃣ Escribe tu nombre o toca *"¿Prefieres buscar tu nombre en la lista?"*.\n` +
+        `3️⃣ ¡Listo! Podrás ver tu número de asiento, bus asignado y horarios de abordaje y salida.\n\n` +
+        `¡Nos vemos el sábado puntuales en Plaza Belén! 😊`;
+      navigator.clipboard.writeText(msg).then(() => {
+        alert("¡Mensaje copiado! Ya puedes pegarlo y enviarlo en tu grupo de WhatsApp.");
+      });
+    }
+
+    // Inicializar estado en 0
+    updateTimeline(0);
+  </script>
+</body>
+</html>
