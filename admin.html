@@ -9,210 +9,328 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --navy:   #14213D;
-      --navy2:  #1B2B4E;
-      --orange: #EA580C;
-      --gold:   #E3B04B;
-      --green:  #16A34A;
-      --gbg:    #DCFCE7;
-      --gborder:#86EFAC;
-      --red:    #DC2626;
-      --rbg:    #FEE2E2;
-      --gray:   #6B7280;
-      --border: #E5E7EB;
-      --bg:     #F3F4F6;
-      --white:  #FFFFFF;
-      --font:   'Plus Jakarta Sans', sans-serif;
-      --mono:   'Space Grotesk', monospace;
+      --bg-page:     #FAF6F0;
+      --bg-card:     #FFFFFF;
+      --bg-cream:    #FFF9F0;
+      --bg-cream-box:#FEF7ED;
+      --orange:      #EA580C;
+      --orange-glow: rgba(234,88,12,0.15);
+      --orange-light:#F97316;
+      --orange-dark: #C2410C;
+      --navy:        #0F1E36;
+      --navy-soft:   #1E293B;
+      --slate:       #475569;
+      --muted:       #78716C;
+      --green:       #16A34A;
+      --green-bg:    #F0FDF4;
+      --green-border:#BBF7D0;
+      --green-glow:  rgba(22,163,74,0.15);
+      --red:         #DC2626;
+      --red-bg:      #FEF2F2;
+      --border:      #EEDFC2;
+      --border-light:#FDE8C8;
+      --white:       #FFFFFF;
+      --font:        'Plus Jakarta Sans', sans-serif;
+      --mono:        'Space Grotesk', monospace;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font); background: var(--bg); color: var(--navy); min-height: 100vh; }
+    body { font-family: var(--font); background: var(--bg-page); color: var(--navy); min-height: 100vh; }
 
-    /* ── TOPBAR ── */
+    /* ══════════ TOPBAR ══════════ */
     .topbar {
-      background: var(--navy); color: #fff;
-      padding: 14px 18px;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-soft) 100%);
+      color: #fff; padding: 16px 18px;
       display: flex; align-items: center; justify-content: space-between; gap: 10px;
       position: sticky; top: 0; z-index: 40;
-      box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+      box-shadow: 0 4px 20px rgba(15,30,54,0.3);
     }
-    .topbar-left   { display: flex; align-items: center; gap: 10px; }
-    .topbar-emoji  { font-size: 1.4rem; }
-    .topbar-title  { font-size: 0.9rem; font-weight: 800; line-height: 1.2; }
-    .topbar-sub    { font-size: 0.68rem; color: rgba(255,255,255,0.5); }
+    .topbar-left   { display: flex; align-items: center; gap: 12px; }
+    .topbar-icon   {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: var(--orange); display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; box-shadow: 0 4px 12px rgba(234,88,12,0.35);
+    }
+    .topbar-title  { font-size: 1rem; font-weight: 800; line-height: 1.2; }
+    .topbar-sub    { font-size: 0.7rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
     .topbar-right  { display: flex; align-items: center; gap: 8px; }
     .user-pill {
-      background: var(--orange); color: #fff;
-      padding: 4px 12px; border-radius: 9999px;
-      font-size: 0.75rem; font-weight: 800; letter-spacing: 0.05em;
+      background: rgba(234,88,12,0.2); color: var(--orange-light);
+      padding: 5px 14px; border-radius: 9999px; border: 1px solid rgba(234,88,12,0.3);
+      font-size: 0.72rem; font-weight: 800; letter-spacing: 0.06em;
     }
-    .btn-sm {
-      padding: 6px 12px; border: 1px solid rgba(255,255,255,0.2);
-      border-radius: 6px; background: transparent; color: rgba(255,255,255,0.7);
-      font-size: 0.75rem; font-weight: 600; cursor: pointer; font-family: var(--font);
+    .btn-logout {
+      padding: 7px 14px; border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 8px; background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.65);
+      font-size: 0.75rem; font-weight: 700; cursor: pointer; font-family: var(--font);
       transition: all 0.15s;
     }
-    .btn-sm:hover { background: rgba(255,255,255,0.12); color: #fff; }
+    .btn-logout:hover { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.25); }
 
-    /* ── LOGIN ── */
+    /* ══════════ LOGIN ══════════ */
     #loginScreen {
       display: flex; align-items: center; justify-content: center;
       min-height: 100vh; padding: 20px;
+      background: radial-gradient(ellipse at top, #FFF5E6 0%, var(--bg-page) 50%);
     }
     .login-box {
-      background: var(--white); border-radius: 18px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-      padding: 36px 28px; width: 100%; max-width: 360px;
+      background: var(--white); border-radius: 24px;
+      box-shadow: 0 12px 48px rgba(15,30,54,0.1), 0 2px 8px rgba(0,0,0,0.04);
+      padding: 40px 28px; width: 100%; max-width: 380px;
+      border: 1px solid var(--border-light);
     }
-    .login-icon  { text-align: center; font-size: 2.8rem; margin-bottom: 8px; }
-    .login-title { text-align: center; font-size: 1.2rem; font-weight: 800; margin-bottom: 4px; }
-    .login-sub   { text-align: center; font-size: 0.8rem; color: var(--gray); margin-bottom: 28px; line-height: 1.5; }
-    .field-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase;
-                   letter-spacing: 0.07em; color: var(--gray); margin-bottom: 6px; display: block; }
+    .login-icon-wrap {
+      width: 64px; height: 64px; margin: 0 auto 16px;
+      background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+      border-radius: 18px; display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; box-shadow: 0 6px 20px rgba(234,88,12,0.3);
+    }
+    .login-title { text-align: center; font-size: 1.3rem; font-weight: 800; margin-bottom: 4px; }
+    .login-sub   { text-align: center; font-size: 0.82rem; color: var(--muted); margin-bottom: 28px; line-height: 1.5; }
+    .field-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+                   letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; display: block; }
     .field-input {
-      width: 100%; height: 48px; padding: 0 14px;
-      border: 1.5px solid var(--border); border-radius: 10px;
+      width: 100%; height: 50px; padding: 0 16px;
+      border: 1.5px solid var(--border); border-radius: 12px;
       font-size: 0.95rem; font-family: var(--font); color: var(--navy);
-      background: var(--bg); outline: none; transition: border 0.2s; margin-bottom: 14px;
+      background: var(--bg-cream); outline: none; transition: all 0.2s; margin-bottom: 16px;
     }
-    .field-input:focus { border-color: var(--orange); background: var(--white); }
+    .field-input:focus { border-color: var(--orange); background: var(--white); box-shadow: 0 0 0 3px var(--orange-glow); }
     .btn-login {
-      width: 100%; height: 50px; background: var(--navy);
-      color: #fff; border: none; border-radius: 10px;
+      width: 100%; height: 52px; background: linear-gradient(135deg, var(--orange) 0%, var(--orange-dark) 100%);
+      color: #fff; border: none; border-radius: 12px;
       font-size: 0.95rem; font-weight: 800; font-family: var(--font);
       cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-      transition: opacity 0.2s;
+      transition: all 0.2s; box-shadow: 0 4px 16px rgba(234,88,12,0.3);
     }
-    .btn-login:hover { opacity: 0.86; }
+    .btn-login:hover { transform: translateY(-1px); box-shadow: 0 6px 24px rgba(234,88,12,0.4); }
+    .btn-login:active { transform: translateY(0); }
     .login-err {
-      margin-top: 12px; padding: 10px 14px; border-radius: 8px;
-      background: var(--rbg); color: var(--red);
+      margin-top: 14px; padding: 12px 16px; border-radius: 10px;
+      background: var(--red-bg); color: var(--red); border: 1px solid #FECACA;
       font-size: 0.82rem; font-weight: 600; display: none; text-align: center;
     }
 
-    /* ── APP ── */
+    /* ══════════ APP ══════════ */
     #appScreen { display: none; }
-    .container { max-width: 680px; margin: 0 auto; padding: 18px 14px 40px; }
+    .container { max-width: 700px; margin: 0 auto; padding: 20px 14px 40px; }
 
-    /* ── STATS ── */
-    .stats-row {
-      display: grid; grid-template-columns: 1fr 1fr;
-      gap: 10px; margin-bottom: 18px;
-    }
+    /* ══════════ STATS ══════════ */
+    .stats-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 20px; }
     .stat-card {
-      background: var(--white); border-radius: 12px;
-      padding: 14px 16px; border-left: 4px solid var(--orange);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      background: var(--white); border-radius: 16px;
+      padding: 16px 18px; border: 1px solid var(--border-light);
+      box-shadow: 0 2px 12px rgba(0,0,0,0.04);
+      position: relative; overflow: hidden;
     }
-    .stat-card.ret { border-left-color: var(--green); }
+    .stat-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+      background: var(--orange); border-radius: 0 4px 4px 0;
+    }
+    .stat-card.ret::before { background: var(--green); }
     .stat-lbl { font-size: 0.65rem; font-weight: 700; text-transform: uppercase;
-                letter-spacing: 0.08em; color: var(--gray); margin-bottom: 5px; }
-    .stat-val { font-size: 1.6rem; font-weight: 900; font-family: var(--mono);
+                letter-spacing: 0.08em; color: var(--muted); margin-bottom: 6px; }
+    .stat-val { font-size: 1.7rem; font-weight: 900; font-family: var(--mono);
                 line-height: 1; color: var(--navy); }
-    .stat-bar { margin-top: 8px; height: 5px; background: var(--border); border-radius: 9999px; overflow: hidden; }
-    .stat-fill { height: 100%; background: var(--green); border-radius: 9999px; transition: width 0.4s ease; }
+    .stat-pct { font-size: 0.7rem; font-weight: 700; color: var(--orange); margin-left: 6px; }
+    .stat-card.ret .stat-pct { color: var(--green); }
+    .stat-bar { margin-top: 10px; height: 6px; background: #F5F0E8; border-radius: 9999px; overflow: hidden; }
+    .stat-fill { height: 100%; border-radius: 9999px; transition: width 0.5s cubic-bezier(0.22,1,0.36,1); }
+    .stat-card .stat-fill  { background: linear-gradient(90deg, var(--orange), var(--orange-light)); }
+    .stat-card.ret .stat-fill { background: linear-gradient(90deg, var(--green), #22C55E); }
 
-    /* ── CONTROLES ── */
-    .ctrl-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
-    .tabs     { display: flex; border-radius: 9px; overflow: hidden;
-                border: 1.5px solid var(--border); background: var(--white); }
-    .tab      {
-      padding: 9px 16px; border: none; background: transparent;
+    /* ══════════ CONTROLES ══════════ */
+    .ctrl-section {
+      background: var(--white); border-radius: 16px; padding: 14px 16px;
+      border: 1px solid var(--border-light); margin-bottom: 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+    }
+    .ctrl-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+    .tabs {
+      display: flex; border-radius: 10px; overflow: hidden;
+      border: 1.5px solid var(--border); background: var(--bg-cream);
+    }
+    .tab {
+      padding: 10px 18px; border: none; background: transparent;
       font-size: 0.8rem; font-weight: 700; font-family: var(--font);
-      cursor: pointer; color: var(--gray); transition: all 0.15s;
+      cursor: pointer; color: var(--muted); transition: all 0.2s;
     }
     .tab.active { background: var(--navy); color: #fff; }
     .bus-tabs { display: flex; gap: 6px; }
-    .bus-tab  {
-      padding: 9px 14px; border: 1.5px solid var(--border); border-radius: 8px;
-      background: var(--white); font-size: 0.8rem; font-weight: 700;
-      font-family: var(--font); cursor: pointer; color: var(--gray); transition: all 0.15s;
+    .bus-tab {
+      padding: 10px 16px; border: 1.5px solid var(--border); border-radius: 10px;
+      background: var(--bg-cream); font-size: 0.8rem; font-weight: 700;
+      font-family: var(--font); cursor: pointer; color: var(--muted); transition: all 0.2s;
     }
-    .bus-tab.active { background: var(--orange); border-color: var(--orange); color: #fff; }
-    .search-wrap { flex: 1; min-width: 140px; position: relative; }
-    .search-wrap svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--gray); }
+    .bus-tab.active { background: var(--orange); border-color: var(--orange); color: #fff;
+                      box-shadow: 0 3px 10px rgba(234,88,12,0.25); }
+    .search-wrap { flex: 1; min-width: 150px; position: relative; }
+    .search-wrap svg { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--muted); }
     .search-in {
-      width: 100%; height: 40px; padding: 0 12px 0 36px;
-      border: 1.5px solid var(--border); border-radius: 8px;
+      width: 100%; height: 42px; padding: 0 14px 0 38px;
+      border: 1.5px solid var(--border); border-radius: 10px;
       font-size: 0.85rem; font-family: var(--font); color: var(--navy);
-      background: var(--white); outline: none;
+      background: var(--bg-cream); outline: none; transition: all 0.2s;
     }
-    .search-in:focus { border-color: var(--orange); }
+    .search-in:focus { border-color: var(--orange); background: var(--white); box-shadow: 0 0 0 3px var(--orange-glow); }
 
-    /* ── LISTA ── */
-    .p-list { display: flex; flex-direction: column; gap: 5px; }
+    /* ══════════ LISTA DE PASAJEROS ══════════ */
+    .p-list { display: flex; flex-direction: column; gap: 6px; }
 
     .p-item {
-      display: flex; align-items: center; gap: 11px;
-      background: var(--white); border: 1.5px solid var(--border);
-      border-radius: 10px; padding: 11px 13px;
-      cursor: pointer; transition: all 0.12s; user-select: none;
+      display: flex; align-items: center; gap: 12px;
+      background: var(--white); border: 1.5px solid var(--border-light);
+      border-radius: 14px; padding: 12px 14px;
+      cursor: pointer; transition: all 0.2s ease; user-select: none;
       -webkit-tap-highlight-color: transparent;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.03);
     }
-    .p-item:active       { transform: scale(0.99); }
-    .p-item:hover        { border-color: var(--orange); }
-    .p-item.boarded      { background: var(--gbg); border-color: var(--gborder); }
-    .p-item.saving       { opacity: 0.5; pointer-events: none; }
+    .p-item:active { transform: scale(0.985); }
+    .p-item:hover  { border-color: var(--orange); box-shadow: 0 2px 12px var(--orange-glow); }
 
+    /* ── Estado: ABORDADO ── */
+    .p-item.boarded {
+      background: var(--green-bg); border-color: var(--green-border);
+      box-shadow: 0 2px 12px var(--green-glow);
+    }
+    .p-item.boarded:hover { border-color: var(--green); }
+
+    /* ── Animación al marcar ── */
+    .p-item.just-boarded {
+      animation: flashBoard 0.6s ease;
+    }
+    @keyframes flashBoard {
+      0%   { transform: scale(1); }
+      15%  { transform: scale(1.03); box-shadow: 0 0 30px var(--green-glow); }
+      30%  { transform: scale(0.98); }
+      100% { transform: scale(1); }
+    }
+    .p-item.just-unboarded {
+      animation: flashUnboard 0.4s ease;
+    }
+    @keyframes flashUnboard {
+      0%   { transform: scale(1); }
+      20%  { transform: scale(0.96); }
+      100% { transform: scale(1); }
+    }
+
+    /* ── Checkbox ── */
     .p-cb {
-      width: 32px; height: 32px; border-radius: 7px; flex-shrink: 0;
-      border: 2px solid var(--border); background: var(--white);
-      display: flex; align-items: center; justify-content: center; font-size: 1rem;
-      transition: all 0.12s;
-    }
-    .p-item.boarded .p-cb { background: var(--green); border-color: var(--green); }
-
-    .p-info  { flex: 1; min-width: 0; }
-    .p-name  { font-weight: 700; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .p-sub   { font-size: 0.7rem; color: var(--gray); margin-top: 1px; }
-    .p-item.boarded .p-sub { color: var(--green); font-weight: 600; }
-
-    .p-seat  {
-      flex-shrink: 0; width: 34px; height: 34px; border-radius: 7px;
-      background: #FEF8EE; border: 1px solid #EEDFC2;
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      border: 2px solid var(--border); background: var(--bg-cream);
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.82rem; font-weight: 900; color: var(--orange); font-family: var(--mono);
+      font-size: 1.1rem; transition: all 0.25s ease;
     }
-    .p-item.boarded .p-seat { background: var(--green); border-color: var(--green); color: #fff; }
+    .p-item.boarded .p-cb {
+      background: var(--green); border-color: var(--green);
+      box-shadow: 0 2px 8px rgba(22,163,74,0.3);
+    }
 
+    /* ── Info ── */
+    .p-info  { flex: 1; min-width: 0; }
+    .p-name  { font-weight: 700; font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; color: var(--navy); }
+    .p-status {
+      font-size: 0.72rem; margin-top: 3px; font-weight: 600;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .p-status.pending { color: var(--muted); }
+    .p-status.done    { color: var(--green); }
+
+    .p-status-dot {
+      width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+    }
+    .p-status.pending .p-status-dot { background: var(--border); }
+    .p-status.done .p-status-dot    { background: var(--green); animation: pulse-dot 2s infinite; }
+
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50%      { opacity: 0.4; }
+    }
+
+    /* ── Asiento ── */
+    .p-seat {
+      flex-shrink: 0; width: 38px; height: 38px; border-radius: 10px;
+      background: var(--bg-cream-box); border: 1.5px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.88rem; font-weight: 900; color: var(--orange); font-family: var(--mono);
+      transition: all 0.25s;
+    }
+    .p-item.boarded .p-seat {
+      background: var(--green); border-color: var(--green); color: #fff;
+      box-shadow: 0 2px 8px rgba(22,163,74,0.25);
+    }
+
+    /* ── Hora ── */
     .p-hora {
-      flex-shrink: 0; font-size: 0.67rem; font-family: var(--mono); font-weight: 700;
-      color: var(--green); min-width: 40px; text-align: right; line-height: 1.3;
+      flex-shrink: 0; font-size: 0.68rem; font-family: var(--mono); font-weight: 700;
+      color: var(--green); min-width: 44px; text-align: right; line-height: 1.3;
     }
 
-    .empty { text-align: center; padding: 48px 20px; color: var(--gray); font-size: 0.88rem;
-             background: var(--white); border-radius: 12px; }
+    /* ── Botón individual de reiniciar ── */
+    .p-reset-btn {
+      flex-shrink: 0; width: 32px; height: 32px; border-radius: 8px;
+      border: 1.5px solid #FECACA; background: var(--red-bg);
+      display: none; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 0.8rem; transition: all 0.15s;
+      color: var(--red);
+    }
+    .p-reset-btn:hover { background: #FEE2E2; border-color: var(--red); }
+    .p-item.boarded .p-reset-btn { display: flex; }
 
-    /* ── TOAST ── */
+    .empty {
+      text-align: center; padding: 48px 20px; color: var(--muted); font-size: 0.88rem;
+      background: var(--white); border-radius: 16px; border: 1px solid var(--border-light);
+    }
+
+    /* ══════════ TOAST ══════════ */
     .toast {
-      position: fixed; bottom: 20px; left: 50%;
-      transform: translateX(-50%) translateY(70px);
-      background: var(--navy); color: #fff;
-      padding: 11px 20px; border-radius: 10px;
-      font-size: 0.85rem; font-weight: 600;
-      transition: transform 0.25s ease; z-index: 100;
-      white-space: nowrap; box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(80px);
+      padding: 14px 24px; border-radius: 14px;
+      font-size: 0.88rem; font-weight: 700; font-family: var(--font);
+      transition: transform 0.3s cubic-bezier(0.22,1,0.36,1), opacity 0.3s;
+      z-index: 100; white-space: nowrap;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      display: flex; align-items: center; gap: 10px;
+      opacity: 0;
     }
-    .toast.show { transform: translateX(-50%) translateY(0); }
-    .toast.ok   { background: var(--green); }
-    .toast.undo { background: var(--gray); }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    .toast.ok {
+      background: linear-gradient(135deg, var(--green), #15803D);
+      color: #fff;
+    }
+    .toast.undo {
+      background: var(--white); color: var(--navy);
+      border: 1.5px solid var(--border);
+    }
 
-    /* ── RESET BTN ── */
+    /* ══════════ DANGER ZONE ══════════ */
     .danger-zone {
-      margin-top: 32px; padding: 16px;
-      background: var(--white); border-radius: 12px; border: 1px solid var(--border);
+      margin-top: 32px; padding: 20px;
+      background: var(--white); border-radius: 16px;
+      border: 1px solid var(--border-light);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.03);
     }
-    .danger-zone h4 { font-size: 0.8rem; color: var(--gray); margin-bottom: 10px; }
+    .danger-zone-title {
+      font-size: 0.78rem; font-weight: 700; color: var(--muted);
+      text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
     .btn-danger {
-      padding: 8px 16px; background: var(--white); border: 1.5px solid var(--red);
-      border-radius: 8px; color: var(--red); font-size: 0.82rem; font-weight: 700;
-      font-family: var(--font); cursor: pointer; transition: all 0.15s;
+      padding: 10px 18px; background: var(--white); border: 1.5px solid var(--red);
+      border-radius: 10px; color: var(--red); font-size: 0.82rem; font-weight: 700;
+      font-family: var(--font); cursor: pointer; transition: all 0.2s;
+      display: flex; align-items: center; gap: 6px;
     }
-    .btn-danger:hover { background: var(--rbg); }
+    .btn-danger:hover { background: var(--red-bg); box-shadow: 0 2px 10px rgba(220,38,38,0.15); }
 
-    @media (max-width: 420px) {
+    /* ══════════ RESPONSIVE ══════════ */
+    @media (max-width: 480px) {
       .topbar-sub { display: none; }
       .stat-val   { font-size: 1.35rem; }
+      .tab { padding: 9px 14px; font-size: 0.75rem; }
+      .bus-tab { padding: 9px 12px; font-size: 0.75rem; }
+      .p-hora { min-width: 36px; font-size: 0.62rem; }
+      .p-reset-btn { width: 28px; height: 28px; }
     }
   </style>
 </head>
@@ -223,9 +341,9 @@
 <!-- ════════ LOGIN ════════ -->
 <div id="loginScreen">
   <div class="login-box">
-    <div class="login-icon">🚌</div>
+    <div class="login-icon-wrap">🚌</div>
     <div class="login-title">Panel de Abordaje</div>
-    <div class="login-sub">Asamblea de Circuito 2026-2027<br>Sábado 07 de Noviembre · Cusco → Urubamba</div>
+    <div class="login-sub">Asamblea de Circuito 2026-2027<br>Sábado 07 Nov · Cusco → Urubamba</div>
 
     <label class="field-label" for="uUser">Usuario</label>
     <input type="text" id="uUser" class="field-input" placeholder="julio  ó  lino" autocomplete="username">
@@ -248,7 +366,7 @@
 
   <div class="topbar">
     <div class="topbar-left">
-      <div class="topbar-emoji">🚌</div>
+      <div class="topbar-icon">🚌</div>
       <div>
         <div class="topbar-title">Control de Abordaje</div>
         <div class="topbar-sub">Asamblea 2026-2027 · 07 Nov</div>
@@ -256,7 +374,7 @@
     </div>
     <div class="topbar-right">
       <span class="user-pill" id="userPill">JULIO</span>
-      <button class="btn-sm" id="btnLogout">Salir</button>
+      <button class="btn-logout" id="btnLogout">Salir</button>
     </div>
   </div>
 
@@ -266,39 +384,44 @@
     <div class="stats-row" id="statsRow">
       <div class="stat-card">
         <div class="stat-lbl" id="statLblA">Bus 1 · IDA</div>
-        <div class="stat-val" id="statValA">0/0</div>
+        <div><span class="stat-val" id="statValA">0/0</span><span class="stat-pct" id="statPctA"></span></div>
         <div class="stat-bar"><div class="stat-fill" id="statBarA" style="width:0%"></div></div>
       </div>
       <div class="stat-card ret">
         <div class="stat-lbl" id="statLblB">Bus 1 · RETORNO</div>
-        <div class="stat-val" id="statValB">0/0</div>
+        <div><span class="stat-val" id="statValB">0/0</span><span class="stat-pct" id="statPctB"></span></div>
         <div class="stat-bar"><div class="stat-fill" id="statBarB" style="width:0%"></div></div>
       </div>
     </div>
 
     <!-- Controles -->
-    <div class="ctrl-row">
-      <div class="tabs">
-        <button class="tab active" id="tabIda"    onclick="setSeg('ida')">IDA</button>
-        <button class="tab"        id="tabVuelta" onclick="setSeg('vuelta')">RETORNO</button>
-      </div>
-      <div class="bus-tabs">
-        <button class="bus-tab active" id="tBus1" onclick="setBus('1')">Bus 1</button>
-        <button class="bus-tab"        id="tBus2" onclick="setBus('2')">Bus 2</button>
-      </div>
-      <div class="search-wrap">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        <input type="text" class="search-in" id="searchIn" placeholder="Buscar nombre..." oninput="render()">
+    <div class="ctrl-section">
+      <div class="ctrl-row">
+        <div class="tabs">
+          <button class="tab active" id="tabIda"    onclick="setSeg('ida')">IDA</button>
+          <button class="tab"        id="tabVuelta" onclick="setSeg('vuelta')">RETORNO</button>
+        </div>
+        <div class="bus-tabs">
+          <button class="bus-tab active" id="tBus1" onclick="setBus('1')">Bus 1</button>
+          <button class="bus-tab"        id="tBus2" onclick="setBus('2')">Bus 2</button>
+        </div>
+        <div class="search-wrap">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+          <input type="text" class="search-in" id="searchIn" placeholder="Buscar nombre..." oninput="render()">
+        </div>
       </div>
     </div>
 
     <!-- Lista de pasajeros -->
     <div class="p-list" id="pList"></div>
 
-    <!-- Zona de reset (emergencia) -->
+    <!-- Zona de opciones -->
     <div class="danger-zone">
-      <h4>⚙️ Opciones avanzadas</h4>
-      <button class="btn-danger" onclick="resetConfirm()">Borrar todos los registros de abordaje</button>
+      <div class="danger-zone-title">⚙️ Opciones avanzadas</div>
+      <button class="btn-danger" onclick="resetConfirm()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+        Reiniciar todos los registros de abordaje
+      </button>
     </div>
 
   </div>
@@ -307,7 +430,6 @@
 <script>
 // ══════════════════════════════════════
 //  CREDENCIALES DE ADMINISTRADORES
-//  (cambia las contraseñas si quieres)
 // ══════════════════════════════════════
 const ADMINS = {
   'julio': '2027Cusco',
@@ -317,8 +439,8 @@ const ADMINS = {
 // ══════════════════════════════════════
 //  ESTADO
 // ══════════════════════════════════════
-let passengers   = [];   // cargados desde passengers_data.json
-let boarding     = {};   // { "P-01_ida": { abordado: true, hora: "07:12:34" }, ... }
+let passengers   = [];
+let boarding     = {};
 let activeUser   = null;
 let activeSeg    = 'ida';
 let activeBus    = '1';
@@ -330,11 +452,9 @@ const LS_USER  = 'asamblea_admin_user';
 //  INICIO
 // ══════════════════════════════════════
 document.addEventListener('DOMContentLoaded', async () => {
-  // Restaurar sesión
   const saved = sessionStorage.getItem(LS_USER);
-  if (saved) { activeUser = saved; }
+  if (saved) activeUser = saved;
 
-  // Cargar pasajeros
   try {
     const r = await fetch('passengers_data.json');
     passengers = await r.json();
@@ -342,13 +462,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     passengers = [];
   }
 
-  // Cargar estado de abordaje desde localStorage
   loadBoarding();
+  if (activeUser) showApp();
 
-  // Mostrar pantalla correcta
-  if (activeUser) showApp(); 
-
-  // Listeners
   document.getElementById('btnLogin').addEventListener('click', doLogin);
   document.getElementById('btnLogout').addEventListener('click', doLogout);
   document.getElementById('uPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
@@ -393,7 +509,7 @@ function showApp() {
 }
 
 // ══════════════════════════════════════
-//  PERSISTENCIA — localStorage
+//  PERSISTENCIA
 // ══════════════════════════════════════
 function loadBoarding() {
   try {
@@ -432,10 +548,6 @@ function norm(s) {
 //  ESTADÍSTICAS
 // ══════════════════════════════════════
 function updateStats() {
-  // Bus activo, ambos tramos
-  const idaKey    = activeBus + '_ida';
-  const vueltaKey = activeBus + '_vuelta';
-
   const forIda    = passengers.filter(p => String(p.ida_bus)    === activeBus);
   const forVuelta = passengers.filter(p => String(p.vuelta_bus) === activeBus);
 
@@ -451,6 +563,7 @@ function setStatEl(id, lbl, ab, total) {
   document.getElementById('statVal' + id).textContent = `${ab}/${total}`;
   const pct = total > 0 ? Math.round(ab/total*100) : 0;
   document.getElementById('statBar' + id).style.width = pct + '%';
+  document.getElementById('statPct' + id).textContent = total > 0 ? `${pct}%` : '';
 }
 
 // ══════════════════════════════════════
@@ -464,7 +577,7 @@ function render() {
   let list = passengers.filter(p => String(p[busKey]) === activeBus);
   if (q) list = list.filter(p => norm(p.nombre).includes(q));
 
-  // Ordenar: pendientes primero (por asiento), luego abordados
+  // Ordenar: pendientes primero por asiento, luego abordados por hora
   list.sort((a, b) => {
     const aB = !!boarding[a.id + '_' + activeSeg]?.abordado;
     const bB = !!boarding[b.id + '_' + activeSeg]?.abordado;
@@ -475,7 +588,7 @@ function render() {
   const container = document.getElementById('pList');
 
   if (list.length === 0) {
-    container.innerHTML = `<div class="empty">${q ? `🔍 No se encontró "${q}"` : 'No hay pasajeros en esta selección.'}</div>`;
+    container.innerHTML = `<div class="empty">${q ? `🔍 No se encontró "${esc(q)}"` : 'No hay pasajeros en esta selección.'}</div>`;
     return;
   }
 
@@ -485,16 +598,23 @@ function render() {
     const boarded = !!rec.abordado;
     const hora    = rec.hora || '';
     const seat    = p[seatKey] || '—';
+    const statusClass = boarded ? 'done' : 'pending';
+    const statusText  = boarded
+      ? `✓ Abordó${hora ? ' a las ' + hora : ''}`
+      : '○ Pendiente de abordaje';
 
     return `
-      <div class="p-item ${boarded ? 'boarded' : ''}" data-id="${p.id}" onclick="toggle('${p.id}')">
-        <div class="p-cb">${boarded ? '✅' : ''}</div>
-        <div class="p-info">
+      <div class="p-item ${boarded ? 'boarded' : ''}" data-id="${p.id}">
+        <div class="p-cb" onclick="toggle('${p.id}')">${boarded ? '✓' : ''}</div>
+        <div class="p-info" onclick="toggle('${p.id}')">
           <div class="p-name">${esc(p.nombre)}</div>
-          <div class="p-sub">${boarded ? (hora ? 'Abordó · ' + hora : 'Abordó') : 'Pendiente'}</div>
+          <div class="p-status ${statusClass}">
+            <span class="p-status-dot"></span>
+            ${statusText}
+          </div>
         </div>
         <div class="p-seat">${esc(seat)}</div>
-        <div class="p-hora">${boarded && hora ? hora.slice(0,5) : ''}</div>
+        <button class="p-reset-btn" onclick="event.stopPropagation(); resetOne('${p.id}')" title="Reiniciar marca">↩</button>
       </div>`;
   }).join('');
 }
@@ -516,21 +636,68 @@ function toggle(id) {
   updateStats();
   render();
 
+  // Animación visual
+  const el = document.querySelector(`.p-item[data-id="${id}"]`);
+  if (el) {
+    el.classList.add(newVal ? 'just-boarded' : 'just-unboarded');
+    setTimeout(() => el.classList.remove('just-boarded', 'just-unboarded'), 700);
+  }
+
   const p = passengers.find(p => p.id === id);
-  const nombre = p ? p.nombre.split(' ')[0] : id;
-  toast(newVal ? `✅ ${nombre} — abordó` : `↩️ ${nombre} — desmarcado`, newVal ? 'ok' : 'undo');
+  const nombre = p ? p.nombre_corto || p.nombre.split(' ').slice(0,2).join(' ') : id;
+
+  if (newVal) {
+    const hora = boarding[key].hora;
+    toast(`✅ ${nombre} — abordó a las ${hora}`, 'ok');
+  } else {
+    toast(`↩️ ${nombre} — marca reiniciada`, 'undo');
+  }
 }
 
 // ══════════════════════════════════════
-//  RESET DE EMERGENCIA
+//  REINICIAR MARCA INDIVIDUAL
+// ══════════════════════════════════════
+function resetOne(id) {
+  const key = id + '_' + activeSeg;
+  if (!boarding[key]?.abordado) return;
+
+  const p = passengers.find(p => p.id === id);
+  const nombre = p ? p.nombre_corto || p.nombre.split(' ').slice(0,2).join(' ') : id;
+
+  boarding[key] = { abordado: false, hora: '' };
+  saveBoarding();
+  updateStats();
+  render();
+
+  const el = document.querySelector(`.p-item[data-id="${id}"]`);
+  if (el) {
+    el.classList.add('just-unboarded');
+    setTimeout(() => el.classList.remove('just-unboarded'), 500);
+  }
+
+  toast(`↩️ ${nombre} — marca reiniciada`, 'undo');
+}
+
+// ══════════════════════════════════════
+//  RESET TOTAL
 // ══════════════════════════════════════
 function resetConfirm() {
-  if (confirm('¿Seguro que deseas borrar TODOS los registros de abordaje?\nEsta acción no se puede deshacer.')) {
-    boarding = {};
+  const seg = activeSeg === 'ida' ? 'IDA' : 'RETORNO';
+  const msg = `¿Reiniciar TODAS las marcas de abordaje?\n\nBus ${activeBus} · ${seg}\n\nEsta acción no se puede deshacer.`;
+  if (confirm(msg)) {
+    // Solo resetear el bus + tramo activo
+    const busKey = activeSeg === 'ida' ? 'ida_bus' : 'vuelta_bus';
+    const affected = passengers.filter(p => String(p[busKey]) === activeBus);
+    affected.forEach(p => {
+      const key = p.id + '_' + activeSeg;
+      if (boarding[key]) {
+        boarding[key] = { abordado: false, hora: '' };
+      }
+    });
     saveBoarding();
     updateStats();
     render();
-    toast('Registros borrados', '');
+    toast(`🔄 Marcas reiniciadas — Bus ${activeBus} ${seg}`, 'undo');
   }
 }
 
@@ -543,7 +710,7 @@ function toast(msg, type) {
   el.textContent = msg;
   el.className   = 'toast show' + (type === 'ok' ? ' ok' : type === 'undo' ? ' undo' : '');
   clearTimeout(_tt);
-  _tt = setTimeout(() => el.className = 'toast', 2800);
+  _tt = setTimeout(() => el.className = 'toast', 3200);
 }
 
 // ══════════════════════════════════════
