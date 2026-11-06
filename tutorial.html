@@ -491,7 +491,7 @@
                 <div class="music-note-float music-note-1">♪</div>
                 <div class="music-note-float music-note-2">♫</div>
                 <div class="music-avatar-info">
-                  <span class="music-label-title" style="font-size:0.58rem;">Música de asamblea</span>
+                  <span class="music-label-title" style="font-size:0.58rem;">Las asambleas nos hacen felices</span>
                   <span class="music-label-status" style="font-size:0.52rem; color:#16A34A;">
                     <span class="music-status-dot"></span> Sonando
                   </span>
@@ -624,7 +624,7 @@
     // ══════════════════════════════════════════════════════════════
     //  REPRODUCCIÓN AUTOMÁTICA AL ENTRAR (SIN CLIC PREVIO)
     // ══════════════════════════════════════════════════════════════
-    const TOTAL_SECONDS = 30;
+    const TOTAL_SECONDS = 39;
     let currentTime = 0;
     let isPlaying = false;
     let animInterval = null;
@@ -666,57 +666,57 @@
     const audioPillText  = document.getElementById('audioPillText');
     const bgAudio        = document.getElementById('bgAudio');
 
-    // Capítulos del video
+    // Capítulos del video (Frases concisas y completas con tiempo suficiente)
     const CHAPTERS = [
       {
         t: 0,
         badge: "Paso 1 de 5 · Inicio",
         icon: "👋",
-        msg: "¡Hola! Bienvenidos. Consultar tu boleto de bus es muy fácil. Te mostramos cómo hacerlo en solo unos segundos.",
-        voice: "Hola, bienvenidos. Consultar tu boleto para la asamblea es muy fácil. Te mostramos cómo hacerlo en solo unos segundos."
+        msg: "¡Hola! Consultar tu boleto de bus es muy fácil y rápido. Te mostramos cómo hacerlo paso a paso.",
+        voice: "Hola. Consultar tu boleto de bus es muy fácil y rápido. Te mostramos cómo hacerlo."
       },
       {
-        t: 5.5,
+        t: 6.5,
         badge: "Paso 2 de 5 · Escribe tu nombre",
         icon: "✍️",
-        msg: "Escribe tu nombre en el recuadro. No te preocupes por tildes o mayúsculas, el sistema te reconocerá con tranquilidad.",
-        voice: "Primero, escribe tu nombre en el recuadro. No te preocupes por mayúsculas o tildes, el sistema te reconocerá con tranquilidad."
+        msg: "Escribe tu nombre en el recuadro. Te reconocerá con o sin tildes.",
+        voice: "Primero, escribe tu nombre en este recuadro. Te reconocerá con o sin tildes."
       },
       {
-        t: 11.5,
+        t: 13.5,
         badge: "Paso 3 de 5 · Toca tu nombre",
         icon: "👆",
-        msg: "Tu nombre aparecerá abajo en una tarjeta dorada con tu bus y asiento. Solo dale un toque suave con el dedo.",
-        voice: "Verás que tu nombre aparece de inmediato abajo. Solo dale un toque con tu dedo para ingresar a tu boleto."
+        msg: "Tu nombre aparecerá abajo en una tarjeta dorada. Dale un toque para ingresar.",
+        voice: "Tu nombre aparecerá abajo en color dorado. Dale un toque para ingresar."
       },
       {
-        t: 16.5,
+        t: 20,
         badge: "Opción alternativa · Lista completa",
         icon: "📖",
-        msg: "¿Prefieres no escribir? Toca 'Buscar tu nombre en la lista' y elígete directamente de la lista de pasajeros.",
-        voice: "Y si prefieres no escribir en el teclado, puedes tocar la lista completa para elegir tu nombre directamente."
-      },
-      {
-        t: 21.5,
-        badge: "Paso 4 de 5 · ¡Tu Boleto y Asiento!",
-        icon: "🎫",
-        msg: "¡Listo! Suena la música de asamblea y ves tu Asiento 01, tu bus y la hora de abordaje (05:50 AM) y salida (06:15 AM).",
-        voice: "Listo. Se abrirá tu boleto con nuestra música de asamblea. Aquí puedes ver tu asiento cero uno en color naranja y los horarios de salida."
+        msg: "¿Prefieres no escribir? También puedes buscarte en la lista completa de pasajeros.",
+        voice: "O si lo prefieres, también puedes buscarte en la lista completa de pasajeros."
       },
       {
         t: 26.5,
+        badge: "Paso 4 de 5 · ¡Tu Boleto y Asiento!",
+        icon: "🎫",
+        msg: "¡Listo! Aquí verás tu número de asiento en grande, tu bus y tus horarios de abordaje y salida.",
+        voice: "¡Listo! Aquí verás tu número de asiento en grande, tu bus y tus horarios de salida."
+      },
+      {
+        t: 33.5,
         badge: "Paso 5 de 5 · Viaje de Retorno",
         icon: "🔄",
-        msg: "Para ver el regreso a Cusco, solo toca arriba en 'RETORNO'. Verás la salida a las 05:30 PM. ¡Que disfrutes la asamblea!",
-        voice: "Y para ver el viaje de regreso a Cusco, solo toca arriba en Tramo Retorno. Esperamos que disfrutes mucho la asamblea."
+        msg: "Para ver tu viaje de regreso a Cusco, solo toca arriba en 'RETORNO'. ¡Buen viaje!",
+        voice: "Para ver tu viaje de regreso a Cusco, solo toca arriba en Tramo Retorno. ¡Buen viaje!"
       }
     ];
 
     let currentChapterIndex = -1;
 
     function renderTimeline(sec) {
-      // 0 a 5.4s: Estado Inicial
-      if (sec < 5.5) {
+      // 0 a 6.4s: Estado Inicial
+      if (sec < 6.5) {
         setChapter(0);
         screenLogin.style.display = 'block';
         screenTicket.style.display = 'none';
@@ -730,8 +730,8 @@
         viewport.scrollTo({ top: 0, behavior: 'smooth' });
         stopMusic();
       }
-      // 5.5 a 11.4s: Escribir nombre
-      else if (sec >= 5.5 && sec < 11.5) {
+      // 6.5 a 13.4s: Escribir nombre
+      else if (sec >= 6.5 && sec < 13.5) {
         setChapter(1);
         screenLogin.style.display = 'block';
         screenTicket.style.display = 'none';
@@ -741,7 +741,7 @@
         simInputWrap.classList.add('tut-highlight-focus');
 
         const name = "Julia Zárate";
-        const charCount = Math.min(name.length, Math.floor((sec - 5.5) * 2.5));
+        const charCount = Math.min(name.length, Math.floor((sec - 6.5) * 2.2));
         simInput.value = name.slice(0, charCount);
 
         if (charCount >= 3) {
@@ -753,8 +753,8 @@
         touchPoint.style.display = 'none';
         viewport.scrollTo({ top: 20, behavior: 'smooth' });
       }
-      // 11.5 a 16.4s: Tocar sugerencia
-      else if (sec >= 11.5 && sec < 16.5) {
+      // 13.5 a 19.9s: Tocar sugerencia
+      else if (sec >= 13.5 && sec < 20) {
         setChapter(2);
         screenLogin.style.display = 'block';
         screenTicket.style.display = 'none';
@@ -769,12 +769,12 @@
         touchPoint.style.display = 'block';
         touchPoint.style.left = '50%';
         touchPoint.style.top = '255px';
-        if (sec >= 13) touchPoint.classList.add('tap'); else touchPoint.classList.remove('tap');
+        if (sec >= 15.5) touchPoint.classList.add('tap'); else touchPoint.classList.remove('tap');
 
         viewport.scrollTo({ top: 40, behavior: 'smooth' });
       }
-      // 16.5 a 21.4s: Opción alternativa - Directorio
-      else if (sec >= 16.5 && sec < 21.5) {
+      // 20 a 26.4s: Opción alternativa - Directorio
+      else if (sec >= 20 && sec < 26.5) {
         setChapter(3);
         screenLogin.style.display = 'block';
         screenTicket.style.display = 'none';
@@ -791,8 +791,8 @@
 
         viewport.scrollTo({ top: 120, behavior: 'smooth' });
       }
-      // 21.5 a 26.4s: Boleto Digital - TRAMO IDA
-      else if (sec >= 21.5 && sec < 26.5) {
+      // 26.5 a 33.4s: Boleto Digital - TRAMO IDA
+      else if (sec >= 26.5 && sec < 33.5) {
         setChapter(4);
         screenLogin.style.display = 'none';
         screenTicket.style.display = 'block';
@@ -820,8 +820,8 @@
         viewport.scrollTo({ top: 45, behavior: 'smooth' });
         startMusic();
       }
-      // 26.5 a 30s: Boleto Digital - TRAMO RETORNO
-      else if (sec >= 26.5) {
+      // 33.5 a 39s: Boleto Digital - TRAMO RETORNO
+      else if (sec >= 33.5) {
         setChapter(5);
         screenLogin.style.display = 'none';
         screenTicket.style.display = 'block';
